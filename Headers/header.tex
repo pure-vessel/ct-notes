@@ -1,0 +1,196 @@
+\usepackage{ifluatex}
+\ifluatex 
+    \usepackage{fontspec}
+    \setsansfont{CMU Sans Serif}%{Arial}
+    \setmainfont{CMU Serif}%{Times New Roman}
+    \setmonofont{CMU Typewriter Text}%{Consolas}
+    \defaultfontfeatures{Ligatures={TeX}}
+\else
+    \usepackage[T2A]{fontenc}
+    \usepackage[utf8]{inputenc}
+\fi
+\usepackage[english,russian]{babel}
+\usepackage{amssymb,latexsym,amsmath,amscd,mathtools,wasysym}
+\usepackage[shortlabels]{enumitem}
+\usepackage[makeroom]{cancel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{verbatim}
+\usepackage{fvextra}
+
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabu}
+\usepackage{arydshln} % \hdashline and :
+
+\usepackage{float}
+\makeatletter
+\g@addto@macro\@floatboxreset\centering
+\makeatother
+\usepackage{caption}
+\usepackage{csquotes}
+\usepackage[bb=dsserif]{mathalpha}
+\usepackage[normalem]{ulem}
+
+\usepackage[e]{esvect}
+\let\vec\vv
+
+\usepackage{xcolor}
+\colorlet{darkgreen}{black!25!blue!50!green}
+
+
+%% Here f*cking with mathabx
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+    <5> <6> <7> <8> <9> <10> gen * matha
+    <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> matha12
+}{}
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathb}{m}{n}{
+    <5> <6> <7> <8> <9> <10> gen * mathb
+    <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> mathb12
+}{}
+\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
+
+\DeclareMathSymbol{\defeq}{\mathrel}{mathb}{"15}
+\DeclareMathSymbol{\eqdef}{\mathrel}{mathb}{"16}
+
+
+\usepackage{trimclip}
+\DeclareMathOperator{\updownarrows}{\clipbox{0pt 0pt 4.175pt 0pt}{$\upuparrows$}\hspace{-.825px}\clipbox{0pt 0pt 4.175pt 0pt}{$\downdownarrows$}}
+\DeclareMathOperator{\downuparrows}{\clipbox{0pt 0pt 4.175pt 0pt}{$\downdownarrows$}\hspace{-.825px}\clipbox{0pt 0pt 4.175pt 0pt}{$\upuparrows$}}
+
+\makeatletter
+\providecommand*\deletecounter[1]{%
+    \expandafter\let\csname c@#1\endcsname\@undefined}
+\makeatother
+
+
+\usepackage{hyperref}
+\hypersetup{
+    %hidelinks,
+    colorlinks=true,
+    linkcolor=darkgreen,
+    urlcolor=blue,
+    breaklinks=true,
+}
+
+\usepackage{pgf}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{tikz,tikz-3dplot}
+\usepackage{tkz-euclide}
+\usetikzlibrary{calc,automata,patterns,angles,quotes,backgrounds,shapes.geometric,trees,positioning,decorations.pathreplacing}
+\pgfkeys{/pgf/plot/gnuplot call={T: && cd TeX && gnuplot}}
+\usepgfplotslibrary{fillbetween,polar}
+\ifluatex
+\usetikzlibrary{graphs,graphs.standard,graphdrawing,quotes,babel}
+\usegdlibrary{layered,trees,circular,force}
+\else
+\errmessage{Run with LuaTeX, if you want to use gdlibraries}
+\fi
+\makeatletter
+\newcommand\currentnode{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+
+%\usepgfplotslibrary{external} 
+%\tikzexternalize
+
+\makeatletter
+\newcommand*\circled[2][1.0]{\tikz[baseline=(char.base)]{
+        \node[shape=circle, draw, inner sep=2pt,
+        minimum height={\f@size*#1},] (char) {#2};}}
+\makeatother
+
+\newcommand{\existence}{{\circled{$\exists$}}}
+\newcommand{\uniqueness}{{\circled{$\hspace{0.5px}!$}}}
+\newcommand{\rightimp}{{\circled{$\Rightarrow$}}}
+\newcommand{\leftimp}{{\circled{$\Leftarrow$}}}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\proj}{pr}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Lat}{Lat}
+\DeclareMathOperator{\Lin}{Lin}
+\DeclareMathOperator{\Ln}{Ln}
+\DeclareMathOperator{\Orbit}{Orbit}
+\DeclareMathOperator{\St}{St}
+\DeclareMathOperator{\Seq}{Seq}
+\DeclareMathOperator{\PSet}{PSet}
+\DeclareMathOperator{\MSet}{MSet}
+\DeclareMathOperator{\Cyc}{Cyc}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Def}{def}
+\DeclareMathOperator{\Alt}{Alt}
+\DeclareMathOperator{\Sim}{Sim}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\asin}{\sin^{-1}}
+\DeclareMathOperator{\acos}{\cos^{-1}}
+\DeclareMathOperator{\atan}{\tan^{-1}}
+\DeclareMathOperator{\acot}{\cot^{-1}}
+\DeclareMathOperator{\asec}{\sec^{-1}}
+\DeclareMathOperator{\acsc}{\csc^{-1}}
+\DeclareMathOperator{\asinh}{\sinh^{-1}}
+\DeclareMathOperator{\acosh}{\cosh^{-1}}
+\DeclareMathOperator{\atanh}{\tanh^{-1}}
+\DeclareMathOperator{\acoth}{\coth^{-1}}
+\DeclareMathOperator{\asech}{\sech^{-1}}
+\DeclareMathOperator{\acsch}{\csch^{-1}}
+
+\newcommand*{\scriptA}{{\mathcal{A}}}
+\newcommand*{\scriptB}{{\mathcal{B}}}
+\newcommand*{\scriptC}{{\mathcal{C}}}
+\newcommand*{\scriptD}{{\mathcal{D}}}
+\newcommand*{\scriptF}{{\mathcal{F}}}
+\newcommand*{\scriptH}{{\mathcal{H}}}
+\newcommand*{\scriptK}{{\mathcal{K}}}
+\newcommand*{\scriptL}{{\mathcal{L}}}
+\newcommand*{\scriptM}{{\mathcal{M}}}
+\newcommand*{\scriptP}{{\mathcal{P}}}
+\newcommand*{\scriptQ}{{\mathcal{Q}}}
+\newcommand*{\scriptR}{{\mathcal{R}}}
+\newcommand*{\scriptT}{{\mathcal{T}}}
+\newcommand*{\scriptU}{{\mathcal{U}}}
+\newcommand*{\scriptX}{{\mathcal{X}}}
+\newcommand*{\Cnk}[2]{\left(\begin{matrix}#1\\#2\end{matrix}\right)}
+\newcommand*{\im}{{\mathbf i}}
+\newcommand*{\id}{{\mathrm{id}}}
+\newcommand*{\compl}{^\complement}
+\newcommand*{\dotprod}[2]{{\left\langle{#1},{#2}\right\rangle}}
+\newcommand\matr[1]{\left(\begin{matrix}#1\end{matrix}\right)}
+\newcommand\matrd[1]{\left|\begin{matrix}#1\end{matrix}\right|}
+\newcommand\arr[2]{\left(\begin{array}{#1}#2\end{array}\right)}
+
+\DeclareMathOperator{\divby}{\scalebox{1}[.65]{\vdots}}
+\DeclareMathOperator{\toto}{\rightrightarrows}
+\DeclareMathOperator{\ntoto}{\not\rightrightarrows}
+
+\newcommand{\undercolorblack}[2]{{\color{#1}\underline{\color{black}#2}}}
+\newcommand{\undercolor}[2]{{\colorlet{tmp}{.}\color{#1}\underline{\color{tmp}#2}}}
+
+\usepackage{adjustbox}
+
+\geometry{margin=1in}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot[L]{}
+\fancyfoot[C]{Иванов Тимофей}
+\fancyfoot[R]{\pagename\ \thepage}
+\fancyhead[L]{}
+\fancyhead[R]{\leftmark}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\setcounter{tocdepth}{5}

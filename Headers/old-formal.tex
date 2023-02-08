@@ -1,0 +1,35 @@
+\newcommand{\dfn}{\item[\color{red}\textbullet]}
+\newcommand{\thm}{\item[\color{darkgreen}\textbullet]}
+
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfdefinestyle{MyFrame}{
+    %linecolor=green!50!red!50!blue, %here we have 50% of blue and 25% of green and red.
+    outerlinewidth=1pt,
+    roundcorner=0px,
+    innertopmargin=\baselineskip,
+    innerbottommargin=\baselineskip,
+    innerleftmargin=\baselineskip,
+    innerrightmargin=\baselineskip}
+\mdfdefinestyle{Proof}{
+    style=MyFrame,
+    fontcolor=black,
+    linecolor=darkgreen,
+    backgroundcolor=black!10!white,
+}
+\mdfdefinestyle{Example}{
+    style=MyFrame,
+    linecolor=yellow,
+    fontcolor=black,
+    backgroundcolor=black!10!white,
+}
+\mdfdefinestyle{Comment}{
+    style=MyFrame,
+    linecolor=black,
+    backgroundcolor=black,
+    fontcolor=white,
+    roundcorner=10px,
+}
+
+\newenvironment{Proof}{\begin{mdframed}[style=Proof]}{\end{mdframed}}
+\newenvironment{Example}{\begin{mdframed}[style=Example]}{\end{mdframed}}
+\newenvironment{Comment}{\begin{mdframed}[style=Comment]}{\end{mdframed}}

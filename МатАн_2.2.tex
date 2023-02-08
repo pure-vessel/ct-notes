@@ -1,0 +1,513 @@
+\documentclass{article}
+\input{Headers/header}
+\input{Headers/formal}
+
+\fancyhead[L]{Математический анализ}
+
+\let\eps\varepsilon
+
+\undef\limsup
+\DeclareMathOperator*{\limsup}{\overline{\lim}}
+\undef\liminf
+\DeclareMathOperator*{\liminf}{\underline{\lim}}
+
+\let\tmp\varphi
+\let\varphi\phi
+\let\phi\tmp
+\undef\tmp
+
+\begin{document}
+    \tableofcontents
+    \begin{definition}
+        Пусть $E\subset \mathbb R^n$ $f\colon E\to[0;+\infty]$. \textbf{Подграфиком} $f$ называется множество
+        $$
+        Q_f=\{(x;y)\in\mathbb R^{n+1}\mid x\in E,0\leqslant y\leqslant f(x)\}
+        $$
+    \end{definition}
+    \begin{definition}
+        Пусть $E\subset \mathbb R^n$ $f\colon E\to\overline{\mathbb R}$. \textbf{Графиком} $f$ называется множество
+        $$
+        \Gamma_f=\{(x;f(x))\in\mathbb R^{n+1}\mid x\in E\}
+        $$
+    \end{definition}
+    \begin{remark}
+        Отличается от общего определения тем, что $\Gamma_f\subset\mathbb R^{n+1}$
+    \end{remark}
+    \begin{theorem}[О мере графика]
+        \label{О мере графика}
+        Пусть $E\in\mathbb A_n$, $f\in S(E)$. Тогда $\Gamma_f\in\mathbb A_{n+1}$ и $\mu_{n+1}\Gamma_f=0$.
+    \end{theorem}
+    \begin{proof}
+        \begin{itemize}
+            \item Сначала разберём случай, когда $\mu E<+\infty$. Заключим $\Gamma_f$ в множество сколь угодно малой меры. Зафиксируем $\eps>0$. Пусть
+            $$
+            e_k=E(k\eps<f(k+1)\eps)
+            $$
+            Тогда
+            $$
+            E=E(|f|=+\infty)\cup\bigcup\limits_{k\in\mathbb Z}e_k
+            $$
+            Тогда
+            $$
+            \Gamma_f=\bigcup\limits_{k\in\mathbb Z}\Gamma_{f\big|_{e_k}}\subset\bigcup\limits_{k\in\mathbb Z}e_k\times[k\eps;(k+1)\eps)=H_\eps
+            $$
+            Заметим, что
+            $$
+            \mu_{n+1}H_\eps=\sum\limits_{k\in\mathbb Z}\mu_ne_k\cdot\eps\leqslant\mu_nE\eps
+            $$
+            По критерию измеримости утверждение теоремы верно.
+            \item Теперь пусть $\mu E=+\infty$. По $\sigma$-конечности $\mu_n$
+            $$
+            E=\bigcup\limits_{j=1}^\infty E_j\qquad\mu_nE_j<+\infty
+            $$
+            А значит $f\Big|_{E_j}$ имеет измеримый график нулевой меры, а поскольку
+            $$
+            \Gamma_f=\bigcup\limits_{j=1}^\infty \Gamma_{f\big|_{E_j}}
+            $$
+            Верно требуемое.
+        \end{itemize}
+    \end{proof}
+    \begin{theorem}
+        \label{О мере подграфика}
+        Пусть $E\in\mathbb A_n$, $f\colon E\to[0;+\infty]$. Тогда измеримость $f$ и её подграфика равносильны и в случае измеримости имеет место равенство
+        $$
+        \mu_{n+1}Q_f=\int_Ef~\mathrm d\mu_n
+        $$
+    \end{theorem}
+    \begin{proof}
+        Пусть нам известна измеримость подграфика. Тогда искомая формула следует из принципа Кавальери:
+        $$
+        Q_f(x)=\begin{cases}
+            \varnothing & x\notin E\\
+            [0;f(x)\rangle & x\in E
+        \end{cases}
+        $$
+        Отсюда
+        $$
+        \mu_1Q_f(x)=\begin{cases}
+            0 & x\notin E\\
+            f(x) & x\in E
+        \end{cases}
+        $$
+        Отсюда если $Q_f$ измеримо, то формула следует из принципа Кавальери. А также в принципе Кавальери в качестве следствия был факт, что функция $x\mapsto\mu_1Q_f(x)$ измерима, а значит и $f$ измерима как сужение $x\mapsto\mu_1Q_f(x)$ на $E$.\\
+        Осталось доказать, что если $f$ измерима, то её подграфик измерим. Рассмотрим случаи:
+        \begin{enumerate}
+            \item $f$ простая.
+            $$
+            f=\sum\limits_{k=1}^Nc_k\chi_{A_k}\qquad A_k\in\mathbb A_n,c_k\in[0;+\infty)
+            $$
+            Можно считать, что $A_k$ дизъюнктны. И ещё можно считать, что $A_k\subset E$ и в объединении дают $E$. Тогда
+            $$
+            Q_f=\bigsqcup_{k=1}^NA_k\times[0;c_k]
+            $$
+            Отсюда следует измеримость.
+            \item Общий случай: $f$ произвольная неотрицательная измеримая функция. Приблизим её возрастающей последовательность простых функций $\phi_n$. Проверим, что 
+            $$
+            Q_f=\bigcup Q_{\phi_n}\cup\Gamma_f
+            $$
+            Тогда мы докажем искомое.
+            \begin{itemize}
+                \item[$\supset$] ясно т.к. $\phi_n\leqslant f\Rightarrow Q_{\phi_n}\subset Q_f$.
+                \item[$\subset$] рассмотрим $(x;y)\in Q_f$. То есть $x\in E$, $y\in[0;f(x)]$. Если $y=f(x)$, то понятно. Иначе
+                $$
+                \exists N\in\mathbb N~y<\phi_N(x)\Rightarrow \exists N~(x;y)\in Q_{\phi_N}
+                $$
+            \end{itemize}
+        \end{enumerate}
+    \end{proof}
+    \begin{remark}
+        Условие измеримости $E$ существенно. Если $f\equiv0$ не неизмеримом множестве, например, то $Q_f\in\mathbb A_{n+1}$ и $\mu_{n+1}Q_f=0$.
+    \end{remark}
+    \begin{theorem}[Теорема Тонелли]
+        \label{Теорема Тонелли}
+        Пусть $E\subset\mathbb R^{n+m}$, $f\in S(E\to[0;+\infty])$. Тогда
+        \begin{enumerate}
+            \item При почти всех $x\in\mathbb R^n$ функция $f(x;\bullet)\in S(E(x))$.
+            \item Пусть $I(x)=\int_{E(x)}f(x;y)~\mathrm dy$. Тогда $I(x)\in S(\mathbb R^n)$.
+            \item
+            $$\int_E f~\mathrm d\mu_{n+m}=\int_{\mathbb R^n}I(x)~\mathrm dx$$
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        По теореме \ref{О мере подграфика}, что $Q_f\in\mathbb A_{n+m+1}$ и
+        $$
+        \mu_{n+m+1}Q_f=\int_E f~\mathrm d\mu_{n+m}
+        $$
+        Воспользуемся принципом Кавальери:
+        $$
+        \mu_{n+m+1}Q_f=\int_{\mathbb R^n}\mu_{m+1}Q_f(x)~\mathrm dx
+        $$
+        Заметим, что
+        \[\begin{split}
+            Q_f(x)&=\left\{(y;z)\in\mathbb R^{m+1}\mid (x;y;z)\in Q_f\right\}=\\
+            &=\left\{(y;z)\in\mathbb R^{m+1}\mid (x;y)\in E,z\in[0;f(x;y)]\right\}=\\
+            &=\left\{(y;z)\in\mathbb R^{m+1}\mid y\in E(x),z\in[0;f(x;y)]\right\}
+        \end{split}\]
+        Да это же подграфик $f(x;\bullet)$!
+        \begin{enumerate}
+            \item По теореме Кавальери при почти всех $x\in\mathbb R^n$ $Q_f(x)$ измеримо, а значит мы доказали первое утверждение по теореме \ref{О мере подграфика}.
+            \item
+            $$
+            \mu_{m+1}Q_f(x)=\mu_{m+1}Q_{f(x;\bullet)}\overset{\ref{О мере подграфика}}=\int_{E(x)}f(x;y)~\mathrm dy=I(x)
+            $$
+            Отсюда $I(x)$ измерима по всё тому же принципу Кавальери.
+            \item Приравняем два выражения для $\mu_{n+m+1}Q_f$.
+        \end{enumerate}
+    \end{proof}
+    \begin{theorem}[Теорема Фубини]
+        \label{Теорема Фубини}
+        \label{Выражение кратного интеграла через повторный}
+        Пусть $E\subset\mathbb R^{n+m}$, $f\in L(E)$. Тогда
+        \begin{enumerate}
+            \item При почти всех $x\in\mathbb R^n$ функция $f(x;\bullet)\in L(E(x))$.
+            \item Пусть $I(x)=\int_{E(x)}f(x;y)~\mathrm dy$. Тогда $I(x)\in L(\mathbb R^n)$.
+            \item
+            $$\int_E f~\mathrm d\mu_{n+m}=\int_{\mathbb R^n}I(x)~\mathrm dx$$
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        Применим \hyperref[Теорема Тонелли]{теорему Тонелли} для $f_+$ и $f_-$. Пусть $I^\pm=\int_{E(x)}f_\pm(x;y)~\mathrm dy$. По теореме Тонелли
+        $$
+        \int_E f_\pm~\mathrm d\mu_{n+m}=\int_{\mathbb R^n}I^\pm(x)~\mathrm dx<+\infty
+        $$
+        Учитывая $f_{\pm}(x;\bullet)=(f(x;\bullet))_\pm$, имеем
+        $$
+        I^+-I^-=I\in L(\mathbb R^n)
+        $$
+        При почти всех $x$ $I^\pm(x)<+\infty$, а значит при почти всех $x$ $f_\pm\in L(E(x))$ отсюда $f\in L(E(x))$.
+    \end{proof}
+    \begin{remark}
+        В \hyperref[Теорема Тонелли]{теореме Тонелли} все условия можно ослабить:
+        \begin{enumerate}
+            \item Если $f\in S(E)$ (не важен знак), то при почти всех $x\in \mathbb R^n$ $f(x;\bullet)\in S(E(x))$.
+            \item Если $I(x)$ существует почти во всех $x\in\mathbb R^n$, то $I\in S(\mathbb R^n)$
+            \item Если существует $\int_Ef~\mathrm d\mu_{n+m}\in\overline{\mathbb R}$, то верно условие пункта 2 и
+            $$
+            \int_Ef~\mathrm d\mu_{n+m}\in\overline{\mathbb R}=\int_{\mathbb R^n}I(x)~\mathbb dx
+            $$
+        \end{enumerate}
+        Доказывается всё это как в теореме Фубини.
+    \end{remark}
+    \begin{remark}
+        $$
+        \left\{\begin{aligned}
+            &\forall x\in\mathbb R^n~f(x;\bullet)\in S(E(x))\\
+            &\forall y\in\mathbb R^m~f(\bullet;m)\in S(E(y))
+        \end{aligned}\right.\not\Rightarrow f\in S(E)
+        $$
+        Серпинский построил пример такого неизмеримого $E\subset\mathbb R^2$, что $E$ пересекается с любой прямой не более чем в двух точках. Мы говорить о нём не будем, т.к. он довольно сложен.
+    \end{remark}
+    \begin{definition}
+        Пусть $X\subset\mathbb R^n$, $Y\subset\mathbb R^m$, $f\colon X\to\mathbb R$, $g\colon Y\to\mathbb R$. Тогда
+        $$
+        f\otimes g\colon\substack{X\times Y\to\mathbb R\\(x;y)\mapsto f(x)g(y)}
+        $$
+    \end{definition}
+    \begin{lemma}
+        Если $f\in S(X)$, $g\in S(Y)$, то $f\otimes g\in S(X\times Y)$.
+    \end{lemma}
+    \begin{proof}
+        Пусть
+        $$
+        \tilde f(x;y)=f(x)\qquad\tilde g(x;y)=g(y)
+        $$
+        Докажем, что $\tilde f$ и $\tilde g$ измеримы, тогда $f\otimes g$ будет измеримо как произведение измеримых.\\
+        $$(X\times Y)(\tilde f>a)=X(\tilde f>0)\times Y$$
+        Левое измеримо по измеримости $f$, правое~--- потому что, а произведение измеримы измеримо.
+    \end{proof}
+    \begin{corollary}
+        Пусть $X\subset\mathbb R^n$, $Y\subset\mathbb R^m$. Если
+        $$
+        \left[\begin{aligned}
+            &f\in S(X\to[0;+\infty])\land g\in S(Y\to[0;+\infty])\\
+            &f\in L(X)\land g\in L(Y)
+        \end{aligned}\right.
+        $$
+        То
+        $$
+        \int_{X\times Y}f\otimes g~\mathrm d\mu_{n+m}=\int_Xf~\mathrm d\mu_n\int_Yg~\mathrm d\mu_m
+        $$
+    \end{corollary}
+    \begin{proof}
+        В первом случае нет сомнений в существовании интегралов. Пусть $E=X\times Y$. Тогда
+        $$
+        \int_Ef\otimes g~\mathrm d\mu_{n+m}=\int_X\left(\int_Yf(x)g(y)~\mathrm dy\right)~\mathrm dx
+        $$
+        так как $E(x)=\begin{cases}
+            \varnothing&x\notin X\\
+            Y&x\in X
+        \end{cases}$.\\
+        А почему то же самое верны для произвольного знака, если интегралы от них конечны? Ну, чтобы применить теорему Фубини, надо проверить суммируемость $f\otimes g$. Ну, смотрите. По доказанному
+        $$
+        \int_{X\times Y}|f\otimes g|~\mathrm d\mu_{n+m}=\int_X|f|~\mathrm d\mu_n\int_Y|g|~\mathrm d\mu_m
+        $$
+        По условию оба этих интеграла конечны, значит $|f\otimes g|$ суммируема, а суммируемость функции равносильна суммируемости её модуля.
+    \end{proof}
+    \begin{remark}
+        Мы знаем, что в условиях теорем \hyperref[Теорема Тонелли]{Тонелли} и \hyperref[Теорема Фубини]{Фубини} верно
+        $$
+        \int_E f~\mathrm d\mu_{n+m}=\int_{\mathbb R^n}\left(\int_{E(x)}f(x;y)~\mathrm dy\right)~\mathrm dx
+        $$
+        Тривиально, то же можно записать, поменяв $x$ и $y$ ролями.
+        $$
+        \int_E f~\mathrm d\mu_{n+m}=\int_{\mathbb R^n}\left(\int_{E(y)}f(x;y)~\mathrm dx\right)~\mathrm dy
+        $$
+        А значит два повторных интеграла равны.
+    \end{remark}
+    \begin{example}
+        Повторные интегралы могут быть не равны
+        $$
+        f(x;y)=\frac{x^2-y^2}{(x^2+y^2)^2}\qquad E=[-1;1]^2
+        $$
+        Тогда
+        $$
+        \int\limits_{-1}^1 \frac{x^2-y^2}{(x^2+y^2)^2}~\mathrm dy=\frac y{x^2+y^2}\bigg|_{y=-1}^1=\frac2{x^2+1}
+        $$
+        $$
+        \int\limits_{-1}^1 \int\limits_{-1}^1 \frac{x^2-y^2}{(x^2+y^2)^2}~\mathrm dy~\mathrm dx=\int\limits_{-1}^1 \frac2{x^2+1}~\mathrm dx=4\atan x\bigg|_0^1=\pi
+        $$
+        Другой повторный интеграл будет равен $-\pi$, как несложно заметить.
+    \end{example}
+    \begin{example}
+        Неверно, что если повторные интегралы равны, то двойной существует.
+        $$
+        g(x;y)=\frac{2xy}{(x^2+y^2)^2}\qquad E=[-1;1]^2
+        $$
+        Поскольку функция $g$ нечётна по каждой переменной, оба повторных интеграла равны нулю. Отсюда если двойной интеграл существует, то равен нулю.\\
+        Докажем, что он не существует. Для этого докажем, что $g$ не суммируема. Попробуем проинтегрировать $|g|$:
+        $$
+        \int\limits_{-1}^1\int\limits_{-1}^1\frac{|2xy|}{(x^2+y^2)^2}~\mathrm dy~\mathrm dx=
+        4\int\limits_0^1\int\limits_0^1\frac{|2xy|}{(x^2+y^2)^2}~\mathrm dy~\mathrm dx=
+        4\int\limits_0^1\frac{-x}{x^2+y^2}\bigg|_{y=0}^1~\mathrm dx=
+        4\int\limits_0^1\frac{-x}{x^2+1}+\frac1x~\mathrm dx=+\infty
+        $$
+        Отсюда $g$ не суммируема. А значит нулю её интеграл не равен, то есть он не существует.
+    \end{example}
+    \begin{definition}
+        Пусть $E\subset\mathbb R^{n+m}$ \textbf{Проекцией} $E$ на первое координатное пространство называется
+        $$
+        \operatorname{Pr}_1E=\left\{x\in\mathbb R^n\mid E(x)\neq\varnothing\right\}
+        $$
+    \end{definition}
+    \begin{remark}
+        Проекция измеримого множества может быть быть неизмеримой (достаточно добавить к измеримому двумерному множеству неизмеримое одномерное).
+    \end{remark}
+    \begin{definition}
+        Множество
+        $$
+        \operatorname{Pr}^*_1E=\left\{x\in\mathbb R^n\mid \mu_m E(x)>0\right\}
+        $$
+        называется \textbf{существенной проекцией} множества $E$.
+    \end{definition}
+    \begin{property}
+        Существенная проекция измерима. (Как Лебегово множество функции $\mu_m E(\bullet)$).
+    \end{property}
+    \begin{property}
+        При $f$ подходящем под теоремы \hyperref[Теорема Тонелли]{Тонелли} и \hyperref[Теорема Фубини]{Фубини} верно
+        $$
+        \int_E f~\mathrm d\mu_{n+m}=\int_{\Pr^*_1}I(x)~\mathrm dx
+        $$
+    \end{property}
+    \begin{remark}
+        Теоремы \hyperref[Теорема Тонелли]{Тонелли} и \hyperref[Теорема Фубини]{Фубини} можно применять несколько раз.
+    \end{remark}
+    \begin{definition}
+        Пусть $(X;\mathbb A;\mu)$ и $(Y;\mathbb B;\nu)$~--- пространства с мерами. Пусть
+        $$
+        \mathbb A\odot\mathbb B=\{A\times B\mid A\in\mathbb A,B\in\mathbb B\}
+        $$
+        Тогда $\mathbb A\odot\mathbb B$ является полукольцом, а
+        $$
+        \pi_0\colon A\times B\to\mu A\nu B
+        $$
+        является мерой на $\mathbb A\oplus\mathbb B$. Тогда $\pi$~--- стандартное распространение $\pi_0$ на $\sigma$-алгебру $\mathbb C$ называется произведением мер $\mu$ и $\nu$.\\
+        Обозначения:
+        $$
+        \mathbb C=\mathbb A\otimes\mathbb B\qquad \pi=\mu\times\nu
+        $$
+    \end{definition}
+    \begin{remark}
+        Доказывать корректность определения мы не будем.
+    \end{remark}
+    \begin{property}
+        $$
+        \mu_{n+m}=\mu_n\times\mu_m
+        $$
+    \end{property}
+    \begin{property}
+        Если $\mu$ и $\nu$ являются $\sigma$-конечными, то $\mu\times\nu$~--- тоже.
+    \end{property}
+    \begin{property}
+        Произведение мер ассоциативно.
+    \end{property}
+    \begin{property}
+        Все теоремы этого параграфа с доказательствами верны для полных $\sigma$-конечных мер.
+    \end{property}
+    \begin{theorem}[Теорема Тонелли для абстрактных пространств с мерой]
+        Пусть $E\subset X\times Y$, $f\in S_{\mathbb A\otimes\mathbb B}(E\to[0;+\infty])$. Тогда
+        \begin{enumerate}
+            \item При почти всех $x\in x$ функция $f(x;\bullet)\in S_{\mathbb B}(E(x))$.
+            \item Пусть $I(x)=\int_{E(x)}f(x;\bullet)~\mathrm d\nu$. Тогда $I(x)\in S_{\mathbb A}(X)$.
+            \item
+            $$\int_E f~\mathrm d(\mu\times\nu)=\int_{X}I(x)~\mathrm d\mu$$
+        \end{enumerate}
+    \end{theorem}
+    \paragraph{Замена переменной в интеграле.}
+    \begin{theorem}[Общая схема замены переменной в интеграле]
+        \label{Общая схема замены переменной в интеграле}
+        Пусть $(X;\mathbb A;\mu)$, $(Y;\mathbb B;\nu)$~--- пространства с мерами. Пусть $h\in S_{\mathbb A}(X\to[0;+\infty])$, $\Phi\colon X\to Y$ и
+        $$
+        \forall B\in\mathbb B~\Phi^{-1}(B)\in\mathbb A\qquad \forall B\in\mathbb B~\nu B=\int_{\Phi^{-1}(B)}h~\mathrm d\mu
+        $$
+        Пусть $f\in S_{\mathbb B}(Y)$. Тогда
+        \begin{enumerate}
+            \item $f\circ\Phi\in S_{\mathbb A}(X)$.
+            \item
+            $$
+            \int_Y f~\mathrm d\nu=\int_X(f\circ\Phi)h~\mathrm d\mu
+            $$
+            (Трактовка стандартная: интегралы существуют или нет одновременно, если существуют, то равны.)
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        \begin{enumerate}
+            \item Рассмотрим Лебегово множество
+            $$
+            X(f\circ\Phi>a)=\{x\in X\mid f(\Phi(x))>a\}=\{x\in X\mid \Phi(x)\in Y(f>a)\}=\Phi^{-1}(Y(f>a))
+            $$
+            По условию $Y(f>a)\in \mathbb B$, а значит $\Phi^{-1}\in\mathbb A$.
+            \item Разберём случаи
+            \begin{enumerate}[a.]
+                \item $f=\chi_B\mid B\in\mathbb B$. Тогда
+                $$
+                (\chi_B\circ\Phi)(x)=\begin{cases}
+                    1 & x\in\Phi^{-1}(B)\\0 & x\notin\Phi^{-1}(B)
+                \end{cases}=\chi_{\Phi^{-1}(B)}(x)
+                $$
+                Тогда
+                $$
+                \int_{Y}\chi_B~\mathrm d\nu=\nu B=\int_{\Phi^{-1}(B)}h~\mathrm d\nu=\int_{X}\underbrace{\chi_{\Phi^{-1}(B)}}_{f\circ\Phi}h~\mathrm d\nu
+                $$
+                \item По линейности равенство верно для простых функций.
+                \item Для положительных измеримых функций рассмотрим последовательность $\phi_n$, возрастающую к $f$ и перейдём к пределу в равенстве
+                $$
+                \int_Y\phi_n~\mathrm d\nu=\int_X(\phi_n\circ\Phi)h~\mathrm d\mu
+                $$
+                по теореме Леви.
+                \item Для произвольных измеримых функций рассмотрим $f_{\pm}$
+                $$
+                \int_Yf_\pm~\mathrm d\nu=\int_X(\phi_n\circ\Phi)_\pm h~\mathrm d\mu=\int_X(\phi_n\circ\Phi h)_\pm~\mathrm d\mu
+                $$
+            \end{enumerate}
+        \end{enumerate}
+    \end{proof}
+    \begin{remark}
+        В условиях теоремы \ref{Общая схема замены переменной в интеграле} суммируемость $f$ по $\nu$ равносильная суммируемости $(f\circ\Phi)h$ по $\mu$
+    \end{remark}
+    \begin{corollary}
+        В условиях теоремы \ref{Общая схема замены переменной в интеграле} если $B\in\mathbb B$, $f\in S_{\mathbb B}(B)$, то
+        $$
+        \int_B f~\mathrm d\nu=\int_{\Phi^{-1}(B)}(f\circ\Phi)h~\mathrm d\mu
+        $$
+    \end{corollary}
+    \begin{proof}
+        Продолжим $f$ нулём на $Y\setminus B$.
+    \end{proof}
+    \begin{definition}
+        В условии теоремы \ref{Общая схема замены переменной в интеграле} $\nu$ называется $h$-взвешенным $\Phi$-\textbf{образом меры} $\mu$.
+    \end{definition}
+    \begin{remark}
+        Пусть
+        $$
+        \mathbb A^*=\{\Phi^{-1}(B)\mid B\in\mathbb B\}
+        $$
+        Нетрудно заметить, что это $\sigma$-алгебра.\\
+        В условиях теоремы \ref{Общая схема замены переменной в интеграле} $\mathbb A^*\subset\mathbb A$.\\
+        Пусть
+        $$
+        \mathbb B^*=\{B\subset Y\mid \Phi^{-1}\in\mathbb A\}
+        $$
+        тогда условиях теоремы \ref{Общая схема замены переменной в интеграле} $\mathbb B\subset\mathbb B^*$.
+    \end{remark}
+    \begin{claim}
+        Если
+        $$
+        \nu B=\int_{\Phi^{-1}(B)}h~\mathrm d\mu
+        $$
+        То $\nu$~--- мера на $\mathbb B$.
+    \end{claim}
+    \begin{proof}
+        Остаётся как несложное упражнение читателю.
+    \end{proof}
+    \begin{example}
+        $h\equiv1$~--- невзвешенный образ меры.
+        $$
+        \nu B=\mu\Phi^{-1}(B)\Rightarrow \int_Yf~\mathrm d\nu=\int_Xf\circ\Phi~\mathrm d\mu
+        $$
+    \end{example}
+    \begin{example}
+        $X=Y$, $\mathbb A=\mathbb B$, $\Phi=\mathrm{id}$.
+        $$
+        \nu A=\int_A h~\mathrm d\mu\Rightarrow \int_X f~\mathrm d\nu=\int_Xfh~\mathrm d\mu
+        $$
+        Тогда пишут $\mathrm d\nu=h\mathrm d\mu$.
+    \end{example}
+    \begin{definition}
+        Если
+        $$\nu A=\int_A h~\mathrm d\mu$$
+        то $h$ называется \textbf{плотностью} меры $\nu$ относительны меры $\mu$.
+    \end{definition}
+    \begin{property}
+        Если $h=\tilde h$ $\mu$-почти везде, то $\nu=\tilde\nu$. Для $\sigma$-конечных мер верно и обратное.\\
+        Без доказательства.
+    \end{property}
+    \begin{theorem}[Критерий плотности]
+        \label{Критерий плотности}
+        Пусть даны $X,\mathbb A$ и $\mu$ и $\nu$~--- меры на $\mathbb A$, $h\colon S(X\to[0;+\infty])$. Тогда следующие утверждения равносильны:
+        \begin{enumerate}
+            \item $h$~--- плотность $\nu$ относительны $\mu$.
+            \item
+            $$
+            \forall A\in\mathbb A~\mu A\inf\limits_Ah\leqslant\nu A\leqslant \mu A\sup\limits_Ah
+            $$
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        \begin{itemize}
+            \item Из первого во второе ясно из оценки интеграла.
+            \item Рассмотрим
+            $$
+            A=A(h=0)\cup A(0<h<+\infty)\cup A(h=+\infty)
+            $$
+            Равенство есть для первой части:
+            $$\nu A(h=0)=\int_{A(h=0)} h~\mathrm d\mu$$
+            так как левое равно нулю по условию второго утверждения, а правое~--- потому что функция тождественный ноль.\\
+            также очевидно равенство есть для третьей части:
+            $$\nu A(h=+\infty)=\begin{cases}
+                +\infty & \mu A>0\\0 & \mu A\equiv0
+            \end{cases}=\int_{A(h=+\infty)} h~\mathrm d\mu$$
+            Далее можно считать $0<h<+\infty$ на $A$.\\
+            Рассмотрим $q\in(0;1)$. Пусть
+            $$
+            A_j=A(q^j\leqslant h<q^{j-1})
+            $$
+            Очевидно, $A_j\in\mathbb A$ и $\bigsqcup\limits_{j\in\mathbb Z}A_j=A$. Нам известно, что
+            $$
+            q^j\mu A_j\leqslant\nu A_j\leqslant q^{j-1}\mu A_j
+            $$
+            А ещё из оценки интеграла
+            $$
+            q^j\mu A_j\leqslant\int_{A_j}h~\mathrm d\mu\leqslant q^{j-1}\mu A_j
+            $$
+            Отсюда
+            \[\begin{split}
+                q\int_Ah~\mathrm d\mu&=q\sum\limits_j\int_{A_j}h~\mathrm d\mu\leqslant\\
+                &\leqslant\sum\limits_jq^j\mu A_j\leqslant\sum\limits_j\nu A_j=\\
+                &=\fbox{\nu A}\leqslant\sum\limits_j q^{j-1}\mu A_j\leqslant\\
+                &\leqslant\frac1q\sum\limits_j\int_{A_j}h~\mathrm d\mu=\\
+                &=\frac1q\int_Ah~\mathrm d\mu
+            \end{split}\]
+            Если взять начало, конец и то, что в квадратике, после чего устремить $q$ к единицу, то получим искомое.
+        \end{itemize}
+    \end{proof}
+\end{document}

@@ -1,0 +1,71 @@
+\newcommand{\convexpath}[2]{
+    [   
+    create hullcoords/.code={
+        \global\edef\namelist{#1}
+        \foreach [count=\counter] \nodename in \namelist {
+            \global\edef\numberofnodes{\counter}
+            \coordinate (hullcoord\counter) at (\nodename);
+        }
+        \coordinate (hullcoord0) at (hullcoord\numberofnodes);
+        \pgfmathtruncatemacro\lastnumber{\numberofnodes+1}
+        \coordinate (hullcoord\lastnumber) at (hullcoord1);
+    },
+    create hullcoords
+    ]
+    ($(hullcoord1)!#2!-90:(hullcoord0)$)
+    \foreach [
+    evaluate=\currentnode as \previousnode using \currentnode-1,
+    evaluate=\currentnode as \nextnode using \currentnode+1
+    ] \currentnode in {1,...,\numberofnodes} {
+        let \p1 = ($(hullcoord\currentnode) - (hullcoord\previousnode)$),
+        \n1 = {atan2(\y1,\x1) + 90},
+        \p2 = ($(hullcoord\nextnode) - (hullcoord\currentnode)$),
+        \n2 = {atan2(\y2,\x2) + 90},
+        \n{delta} = {Mod(\n2-\n1,360) - 360}
+        in 
+        {arc [start angle=\n1, delta angle=\n{delta}, radius=#2]}
+        -- ($(hullcoord\nextnode)!#2!-90:(hullcoord\currentnode)$) 
+    }
+} % Nodes CW. Supposes tikz >= 3.0, else swap atan2 arguments.
+
+
+\tikzset{treenode/.style={
+        inner sep=0pt,
+        text width=5mm,
+        scale=.8,
+        circle,
+        outer sep=2mm,
+        align=center,
+        draw=black,
+        fill=white,
+        thin
+}}
+\tikzset{subtree/.style={
+        regular polygon,
+        regular polygon sides=3,
+        inner sep=0pt,
+        text width=5mm,
+        yscale=1.5,
+        xscale=.7,
+        draw=black,
+        fill=white,
+        thin
+}}
+\tikzset{
+    ->-/.style={
+        decoration={
+            markings,
+            mark=at position #1 with {\arrow{>}}
+        },
+        postaction={decorate}
+    },
+    ->-/.default=0.5,
+    -<-/.style={
+        decoration={
+            markings,
+            mark=at position #1 with {\arrow{<}}
+        },
+        postaction={decorate}
+    },
+    -<-/.default=0.5
+}

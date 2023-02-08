@@ -1,0 +1,26 @@
+\usepackage{amsthm}
+\usepackage{chngcntr}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}
+\counterwithin*{definition}{section}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}
+\counterwithin*{theorem}{section} % Without changing appearance
+\newtheorem{lemma}{Лемма}
+\counterwithin*{lemma}{section}
+\newtheorem{corollary}{Следствие}[theorem]
+\counterwithin{corollary}{theorem} % Changing appearance
+\counterwithin{corollary}{lemma}
+\newtheorem*{claim}{Утверждение}
+\newtheorem{property}{Свойство}[definition]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+\newtheorem*{example}{Пример}
+
+
+%\renewcommand\qedsymbol{$\blacksquare$}
+
+\counterwithin{equation}{section}
