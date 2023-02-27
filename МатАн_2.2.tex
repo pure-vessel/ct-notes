@@ -1286,7 +1286,7 @@
         $$\forall y\in Y~f(\bullet;y)\in L(X;\mu)$$
         Пусть $y_0$~--- предельная точка $Y$, при почти всех $x\in X$ $f(x;y)\underset{y\to y_0}\rightarrow g(x)$.\\
         Пусть
-        $$\exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{при почти всех }x\in X~\forall y\in V_{y_0}\cap Y~|f(x;y)|\leqslant\Phi(x)$$
+        $$\exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{при почти всех }x\in X~\forall y\in{\dot V}_{y_0}\cap Y~|f(x;y)|\leqslant\Phi(x)$$
         Тогда
         $$
         \lim\limits_{y\to y_0}\int_Xf(x;y)~\mathrm d\mu(x)=\int_X\lim\limits_{y\to y_0}f(x;y)~\mathrm d\mu(x)
@@ -1294,7 +1294,7 @@
     \end{theorem}
     \begin{definition}
         Условие
-        $$\exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{при почти всех }x\in X~\forall y\in V_{y_0}\cap Y~|f(x;y)|\leqslant\Phi(x)$$
+        $$\exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{при почти всех }x\in X~\forall y\in{\dot V}_{y_0}\cap Y~|f(x;y)|\leqslant\Phi(x)$$
         называется \textbf{локальным условием Лебега} в точке $y_0$.
     \end{definition}
     \begin{proof}
@@ -1322,7 +1322,7 @@
         Записывается привычным образом $f(x;y)\underset{y\to y_0}\toto g(x)$
     \end{definition}
     \begin{corollary}[Предельный переход по параметру при условии равномерной сходимости]
-        \label{Предельный переход по параметру}
+        \label{Предельный переход по параметру при условии равномерной сходимости}
         Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, $\mu$ конечна.\\
         $\tilde Y$~--- метрическое пространство, $Y\subset Y$, $y_0$~--- предельная точка $Y$.\\
         Пусть $f\colon X\times Y\to\mathbb R$, $f(x;y)\underset{y\to y_0}\toto g(x)$ на $X$ и пусть
@@ -1418,18 +1418,45 @@
         \label{Дифференцируемость интеграла по параметру}
         Пусть $Y=\langle c;d\rangle\subset\mathbb R$, $(X;\mathbb A;\mu)$~--- пространство с мерой, $f\colon X\times Y\to\mathbb R$, $\forall y\in Y~f(\bullet;y)\in L(X;\mu)$, при почти всех $x\in X~f(x;\bullet)$ дифференцируемо на $Y$. Пусть $y_0\in Y$ и $\frac{\partial f}{\partial y}$ удовлетворяет локальному условию Лебега. Тогда
         $$
-        \exists\left(\int_X f(x;y)~\mathrm d\mu(x)\right)'_y(y_0)=\int_Xf'_y(x;y_0)~\mathrm d\mu(x)
+        \exists\left(\int_X f(x;y)~\mathrm d\mu(x)\right)'_y\bigg|_{y=y_0}=\int_Xf'_y(x;y_0)~\mathrm d\mu(x)
         $$
     \end{theorem}
     \begin{proof}
-        
+        Производную будем искать по определению. Возьмём $h\neq0$, $y_0+h\in Y$. Рассмотрим
+        $$
+        F(x;h)=\frac{f(x;y_0+h)-f(x;y_0)}h
+        $$
+        Из дифференцируемости $f(x;\bullet)$ почти везде, при почти всех $x$ $F(x;h)\underset{h\to0}\longrightarrow f'_y(x;y_0)$. Пусть
+        $$
+        I(y)=\int_Xf(x;y)\mathrm d\mu(x)
+        $$
+        Тогда
+        $$
+        \frac{I(y_0+h)-I(y_0)}h=\int_XF(x;h)~\mathrm d\mu(x)
+        $$
+        Очень хочется сделать переход под знаком интеграла. Чтобы так было можно сделать по теореме \ref{Предельный переход по параметру под знаком интеграла}, надо проверить локальное условие Лебега для $F$ в точке $h$. По теореме Лагранжа
+        $$
+        \exists\theta\in(0;1)~F(x;h)=f'_y(x;y+\theta h)
+        $$
+        Какое-то условие Лебега нам дано ($f'_y\in L_{\mathrm{loc}}$ в $y_0$). Запишем его подробно:
+        $$
+        \exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{для почти всех }x\in X~\forall y\in{\dot V}_{y_0}\cap Y~|f'_y(x;y)|\leqslant\Phi(x)
+        $$
+        Понятно, что
+        $$
+        \exists\delta>0~\forall h\in(-\delta;\delta)\setminus\{0\}~y_0+\theta h\in{\dot V}_{y_0}\cap Y
+        $$
+        Тогда
+        $$
+        |F(x;h)|=|f'(x;y_0+\theta h)|\leqslant\Phi(x)
+        $$
     \end{proof}
     \begin{corollary}
         Если $X$~--- компакт, $\mu$~--- конечная борелевская мера на $X$, $Y=\langle c;d\rangle\subset\mathbb R$, $f,f'_y\in C(X\times Y)$. Тогда
         $$
         \int_X f(x;y)~\mathrm d\mu(x)\in C^{(1)}(Y)
         $$
-        и для любой $y_0\in Y$ верно правило Лейбница
+        и для любой $y_0\in Y$ верно правило Лейбница.
     \end{corollary}
     \begin{proof}
         Надо проверить, локальное условие Лебега для производной. Для любой $y_0$ возьмём 
@@ -1437,5 +1464,246 @@
         \delta>0~[y_0-\delta;y_0+\delta]\cap\langle c;d\rangle=[\alpha;\beta]\text{ ограничено}
         $$
         Тогда $f'_y\in C(X\times[\alpha;\beta])$, а значит $f'_y$ ограничена на $X\times[\alpha;\beta]$ (мажоранта~--- постоянная). По теореме \ref{Дифференцируемость интеграла по параметру} $I'(y_0)$ равно тому, чему хочется, а \ref{Непрерывность интеграла по параметру на множестве}.
+    \end{proof}
+    \begin{example}
+        Условие Лебега в теореме \ref{Дифференцируемость интеграла по параметру} и компактность в следствии 1 существенны.\\
+        Пусть $X=(0;1]$, $Y=[0;+\infty)$, $f(x;y)=\ln(x^2+y^2)$. Тогда
+        \[\begin{split}
+            I(y)&=\int_0^1\ln(x^2+y^2)~\mathrm dx\overset{y\neq0}=x\ln(x^2+y^2)\Big|_{x=0}^1-\int_0^1\frac{2x^2}{x^2+y^2}~\mathrm dx=\\
+            &=\ln(1+y^2)-2+2y^2\frac1y\atan\frac xy\Big|_{x=0}^1=\ln(1+y^2)-2+2y\atan\frac1y
+        \end{split}\]
+        А при $y=0$ это просто $-2$.\\
+        Теперь давайте считать производную в нуле (где нарушено правило Лейбница)
+        $$
+        I'(0)=I'_+(0)=0-0+\pi
+        $$
+        Но
+        $$
+        \int_0^1\left(\ln(x^2+y^2)\right)'_y\bigg|_{y=0}~\mathrm dx=\int_0^10~\mathrm dx=0
+        $$
+    \end{example}
+    \subparagraph{Интеграл комплекснозначной функции.}
+    \begin{definition}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, $E\in\mathbb A$, $f\colon E\to\mathbb C$ (или даже $\overline{\mathbb C}$). Пусть $f=u+\im v$.\\
+        $f$ называется \textbf{измеримой} на $E$, если $u$ и $v$ измеримы на $E$.\\
+        $f$ называется \textbf{измеримой} на $E$, если $u$ и $v$ измеримы на $E$.\\
+        Положим
+        $$
+        \int_Ef~\mathrm d\mu=\int_Eu~\mathrm d\mu+\im\int_Ev~\mathrm d\mu
+        $$
+        если правая часть имеет смысл.
+    \end{definition}
+    \begin{property}
+        Очевидно.
+        $$
+        \int_E\overline f~\mathrm d\mu=\overline{\int_E\overline f~\mathrm d\mu}
+        $$
+    \end{property}
+    \begin{property}
+        Арифметические свойства интеграла переносятся очевидно.
+    \end{property}
+    \begin{lemma}
+        Пусть $f=u+\im v$, $f\in S(E)$. Тогда
+        \begin{enumerate}
+            \item $|f|\in S(E)$.
+            \item Суммируемость $f$ и $|f|$ равносильны.
+            \item
+            $$
+            \left|\int_Ef~\mathrm d\mu\right|\leqslant\int_E|f|~\mathrm d\mu
+            $$
+        \end{enumerate}
+    \end{lemma}
+    \begin{proof}
+        \begin{enumerate}
+            \item $|f|=\sqrt{u^2+v^2}$. А правая часть $\in S(E)$ по арифметическим действиям с измеримыми функциями.
+            \item Из
+            $$
+            |u|,|v|\leqslant |f|\leqslant |u|+|v|
+            $$
+            Отсюда всё понятно.
+            \item Если $\int_Ef~\mathrm d\mu=0$ или $\infty$, то всё понятно. Иначе
+            $$
+            \int_Ef~\mathrm d\mu\in \mathbb C\setminus\{0\}
+            $$
+            Тогда пусть
+            $$
+            z=\frac{\left|\int_Ef~\mathrm d\mu\right|}{\int_Ef~\mathrm d\mu}
+            $$
+            Понятно, что $|z|=1$. Тогда
+            $$
+            \left|\int_Ef~\mathrm d\mu\right|=z\int_Ef~\mathrm d\mu=\int_E zf~\mathrm d\mu
+            $$
+            При этом левая штука $\in\mathbb R$, а значит правая~--- тоже. Отсюда
+            $$
+            \left|\int_Ef~\mathrm d\mu\right|=\Re\int_E zf~\mathrm d\mu=\int_E \Re zf~\mathrm d\mu\leqslant\int_E|zf|~\mathrm d\mu=\int_E|f|~\mathrm d\mu
+            $$
+        \end{enumerate}
+    \end{proof}
+    \begin{property}
+        Из леммы переносятся теоремы \hyperref[Теорема Фубини]{Фубини}, Лебега о мажорируемой сходимости и все теоремы этого параграфа. При дифференцируемость сейчас разберёмся.
+    \end{property}
+    \begin{theorem}[Голоморфность интеграла по параметру]
+        \label{Голоморфность интеграла по параметру}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, $Y\subset\mathbb C$, $f\colon X\times Y\to\mathbb C$,
+        $$
+        \forall y\in Y~f(\bullet;y)\in L(X;\mu)
+        $$
+        $$
+        \text{При почти всех }\forall x\in X~f(x;\bullet)\in \scriptA(Y)
+        $$
+        И пусть ещё
+        $$
+        \forall y_0\in Y~f'_y\in L_{\mathrm{loc}}\text{ в точке }y_0
+        $$
+        тогда $I\in\scriptA(Y)$ и верно правило Лейбница.
+    \end{theorem}
+    \begin{proof}
+        Единственное отличие доказательства от доказательства \ref{Дифференцируемость интеграла по параметру} в том, что
+        $$
+        |F(x;h)|\leqslant|f'_y(x;y_0+\theta h)|
+        $$
+        Этого нам хватит, так как нам нужна мажоранта.
+    \end{proof}
+    \begin{example}
+        Пусть $\Gamma$ замкнуто в $\mathbb C$. Пусть $\mu$~--- борелевская мера на $\Gamma$. Пусть $G=\mathbb C\setminus\Gamma$, $h\in L(\Gamma;\mu)$.\\
+        Пусть
+        $$
+        F(z)=\int_\Gamma\frac{h(\zeta)}{\zeta-z}~\mathrm d\mu(\zeta),\qquad z\in G
+        $$
+        тогда $F\in\scriptA(G)$ и
+        $$
+        \forall n\in\mathbb N~\forall z\in G~F^{(n)}(z)=n!\int_\Gamma\frac{h(\zeta)}{(\zeta-z)^{n+1}}~\mathrm d\mu(\zeta)
+        $$
+        Почему?\\
+        Пусть $z_0\in\Gamma$. Пусть $2\sigma=\rho(z_0;\Gamma)>0$. Если $|z-z_0|<\sigma$, а $\zeta\in\Gamma$, то $|\zeta-z|\geqslant\sigma$. Тогда
+        $$
+        \left|\frac{\partial^n}{\partial z^n}\frac{h(\zeta)}{\zeta-z}\right|=n!\frac{|h(\zeta)|}{|\zeta-z|^{n+1}}\leqslant\underbrace{\frac{n!}{\sigma^{n+1}}|h(\zeta)|}_{\in L(\Gamma;\mu)}
+        $$
+        Значит можно дифференцировать сколько угодно раз.
+    \end{example}
+    \subparagraph{Примеры вычисления интегралов.}
+    \begin{example}
+        $$
+        I_n=\int\limits_0^{+\infty}\frac{\mathrm dx}{(1+x^2)^{n+1}}\qquad n\in\mathbb Z_+
+        $$
+        А давайте введём вот такую штуку:
+        $$
+        I(y)=\int\limits_0^{+\infty}\frac{\mathrm dy}{y+x^2}
+        $$
+        Это мы считать умеем. А зачем? В потому что если продифференцировать это по $y$ $n$ раз, то получится то, что мы хотели (только с точностью до знака и факториала):
+        $$
+        \frac{\partial^n}{\partial y^n}\frac1{y+x^2}=\frac{(-1)^nn!}{(y+x^2)^{n+1}}
+        $$
+        Хорошо, а почему можно дифференцировать под знаком интеграла? Пусть $V_{y_0}=\left(\frac{y_0}2;+\infty\right)$. Тогда
+        $$
+        \forall y\in V_{y_0}~\forall x\in[0;+\infty)~\left|\frac{\partial^n}{\partial y^n}\frac1{y+x^2}\right|\leqslant\frac{n!}{\left(\frac{y_0}2+x^2\right)^{n+1}}=\Phi_{y_0}(x)
+        $$
+        Где $\Phi_{y_0}\in L[0;+\infty)$. Ну, о'кей. Давайте считать $I(y)$.
+        $$
+        I(y)=\frac1{\sqrt y}\atan\frac x{\sqrt y}\Big|_{x=0}^{+\infty}=\frac\pi{2\sqrt y}
+        $$
+        Тогда
+        $$
+        I^{(n)}(y)=\frac\pi2\frac{(-1)^n\frac12\cdot\frac32\cdot\cdots\cdot\frac{2n-1}2}{y^{n+1/2}}=\frac{(-1)^n(2n-1)!!}{2^{n+1}y^{n+1/2}}\pi
+        $$
+        Тогда
+        $$
+        I_n=\frac{(-1)^n}{n!}I^{(n)}(1)=\frac{(2n-1)!!}{(2n)!!}\frac\pi2
+        $$
+    \end{example}
+    \begin{example}
+        Давайте возьмём интеграл из предыдущего примера, и начнём делать с ним тёмную магию
+        $$
+        \int\limits_0^{+\infty}\frac{\mathrm dx}{(1+x^2)^{n+1}}=\frac{(2n-1)!!}{(2n)!!}\frac\pi2
+        $$
+        Давайте сделаем замену $x=\frac t{\sqrt{n+1}}$. Тогда
+        $$
+        \int\limits_0^{+\infty}\frac{\mathrm dx}{(1+\frac{t^2}{n+1})^{n+1}}=\frac{(2n-1)!!}{(2n)!!}\frac\pi2\sqrt{n+1}
+        $$
+        И теперь давайте устремим $n$ у бесконечности. В правой части по формуле Валлиса $\frac{\sqrt\pi}2$. А в левой части получится замечательный предел, и мы получим интеграл Пуассона:
+        $$
+        \int\limits_0^{+\infty}e^{-t^2}~\mathrm dt
+        $$
+        Остаётся только понять, почему можно переходить к пределу под знаком интеграла. Ну, заметим, что
+        $$
+        f_n(t)=\left(1+\frac{t^2}{n+1}\right)^{-n-1}
+        $$
+        убывает по $n$. А тогда 
+        $$
+        0\leqslant f_n(t)\leqslant f_0(t)=\frac1{1+t^2}
+        $$
+        Где $f_0\in L([0;+\infty))$.
+    \end{example}
+    \begin{remark}
+        Поговорим о несобственных интегралах.\\
+        А что о них говорить-то? А то, что у нас были несобственные интегралы в смысле Римана (это предельчик), но тут у нас интеграл по множеству, и никто не заставляет множество иметь конечную меру.\\
+        Надо как-то связать несобственный интеграл Римана и интеграл по множеству.
+    \end{remark}
+    \begin{definition}
+        Пусть $a\in\mathbb R$, $f\colon [a;+\infty)\to\mathbb R$, и $\forall A\in(a;+\infty)~\exists (L)\int\limits_a^Af$. Тогда положим
+        $$
+        \int\limits_a^{\to+\infty}f=\lim\limits_{A\to+\infty}\int\limits_a^Af
+        $$
+    \end{definition}
+    \begin{lemma}
+        Если существует $(L)\int\limits_a^{+\infty}f$, то существует $\int\limits_a^{\to+\infty} f$, равный собственному лебеговому интегралу.
+    \end{lemma}
+    \begin{proof}
+        Достаточно доказать для $f\geqslant 0$ (иначе рассмотреть $f_+$ и $f_-$, а потом $\Re f$ и $\Im f$). В таком случае оба интеграла существуют в $[0;+\infty]$.\\
+        Рассмотрим $f_n=f\cdot\chi_{[a;n]}$, где $n>a$. Тогда $f_n$ возрастают (по $n$) и стремятся к $f$. Тогда с одной стороны
+        $$
+        \int\limits_a^nf=(L)=\int\limits_a^{+\infty}f_n\underset{n\to\infty}{\overset{\text{Леви}}\longrightarrow}(L)\int\limits_a^{+\infty}f
+        $$
+        С другой стороны по определению несобственного интеграла левая часть стремится к несобственному интегралу.
+    \end{proof}
+    \begin{claim}
+        $\int\limits_a^{\to+\infty}f$ сходится абсолютно тогда и только тогда, когда $f\in L[a;+\infty)$.
+    \end{claim}
+    \begin{proof}
+        Если $f$ суммируема, то и модуль тоже. Поэтому несобственный интеграл сходится абсолютно. Аналогично обратное.
+    \end{proof}
+    \begin{example}
+        \begin{itemize}
+            \item $\int\limits_1^{+\infty}\frac{\mathrm dx}{x^2}=1$ можно рассматривать как Лебегов интеграл или как сходящийся несобственный.
+            \item $\int\limits_1^{+\infty}\frac{\mathrm dx}{x}=+\infty$ можно рассматривать как Лебегов интеграл или как расходящийся несобственный.
+            \item $\int\limits_0^{+\infty}\frac{\sin x}{x}~\mathrm dx=\frac\pi2$ можно рассматривать как сходящийся несобственный, но не как Лебегов.
+        \end{itemize}
+    \end{example}
+    \begin{remark}
+        Аналогично определяются несобственные интегралы для других типов промежутков или даже для многомерных интегралов. Как, например, можно трактовать такое?
+        $$
+        \iint\limits_{\to\mathbb R^2}f
+        $$
+        Ну, рассматривать $\{G_k\}$ открытые, $G_k\subset G_{k+1}$, и объединение их всех~--- $\mathbb R^2$.\\
+        Так вот это не даст нам ничего нового. Почему? Докажем, что условно сходящихся интегралов не бывает. Почему? Ну, потому что если такой бывает, то у нас разошлись интегралы $f_+$ и $f_-$. Тогда мы можем взять места, где $f$ положительно, взять их столько, чтобы в интеграле получилось $>1$ и соединить эти области перемычками. Потом сделаем то же с отрицательными частями так, чтобы они в сумме с положительными давали $<-2$. И так далее. Получим, что предела $f$ нет.\\
+        В итоге рассматривают только какие-то специфичные $G_n$. Типа предел по квадратам или по кому-нибудь ещё.
+    \end{remark}
+    \begin{remark}
+        Есть много замечательных теорем о хороших свойствах несобственных интегралов, их можно прочитать в Фихтенгольце или где-нибудь ещё, а мы расскажем только одну лемму.
+    \end{remark}
+    \begin{lemma}
+        Пусть $a\in\mathbb R$, $f\in C[a;+\infty)$, $\int\limits_a^{+\infty}f$ сходится. Введём
+        $$
+        I(y)=\int\limits_a^{\to+\infty}e^{-yx}f(x)~\mathrm dx
+        $$
+        Тогда $I\in C[0;+\infty)$.
+    \end{lemma}
+    \begin{proof}
+        Докажем сначала, что интеграл сходится. Попутно оценим остаток. Рассмотрим $A>a$ и проинтегрируем по частям:
+        $$
+        \int\limits_A^{\to+\infty}e^{-yx}f(x)~\mathrm dx=\underbrace{e^{-yx}(F(x)-F(A))\bigg|_{X=A}^{+\infty}}_0+\int\limits_a^{\to+\infty}y\underbrace{e^{-yx}}_{\text{интеграл сходится}}\underbrace{(F(x)-F(A))}_{\text{ограничена}}~\mathrm dx
+        $$
+        Теперь докажем непрерывность интеграла в точке $y_0\geqslant0$. Рассмотрим $\eps>0$ и подберём
+        $$
+        A>a~\left|\int\limits_A^{+\infty}f\right|<\frac\eps3
+        $$
+        Тогда
+        $$
+        \left|\int\limits_A^{\to+\infty}e^{-yx}f(x)~\mathrm dx\right|=\left|\int\limits_a^{\to+\infty}ye^{-yx}\underbrace{(F(x)-F(A))}_{\leqslant\frac\eps3}~\mathrm dx\right|\leqslant\frac\eps3e^{-Ay}\leqslant\frac\eps3
+        $$
+        То есть $I_A(y)=\int\limits_a^Ae^{-yx}f(x)~\mathrm dx$ непрерывна. Остаётся рассмотреть такое $\delta>0$, что $\forall y\geqslant0:|y-y_0|<\delta~|I_A(y)-I_A(y_0)|<\frac\eps3$, тогда
+        $$
+        |I(y)-I(y_0)|\leqslant|I(y)-I_A(y)|+|I_A(y)-I_A(y_0)|+|I_A(y_0)-I(y_0)|<\eps
+        $$
     \end{proof}
 \end{document}
