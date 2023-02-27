@@ -510,4 +510,932 @@
             Если взять начало, конец и то, что в квадратике, после чего устремить $q$ к единицу, то получим искомое.
         \end{itemize}
     \end{proof}
+    \subparagraph{Интеграл по дискретной мере.}
+    \begin{example}
+        $\delta$-мера.\\
+        Пусть $X$~--- пространство, $E\subset X$, $a\in X$, тогда, напомним, $\delta$-мера~--- это
+        $$\delta_a(E)=\begin{cases}
+            1 & a\in E\\
+            0 & a\notin E
+        \end{cases}$$
+        В качестве сигма-алгебры выступает $2^X$. Пусть $f\colon E\to\overline{\mathbb R}$. Что тогда такое интеграл по этой мере?
+        $$
+        \int_Ef~\mathrm d\delta_a=\begin{cases}
+            0 & a\notin E\\
+            \int_{\{a\}}f~\mathrm d\delta_a=f(a) & a\in E
+        \end{cases}
+        $$
+    \end{example}
+    \begin{lemma}
+        Пусть $\mu$~--- считающая мера на $X$, $E\subset X$, $f\colon E\to\overline{\mathbb R}$. Тогда
+        $$
+        \int_Ef~\mathrm d\mu=\sum\limits_Ef
+        $$
+        Интеграл и сумма существуют или не существуют одновременно, если существуют, то равны.
+    \end{lemma}
+    \begin{proof}
+        будем постепенно усложнять $f$.
+        \begin{enumerate}
+            \item Сначала докажем для характеристической функции $f=\chi_A$, $A\subset E$. Тогда
+            $$
+            \int_E\chi_A~\mathrm d\mu=\mu A=\sum\limits_A1=\sum\limits_A\chi_A
+            $$
+            \item По линейности равенство верно для простых функций $f$.
+            \item $f\geqslant0$. Разберём два случая:
+            \begin{itemize}
+                \item Пусть $\int_Ef~\mathrm d\mu<+\infty$. Тогда
+                $$
+                \int_Ef~\mathrm d\mu=\sup\limits_{\substack{A\subset E\\\mu A<+\infty}}\int_Af~\mathrm d\mu
+                $$
+                Условие $\mu A<+\infty$ значит что $|A|<+\infty$ (у нас считающая мера). А на конечном множестве положительная функция простая:
+                $$
+                \int_Ef~\mathrm d\mu=\sup\limits_{\substack{A\subset E\\\mu A<+\infty}}\sum\limits_Af
+                $$
+                Справа написано буквально определение $\sum\limits_Ef$ (там супремум частичных сумм).
+                \item Пусть $\int_Ef~\mathrm d\mu=+\infty$. По определению интеграла неотрицательной функции
+                $$
+                \forall N>0~\exists\text{простая }\phi\leqslant f\text{ на }E~\int_E\phi~\mathrm d\mu\geqslant N
+                $$
+                При этом
+                $$
+                \sum\limits_Ef\geqslant\sum\limits_E\phi=\int_E\phi~\mathrm d\mu\geqslant N
+                $$
+            \end{itemize}
+            \item Дальше надо рассмотреть $f_+$ и $f_-$, там всё понятно. Если в одной части нет одновременно двух бесконечностей, то в другой~--- тоже.
+        \end{enumerate}
+    \end{proof}
+    \begin{remark}
+        Причём тут замена переменной?
+    \end{remark}
+    \begin{corollary}
+        Пусть $h\colon X\to[0;+\infty]$, $\mu$~--- считающая на $X$, $\nu$~--- дискретная мера с весовой функцией $h$:
+        $$
+        \forall B\subset X~\nu B=\sum\limits_Bh
+        $$
+        Пусть $f\colon E\to\overline{\mathbb R}$. Тогда
+        $$
+        \int_Ef~\mathrm d\nu=\sum\limits_Ef\cdot h
+        $$
+    \end{corollary}
+    \begin{proof}
+        По только что доказанной лемме
+        $$
+        \nu B=\int_Bh~\mathrm d\mu
+        $$
+        А тогда $h$~--- плотность $\nu$ относительно $\mu$. Тогда по теореме \ref{Общая схема замены переменной в интеграле}
+        $$
+        \int_Ef~\mathrm d\nu\overset{\ref{Общая схема замены переменной в интеграле}}=\int_Efh~\mathrm d\mu=\sum\limits_Efh
+        $$
+    \end{proof}
+    \begin{example}
+        Если $X=\mathbb N$, $\mu$~--- считающая мера, т
+        $$
+        \int_{\mathbb N}f~\mathrm d\mu=\sum\limits_{k\in\mathbb N}f(k)
+        $$
+        То есть суммируемость $f$ равносильна абсолютной сходимости ряда $f(k)$.
+    \end{example}
+    \begin{example}
+        Пусть $\{a_k\}_k$~--- не более чем счётный набор различных точек $X$, $\{h_k\}_k\subset[0;+\infty]$, $\nu B=\sum\limits_{k:a_k\in B}h_k$. Тогда
+        $$
+        \int_Ef~\mathrm d\nu=\sum\limits_{k:a_k\in B}f(a_k)h_k
+        $$
+        И опять суммируемость функции равносильна суммируемости семейства (на сей раз семейства $|f(a_k)|h_k$).\\
+        Замечание: тут $h$ из следствия~--- это не совсем $h_k$. Тут $h_k=h(a_k)$
+    \end{example}
+    \subparagraph{Замена переменной в интеграле по мере Лебега}.
+    \begin{claim}
+        Пусть $G\in\mathbb A_n$. Тогда
+        $$\mathbb A_n(G)=\{E\in\mathbb A_n\mid E\subset G\}$$
+        является $\sigma$-алгеброй на $G$.
+    \end{claim}
+    \begin{proof}
+        Очевидно.
+    \end{proof}
+    \begin{claim}
+        $(G;\mathbb A_n(G);\mu\big|_{\mathbb A_n(G)})$~--- пространство с мерой.
+    \end{claim}
+    \begin{proof}
+        Очевидно.
+    \end{proof}
+    \begin{remark}
+        До конца параграфа $\mu$~--- мера Лебега.
+    \end{remark}
+    \begin{remark}
+        Напоминание:\\
+        Пусть $G,V$ открыты в $\mathbb R^n$. Тогда отображение $\Phi\colon G\to V$ называется \textbf{диффеоморфизмом}, если $\Phi$ гладкая биекция, обратная функция к которой тоже гладкая.\\
+        При этом обычно $V$ опускается, и под <<диффеоморфизмом $\Phi$ на $G$ называется диффеоморфизм $G\to\Phi(G)$>>.\\
+        Также заметим некоторые свойства: якобиан $\Phi$ нигде не равен нулю. При этом если $G$ открыто, $\Phi\colon G\to\mathbb R^n$ гладко и обратимо и $\det\Phi'(x)$ нигде не равен нулю, то $\Phi(G)$ открыто и $\Phi^{-1}\in C^{(1)}(\Phi(G))$.
+    \end{remark}
+    \begin{remark}
+        Также мы знаем, что гладкая замена переводит измеримые множества в измеримые. Вопрос: чему равно $\mu\Phi(A)$? Мы знаем ответ для линейного и аффинного отображения (мера умножается на модуль определителя). При этом для линейного и аффинного отображения $\Phi'=\Phi$, а значит
+        $$
+        \mu\Phi(E)=|\det\Phi'|\mu E
+        $$
+        А что в более общем случае? Ну, запишем определение дифференцируемости $\Phi$:
+        $$
+        \Phi(x)=\underbrace{\Phi(x^0)+\Phi'(x)(x-x^0)}_{\widetilde\Phi_{x^0}(x)}+o(x-x^0)
+        $$
+        Если $\Phi=\widetilde\Phi$, то ответ мы знаем. При этом $\widetilde \Phi$ тем ближе к $\Phi$, чем ближе $x$ к $x^0$. Отсюда возникает предположение, что $|\det\Phi'(x^0)|$~--- плотность $\mu\Phi(\bullet)$ относительно $\mu$. И нам удастся это доказать для диффеоморфизма.
+    \end{remark}
+    \begin{theorem}[Преобразование меры Лебега при диффеоморфизме]
+        \label{Преобразование меры Лебега при диффеоморфизме}
+        Пусть $G\subset\mathbb R^n$ открыто, $\Phi$~--- диффеоморфизм на $G$. Тогда
+        $$
+        \forall E\in\mathbb A_n(G)~\mu\Phi(E)=\int_E|\det\Phi'|~\mathrm d\mu
+        $$
+    \end{theorem}
+    \begin{proof}
+        Why are we still here? Just to suffer.\\
+        Для начала пусть $\nu(E)=\mu\Phi(E)$. Несложно проверить, что $\nu$~--- это мера на $\mathbb A_n(G)$.\\
+        Теперь нам надо доказать, что $|\det\Phi'|$~--- плотность $\nu$  относительно $\mu$. Тогда по определению плотности мы победим. У нас был \hyperref[Критерий плотности]{критерий плотности}, который мы хотим применить. Что нам надо проверить для этого?
+        $$
+        \forall E\in\mathbb A_n(G)~\mu E\inf\limits_E|\det\Phi'|\leqslant\mu\Phi(E)\leqslant\mu E\sup\limits_E|\det\Phi'|
+        $$
+        Здесь есть два неравенства. Мы не хотим доказывать оба. Мы хотим сказать, что если правое доказать для \textbf{любого} диффеоморфизма $\Phi$, то из него будет следовать левое. Почему? Ну, применим правое к отображению $\Phi^{-1}$ и множеству $\Phi(E)$:
+        $$
+        \mu\Phi^{-1}(\Phi(E))\leqslant\mu\Phi(E)\sup\limits_{y\in\Phi(E)}|\det{\Phi^{-1}}'(y)|
+        $$
+        Левая штука~--- $\mu E$. С $\mu\Phi(E)$ делать нечего, а вот с тем, что после него~--- есть что.
+        $$
+        \sup\limits_{y\in\Phi(E)}|\det{\Phi^{-1}}'(y)|=\sup\limits_{y\in\Phi(E)}\frac1{|\det \Phi'(\Phi^{-1}(y))|}=\sup\limits_{x\in E}\frac1{|\det\Phi'(x)|}=\frac1{\inf\limits_{x\in E}|\det\Phi'(x)|}
+        $$
+        Кажется, это то, что мы хотели.\\
+        Теперь наконец начнём доказывать правое неравенство, постепенно усложняя $E$.
+        \begin{enumerate}
+            \item Пусть $E=\Delta$~--- кубическая ячейка, $\overline\Delta\subset G$. Докажем неравенство от противного. Пусть
+            $$
+            \mu\Phi(\Delta)>\mu\Delta\sup\limits_\Delta|\det\Phi'|
+            $$
+            отсюда
+            $$\exists C>\mu\Delta\sup\limits_\Delta|\det\Phi'|~\mu\Phi(\Delta)>C\mu\Delta$$
+            Будем действовать методом половинного деления. Каждое ребро ячейки попилим пополам, получим $2^n$ ячеек. Хотя бы для одной из этих ячеек (обозначим её за $\Delta_1$) будет верно $\mu\Phi(\Delta_1)>C\mu\Delta_1$. Иначе можно было бы сложить эти неравенства, воспользоваться аддитивностью меры и прийти к противоречию. Сделаем так ещё неограниченное количество раз.\\
+            Получим последовательность вложенных ячеек $\Delta_k\supset\Delta_{k+1}$, для каждой выполнено неравенство $\mu\Phi(\Delta_k)>C\mu\Delta_k$, при этом $\operatorname{diam}\Delta_k\to0$. Ну тогда, $\overline{\Delta_k}$ все имеют общую точку $x^0\in\bigcap\limits_{k=1}^\infty\overline{\Delta_k}\subset\overline{\Delta}$.\\
+            Теперь будем усложнять $\Phi$))
+            \begin{enumerate}
+                \item Рассмотрим случай $\Phi'(x^0)=I$. Тогда
+                $$
+                \Phi(x)=\Phi(x^0)+(x-x^0)+o(x-x^0)
+                $$
+                С точностью до двух сдвигов, $\Phi$ почти тождественный оператор:
+                $$
+                \Theta(x)=\Phi(x)-\Phi(x^0)+x^0=x+o(x-x^0)
+                $$
+                Зафиксируем $\eps>0$ и подберём такое $\delta$ из определения $o(x-x^0)$, что
+                $$
+                \forall x\in B(x^0;\delta)~|\Theta(x)-x|\leqslant\frac{\eps}{\sqrt n}|x-x^0|
+                $$
+                Очень хорошо. Заметим, что в некотором номере $N$ $\overline{\Delta_{N}}\subset B(x^0;\delta)$. Пусть $\overline{\Delta_{N}}=[a;a+r\mathbb1]\ni x^0$. Тогда
+                $$
+                x\in\overline{\Delta_n}\Rightarrow|x-x^0|\leqslant r\sqrt n\Rightarrow |\Theta(x)-x|\leqslant\eps r
+                $$
+                Тогда
+                $$
+                \forall j\in[1:n]~|\Theta_j(x)-x_j|\leqslant\eps r
+                $$
+                А это значит, что
+                $$a-\eps r\leqslant x_j-\eps r\leqslant\Theta_j(x)\leqslant x_j+\eps r\leqslant a+(1+\eps)r$$
+                другими словами $\Theta(x)\in[a-\eps r\mathbb1;a+(1+\eps)r\mathbb1]$. обозначим этот куб буквой $\Pi$. Тогда $\Theta(\Delta_N)\subset\Pi$. Тогда
+                $$
+                \mu\Phi(\Delta_N)=\mu\Theta(\Delta_N)\leqslant\mu\Pi=(1+2\eps)^nr^n=(1+2\eps)^n\mu\Delta_N
+                $$
+                И это уже почти противоречие. Но мы его не хотим, давайте сначала возьмём произвольное $\Phi$, и там уже докопаемся до противоречия.
+                \item Итак, пусть $\Phi$ произвольное. Пусть $S=(\Phi'(x^0))^{-1}$ ({\color{red} это линейный оператор}, его производная в любой точке~--- он сам). Пусть $\Psi=S\circ\Phi$. Ну, хорошо
+                $$
+                \Psi'(x^0)=\underbrace{S'(\Phi(x^0))}_S\Phi'(x^0)=S\Phi'(x^0)=I
+                $$
+                $\Psi$ подходит под наш предыдущий случай, а значит мы нашли для него $N$:
+                $$
+                \mu\Psi(\Delta_N)\leqslant(1+2\eps)^n\mu\Delta_N
+                $$
+                При этом
+                $$
+                \mu\Psi(\Delta_N)=\mu S(\Phi(\Delta_N))=|\det S|\mu \Phi(\Delta_N)=\frac1{|\det\Phi'(x^0)|}\mu\Phi(\Delta_N)
+                $$
+                Из двух этих утверждений
+                $$
+                \mu\Phi(\Delta_N)\leqslant(1+2\eps^n)|\det\Phi'(x^0)|\mu\Delta_N
+                $$
+                А ещё мы знаем, что $C\mu\Delta_n\leqslant\mu\Phi(\Delta_n)$. А это уже капец:
+                $$
+                C<(1+2\eps)^n|\det\Phi'(x^0)|\longrightarrow C\leqslant|\det\Phi(x^0)|
+                $$
+                А у нас по выбору $C$ $C>\sup\limits_{\Delta}|\det\Phi'|\overset{|\det\Phi'|\text{непрерывно}}=\sup\limits_{\overline\Delta}|\det\Phi'|>|\det\Phi'(x^0)|$
+            \end{enumerate}
+            \item Пусть $E=U$ открытое подмножество $G$. Открытое множество можно представить как счётное объединения ячеек:
+            $$
+            U=\bigsqcup\limits_k D_k
+            $$
+            Где $D_k$~--- кубические ячейки, $\overline{D_k}\subset U$. Тогда
+            \[\begin{split}
+                \mu\Phi(U)&=\mu\Phi\left(\bigsqcup\limits_k D_k\right)=\mu\bigsqcup\limits_k\Phi(D_k)=\sum\limits_k\mu\Phi(D_k)\leqslant\sum\limits_k\mu D_k\sup\limits_{D_k}|\det\Phi'|\leqslant\\
+                &\leqslant\sum\limits_k\mu D_k\sup\limits_{U}|\det\Phi'|=\sup\limits_U|\det\Phi'|\sum\limits_k\mu D_k=\mu U\sup\limits_U|\det\Phi'|
+            \end{split}\]
+            \item От открытого множества у произвольному $E\in\mathbb A_n(G)$. Тут будем пользоваться регулярностью меры Лебега:
+            $$
+            \mu\Phi(E)=\inf\limits_{\substack{V\text{ открыто}\\\Phi(E)\subset V\subset\Phi(G)}}\mu V=\inf\limits_{\substack{U\text{ открыто}\\E\subset U\subset G}}\mu\Phi(U)\leqslant\inf\limits_{\substack{U\text{ открыто}\\E\subset U\subset G}}\left(\mu U\sup\limits_U|\det\Phi'|\right)
+            $$
+            Хочется доказать, что это равно $\mu E\sup\limits_E|\det\Phi'|$. Мы знаем, что правая часть больше либо равна $\mu E\sup\limits_E|\det\Phi'|$, а нам надо доказать, что меньше либо равно.\\
+            Если $\mu E=0$, то неравенство очевидно (тогда $\mu\Phi(E)=0$, гладкое отображение переводит множество меры ноль в множество меры ноль). Если $\mu E=+\infty$, nо доказывать нечего. И если супремум $\sup\limits_E|\det\Phi'|$ равен $+\infty$, то тоже (в правой части либо 0 (когда $\mu E=0$), либо бесконечность; в обоих случаях доказывать нечего).\\
+            Далее считаем $\mu E,\sup\limits_E|\det\Phi'|\in(0;+\infty)$. Возьмём $\eps>0$.
+            $$
+            \exists\text{октрытое }U,E\subset U\subset G,\mu U\leqslant\mu E+\eps,\sup\limits_U|\det\Phi'|\leqslant\sup\limits_E|\det\Phi'|+\eps
+            $$
+            первое условие~--- регулярность меры Лебега, а второе вот:
+            $$
+            x\in E~\exists V_x\subset G~\forall t\in V_x~\left||\det\Phi'(t)|-|\det\Phi'(x)|\right|\leqslant\eps
+            $$
+            Тогда
+            $$
+            U=\bigcup\limits_{x\in E}V_x
+            $$
+            Такое $U$ подходит под
+            $$
+            \sup\limits_U|\det\Phi'|\leqslant\sup\limits_E|\det\Phi'|+\eps
+            $$
+            Если пересечь его с тем, которое в регулярности меры Лебега, то получится искомое $U$ из утверждения выше. Тогда
+            $$
+            \inf\limits_{\substack{U\text{ открыто}\\E\subset U\subset G}}\left(\mu U\sup\limits_U|\det\Phi'|\right)\leqslant (\mu E+\eps)\left(\sup\limits_E|\det\Phi'|+\eps\right)
+            $$
+            Устремив $\eps$ к нулю, получим искомое.
+        \end{enumerate}
+    \end{proof}
+    \begin{theorem}[Замена переменной в кратном интеграле]
+        \label{Замена переменной в кратном интеграле}
+        Пусть $G\subset\mathbb R^n$ открыто, $\Phi$~--- диффеоморфизм на $G$, $E\in\mathbb A_n(G)$, $f\in S(\Phi(E))$. Тогда
+        $$
+        \int_{\Phi(E)}f~\mathrm d\mu=\int_E(f\circ\Phi)|\det\Phi'|~\mathrm d\mu
+        $$
+        Интегралы существуют или не существуют одновременно, если существуют, то равны.\\
+        Также равенство пишется как
+        $$
+        \int_{\Phi(E)}f(y)~\mathrm dy=\int_E(f\circ\Phi)(x)|\det\Phi'(x)|~\mathrm dx
+        $$
+    \end{theorem}
+    \begin{proof}
+        Возьмём теорему \ref{Общая схема замены переменной в интеграле} и возьмём в ней
+        $$
+        (X;\mathbb A;\mu)=(G;\mathbb A_n(G);\mu)\qquad (Y;\mathbb B;\nu)=(\Phi(G);\mathbb A_N(\Phi(G));\mu)\qquad h=|\det\Phi'|
+        $$
+        От нас хотят равенство
+        $$
+        \forall B\in\mathbb B~\Phi^{-1}(B)\in\mathbb A,\nu B=\int\limits_{\Phi^{-1}(B)}\int h~\mathrm d\mu
+        $$
+        Ну, если $B=\Phi(E)$, то $\nu\Phi(E)=\int_E|\det\Phi'|~\mathrm d\mu$. А это мы доказали в \ref{Преобразование меры Лебега при диффеоморфизме}.
+    \end{proof}
+    \begin{corollary}
+        В условии теоремы \ref{Замена переменной в кратном интеграле}
+        $$
+        f\in L(\Phi(E))\Leftrightarrow(f\circ\Phi)|\det\Phi'|\in L(E)
+        $$
+    \end{corollary}
+    \begin{corollary}
+        Пусть $G\subset H\subset\mathbb R^n$, $G$ открыто. Пусть $\Phi\colon H\to\mathbb R^n$ и пусть $\Phi\big|_G$~--- диффеоморфизм. И пусть ещё $\mu(H\setminus G)=\mu(\Phi(H)\setminus\Phi(G))=0$. $E\in\mathbb A_n(H)$, $f\in S(\Phi(E))$. Тогда верна формула замены переменной:
+        $$
+        \int_{\Phi(E)}f(y)~\mathrm dy=\int_E(f\circ\Phi)(x)|\det\Phi'(x)|~\mathrm dx
+        $$
+    \end{corollary}
+    \begin{proof}
+        $$
+        \int_{\Phi(E)}f(y)~\mathrm dy=\int_{\Phi(E\cap G)}f(y)~\mathrm dy=\int_{E\cap G}(f\circ\Phi)(x)|\det\Phi'(x)|~\mathrm dx=\int_E(f\circ\Phi)(x)|\det\Phi'(x)|~\mathrm dx
+        $$
+    \end{proof}
+    \begin{remark}
+        Ослаблять условия теоремы \ref{Замена переменной в кратном интеграле} дальше трудно и больно. Но можно. Но туда мы лезть не будем. Для желающих есть книжка Эванса и Гариепи <<Теория меры и тонкие свойства функций>>.
+    \end{remark}
+    \begin{remark}
+        А что у нас в $n=1$, как это коррелирует с тем, что мы знаем?
+        $$
+        \int\limits_a^bf=\int\limits_\alpha^\beta(f\circ\phi)\phi'\qquad\phi(\alpha)=a,\phi(\beta)=b
+        $$
+        Почему модуль? На самом деле у нас и тут есть модуль? Потому что $\phi$ может как возрастать, так и убывать, и во втором случае у нас меняются местами пределы интегрирования. А в формуле \ref{Замена переменной в кратном интеграле} ориентации на $E$ не задано.
+    \end{remark}
+    \begin{example}
+        Сдвиг и отражение.\\
+        $\Phi(x)=a\pm x$, $a\in\mathbb R^n$. Очевидно, это диффеоморфизм и модуль якобиана равен единице. То есть
+        $$
+        \int_{\mathbb R^n}f(y)~\mathrm dy=\int_{\mathbb R^n}f(a\pm x)~\mathrm dx
+        $$
+    \end{example}
+    \begin{example}
+        Полярные координаты в $\mathbb R^2$.\\
+        $(x;y)=(r\cos\varphi;r\sin\varphi)=\Phi(r;\varphi)$. Посчитаем якобиан:
+        $$
+        \matrd{\cos\varphi & -r\sin\varphi\\\sin\varphi & r\cos\varphi}=r
+        $$
+        Это не равно нулю всюду, кроме начала координат. Где $\Phi$~--- диффеоморфизм? По-разному можно отвечать, например, так: удалим из плоскости отрицательную часть вещественной оси. Тогда $G=(0;+\infty)\times(-\pi;\pi)$, $\Phi(G)=\mathbb R^2\setminus\{(x;0)\mid x\leqslant0\}$. Тогда $\Phi$~--- диффеоморфизм. Очевидно, пренебрегать тем, что мы сделали, можно, там мера ноль.\\
+        Посчитаем следующий интеграл:
+        $$
+        I=\int\limits_0^\infty e^{-x^2}~\mathrm dx
+        $$
+        Это не берётся, но посчитать можно:
+        \[\begin{split}
+            I^2&=\left(\int_0^\infty e^{-x^2}~\mathrm dx\right)\left(\int_0^\infty e^{-y^2}~\mathrm dy\right)=\iint_{(0;+\infty)^2}e^{-x^2-y^2}~\mathrm dx\mathrm dy\overset{\substack{x=r\cos\varphi\\y=r\sin\varphi}}=\\
+            &=\int\limits_0^{+\infty}\int\limits_0^{\frac\pi2}e^{-r^2}r~\mathrm d\varphi\mathrm dr=\frac\pi2\int_0^{+\infty}e^{-r^2}r~\mathrm dr=\frac\pi2\frac{-e^{-r^2}}2\bigg|_{0}^{+\infty}=\frac\pi4
+        \end{split}\]
+        Отсюда $I=\frac{\sqrt\pi}2$
+    \end{example}
+    \begin{example}
+        Цилиндрические координаты: $(x;y;z)=(r\cos\varphi;r\sin\varphi;h)=\Phi(r;\varphi;h)$. Тогда $\det\Phi'=r$, $G=(0;+\infty)\times(-\pi;\pi)\times\mathbb R$, $\Phi(G)=\{(x;0;z)\mid x\leqslant 0,z\in\mathbb R\}$.
+    \end{example}
+    \begin{example}
+        Сферические координаты: %TODO: pic
+        $$
+        \left\{\begin{aligned}
+            \rho&=r\cos\psi\\
+            z&=r\sin\psi
+        \end{aligned}\right.\qquad
+        \left\{\begin{aligned}
+            x&=\rho\cos\varphi\\
+            y&=\rho\sin\varphi
+        \end{aligned}\right.
+        $$
+        (Обозначения могут быть другими.)\\
+        Тогда
+        $$
+        (x;y;z)=(r\cos\varphi\cos\psi;r\sin\varphi\cos\psi;r\sin\psi)=\Phi(r;\varphi;\psi)
+        $$
+        Из написанного выше $\Phi$ можно представить как два полярных преобразования, а якобиан произведения равен произведению якобианов, т.е. $\det\Phi'=r\rho=r^2\cos\psi$.\\
+        Что покусать из пространства? Ну,
+        $$
+        G=(0;+\infty)\times(-\pi;\pi)\times\left(-\frac\pi2;\frac\pi2\right)\qquad\Phi(G)=\{(x;0;z)\mid x\leqslant 0,z\in\mathbb R\}
+        $$
+    \end{example}
+    \begin{example}
+        Сферические координаты в $\mathbb R^n$.\\
+        $x\in\mathbb R^n$, $r\in(0;+\infty)$, $\varphi\in\mathbb R^{n-1}$. Тут тоже последовательные полярные замены:
+        $$
+        \left\{\begin{aligned}
+            x_1&=\rho_1\cos\varphi_1\\
+            x_2&=\rho_1\sin\varphi_1
+        \end{aligned}\right.\qquad
+        \left\{\begin{aligned}
+            \rho_1&=\rho_2\cos\varphi_2\\
+            x_3&=\rho_2\sin\varphi_2
+        \end{aligned}\right.\qquad\cdots\qquad
+        \left\{\begin{aligned}
+            \rho_{n-3}&=\rho_{n-2}\cos\varphi_{n-2}\\
+            x_{n-1}&=\rho_{n-2}\sin\varphi_{n-2}
+        \end{aligned}\right.\qquad
+        \left\{\begin{aligned}
+            \rho_{n-2}&=r\cos\varphi_{n-1}\\
+            x_n&=r\sin\varphi_{n-1}
+        \end{aligned}\right.
+        $$
+        Отсюда $$
+        \det\Phi'=\rho_1\rho_2\cdots\rho_{n-2}r=r^{n-1}\cos^{n-2}\varphi_{n-1}\cos^{n-1}\varphi_{n-2}\cdots\cos^2\varphi_3\cos\varphi_2
+        $$
+        $$
+        \left\{\begin{aligned}
+            x_1&=r\cos\varphi_{n-1}\cos\varphi_{n-2}\cdots\cos\varphi_2\cos\varphi_1\\
+            x_2&=r\cos\varphi_{n-1}\cos\varphi_{n-2}\cdots\cos\varphi_2\sin\varphi_1\\
+            x_3&=r\cos\varphi_{n-1}\cos\varphi_{n-2}\cdots\sin\varphi_2\\
+            \vdots&\\
+            x_{n-1}&=r\cos\varphi_{n-1}\sin\varphi_{n-2}\\
+            x_n&=r\sin\varphi_{n-1}
+        \end{aligned}\right.
+        $$
+        В качестве $G$ можно берётся вот что:
+        $$
+        G=(0;+\infty)\times(-\pi;\pi)\times\left(-\frac\pi2;\frac\pi2\right)^{n-2}
+        $$
+        Желающие узнать $\Phi(G)$, могут почитать учебник.
+    \end{example}
+    \paragraph{Мера и интеграл Лебега~--- Стилтьеса.}
+    \begin{definition}
+        Пусть $\Delta=(\alpha;\beta)\subset\mathbb R$. Пусть $g\colon\Delta\to\mathbb R$ возрастает и непрерывна слева. Пусть $\mathbb P_\Delta$~--- множество ячеек (полуинтервалов), содержащихся в $\Delta$ вместе с замыканием:
+        $$
+        \mathbb P_\Delta=\{[a;b)\mid \alpha<a\leqslant b<\beta\}
+        $$
+        (В случае $\Delta=\mathbb R$ $\mathbb P_\Delta=\mathbb P_1$.) Очевидно, $\mathbb P_\Delta$~--- полукольцо.\\
+        \textbf{Объём, порождённый функцией} $g$~--- $V_g[a;b)=g(b)-g(a)$.
+    \end{definition}
+    \begin{property}
+        Очевидно, это объём.
+    \end{property}
+    \begin{property}
+        Объём, порождённый функцией~--- мера.
+    \end{property}
+    \begin{proof}
+        См. доказательство для меры Лебега, но используя следующее равенство:
+        $$
+        \lim\limits_{n\to\infty}V_g\left[a-\frac1n;b\right)=Vg[a;b)=\lim\limits_{n\to\infty}V_g\left[a;b-\frac1n\right)
+        $$
+    \end{proof}
+    \begin{definition}
+        Стандартное продолжение $V_g$ на некоторую $\sigma$-алгебру называется \textbf{мерой Стилтьеса~--- Лебега}, порождённой функцией $g$ (и обозначается $\mu_g$).\\
+        Сигма-алгебру, на которой определена эта мера, обозначают $\mathbb A_g$.
+    \end{definition}
+    \begin{remark}
+        Мера Лебега $\mu_1$ является частным случаем меры Стилтьеса~--- Лебега при $g(x)=x$, $\Delta=\mathbb R$.
+    \end{remark}
+    \begin{property}
+        Мера одноточечного множества $\{a\}$ равна $g(a+)-g(a)$
+    \end{property}
+    \begin{proof}
+        $$
+        \{a\}=\bigcap\limits_{n=1}^\infty \left[a;a+\frac1n\right)
+        $$
+        По непрерывности меры
+        $$
+        \mu_g\{a\}=\lim\limits_{n\to\infty}\mu_g\left[a;a+\frac1n\right)=\lim\limits_{n\to\infty}g\left(a+\frac1n\right)-g(a)=g(a+)-g(a)
+        $$
+    \end{proof}
+    \begin{property}
+        Аналогично
+        \begin{align*}
+            \mu_g[a;b]&=g(b+)-g(a)\\
+            \mu_g(\alpha;b]&=g(b+)-g(\alpha+)\\
+            \mu_g[a;\beta)&=g(\beta-)-g(a)\\
+            \mu_g(\alpha;\beta)&=g(\beta-)-g(\alpha+)
+        \end{align*}
+    \end{property}
+    \begin{remark}
+        Мера точки может быть положительной. Нулю она равна тогда и только тогда, когда $g$ непрерывна в этой точке.
+    \end{remark}
+    \begin{property}
+        Мера Лебега~--- Стилтьеса $\sigma$-конечна. Конечна она тогда и только тогда, когда $\mu_g$ ограничена.
+    \end{property}
+    \begin{definition}
+        Определим меру $\mu_g$ на промежутке произвольного типа.\\
+        Пусть $\Delta=\langle\alpha;\beta\rangle\subset\mathbb R$.\\
+        Если $\alpha\in\Delta$, то пусть $\widetilde g(x)=g(\alpha)$ при $x<\alpha$.\\
+        Если $\beta\in\Delta$, то не требуем непрерывности $g$ слева в точке $\beta$, но положим
+        $$\widetilde g(x)=\begin{cases}
+            g(x) & x\in\langle\alpha;\beta)\\
+            g(\beta-) & x=\beta\\
+            g(\beta) & x>\beta
+        \end{cases}$$
+        После этого получим $\widetilde g$, заданное на открытом промежутке $\widetilde\Delta\supset\Delta$. При этом на нём $\widetilde g$ возрастает и непрерывно слева. Положим, что мера Лебега~--- Стилтьеса $\mu_g$ равна $\mu_{\widetilde g}\big|_{\mathbb A_{\widetilde g}(\Delta)}$.
+    \end{definition}
+    \begin{remark}
+        Также можно определить меру $\mu_g$ для функции $g$, которая возрастает на $\Delta$, но не обязательно непрерывна слева. Тогда мы просто исправляем $g$ в точках левого разрыва (кроме $\beta$).\\
+        Другой способ~--- просто определить меру Лебега~--- Стилтьеса как $\mu_g[a;b)=g(b-)-g(a-)$.
+    \end{remark}
+    \begin{remark}
+        У этих мер есть проблемы: $\mathbb A_g$ различны для разных $g$. А иногда хочется сложить две меры Лебега~--- Стилтьеса. Тогда их сужают на Борелевскую $\sigma$-алгебру (на ней они все определены т.к. определены на ячейках), получая меру Бореля~--- Стилтьеса (на самом деле бывает более широкая сигма-алгебра, но обычно хватает Борелевской).
+    \end{remark}
+    \begin{lemma}
+        Пусть $\Delta$~--- промежуток в $\mathbb R$, есть мера $\nu$, заданная на $\mathbb B_\Delta$, которая конечна на $\mathbb P_\Delta$ (ячейках, лежащих в $\Delta$ вместе с замыканием). Тогда существует такая $g\uparrow\Delta$, что $\nu=\mu_g\big|_{\mathbb B_\Delta}$.
+    \end{lemma}
+    \begin{proof}
+        Пусть для определённости $\Delta$ открыт.\\
+        Пусть $x\in\Delta$. Определим $g$ так:
+        $$
+        g(x)=\begin{cases}
+            \nu[x_0;x) & x\geqslant x_0\\
+            -\nu[x;x_0) & x<x_0
+        \end{cases}
+        $$
+        Возрастание $g$ на $\Delta$ очевидно. Проверим непрерывность слева. Пусть для определённости $x>x_0$. Рассмотрим $u\in(x_0;x)$. Тогда
+        $$
+        g(u)=\nu[x_0;u)\underset{u\to x-}\longrightarrow\nu[x_0;x)=g(x)
+        $$
+        Если же $x\leqslant x_0$, возьмём $u<x$:
+        $$
+        g(u)=-\nu[u;x_0)\underset{u\to x-}\longrightarrow-\nu[x;x_0)=g(x)
+        $$
+        (Здесь мы используем конечность на отрезках.)\\
+        Осталось проверить, что $\nu$ и $\mu_g$ совпадают на ячейках. Рассмотрим $[a;b)\subset[a;b]\subset\Delta$. Тогда
+        $$
+        \mu_g[a;b)=g(b)-g(a)=\begin{cases}
+            \nu[x_0;b)-\nu[x_0;a) & x_0\leqslant a<b\\
+            \nu[x_0;b)-(-\nu[a;x_0)) & a<x_0<b\\
+            -\nu[b;x_0)-(-\nu[a;x_0)) & a<b\leqslant x_0
+        \end{cases}=\nu[a;b)
+        $$
+    \end{proof}
+    \begin{definition}
+        \textbf{Интегралом Лебега~--- Стилтьеса} называется никогда не догадаетесь что. Помимо стандартного обозначения $\int_Ef~\mathrm d\mu_g$ также пишут
+        $$
+        \int_Ef~\mathrm dg\qquad \int_Ef(x)~\mathrm dg(x)
+        $$
+        $f$ называутся \textbf{интегрируемой функцией} (integrant), а $g$~--- \textbf{интегрирующей функцией} (integrand).
+    \end{definition}
+    \begin{claim}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, а $\mathbb B\subset\mathbb A$. Пусть $f\in S_{\mathbb B}(X)$. Тогда
+        $$
+        \int_Xf~\mathrm d\mu=\int_Xf~\mathrm d\mu\big|_{\mathbb B}
+        $$
+    \end{claim}
+    \begin{proof}
+        Частный случай \hyperref[Общая схема замены переменной в интеграле]{замены переменной в интеграле}, для $\Phi=\mathrm{id}_X$.
+    \end{proof}
+    \begin{remark}
+        Дальше рассмотрим несколько частных случаев меры и интеграла Лебега~--- Стилтьеса.
+    \end{remark}
+    \begin{example}
+        Дискретная мера.\\
+        Введём
+        $$\theta(x)=\begin{cases}
+            1 & x>0\\0 & x\leqslant 0
+        \end{cases}$$
+        --- тета-функцию Хевисайда. Очевидно, что
+        $$\mu_\theta E=\delta_0E=\begin{cases}
+            1 & 0\in E\\
+            0 & 0\notin E
+        \end{cases}$$
+        А дальше рассмотрим $\{a_k\}$~--- не более чем счётный набор точек из $\Delta$, $\Delta$ открыт в $\mathbb R$, $\{h_k\}\subset(0;+\infty)$. (Дальше будем считать, что имеем счётный набор, конечный будет частным случаем (много нулей)). Пусть
+        $$
+        \forall [a;b]\subset\Delta~\sum\limits_{k:a_k\in[a;b)}h_k<+\infty
+        $$
+        Тогда возьмём $x\in\Delta,c\in\mathbb R$ и определим
+        $$
+        g(x)=c+\sum\limits_kh_k(\theta(x-a_k)-\theta(x_0-a_k))
+        $$
+        Заметим, что $\theta$ возрастает, а значит при фиксированном $x$ все слагаемые одного знака. Поэтому сумма ряда есть в $\overline{\mathbb R}$. На самом деле эта сумма конечна.\\
+        Пусть $x\geqslant x_0$. Тогда, выкинув из суммы нулевые слагаемые, получим
+        $$
+        c\leqslant g(x)=c+\sum\limits_{k:a_k\in[x_0;x)}h_k<+\infty
+        $$
+        В случае $x<x_0$ аналогично. А ещё $g$ возрастает (т.к. это сумма ряда возрастающих функций).
+        \begin{claim}
+            $g$ непрерывна везде, кроме $a_k$, а в $a_k$ непрерывна только слева, а скачок равен $h_k$.
+        \end{claim}
+        \begin{proof}
+            Докажем, что ряд в определении $g$ сходится равномерно на любом отрезке, содержащемся в $\Delta$.\\
+            Достаточно доказывать для $[a;x_0]$ и $[x_0;b]$ (остальные являют собой объединение или разность двух таких). Рассмотрим $[x_0;b]$, $[a;x_0]$ аналогично.\\
+            Рассмотрим $x\in[x_0;b]$. Заметим, что
+            $$
+            h_k(\theta(x-a_k)-\theta(x_0-a_k))\leqslant h_k(\theta(b-a_k)-\theta(x_0-a_k))
+            $$
+            А ряд с тем, что справа, сходится (т.к. поточечно сходится $g(b)$), то есть $g$ равномерно сходится по признаку Вейерштрасса.\\
+            Заметим, что все члены ряда непрерывны на $\Delta\setminus\{a_k\}_k$, а значит и сумма тоже. Также заметим, что если удалить из суммы $k$-тое слагаемое, то всё остальное будет непрерывным. А $h_k(\theta(x-a_k)-\theta(x_0-a_k))$ ведёт себя так, как нам хочется.
+        \end{proof}
+    \end{example}
+    \begin{definition}
+        Функция $g$ такого вида, как в примере выше, называется \textbf{функцией скачков}.
+    \end{definition}
+    \begin{theorem}[Дискретная мера как мера Лебега~--- Стилтьеса]
+        В условиях определения $g$, $\mathbb A_g=2^\Delta$, $\mu_g$~--- дискретная мера с нагрузками $h_k$ в точках $a_k$.
+    \end{theorem}
+    \begin{proof}
+        Если $[a;b]\subset\Delta$, то
+        $$
+        \mu_g[a;b)=g(b)-g(a)=\sum\limits_kh_k(\theta(b-a_k)-\theta(a-a_k))=\sum\limits_{k:a_k\in[a;b)}h_k
+        $$
+        Кажется, это ровно определение дискретной меры. Обозначим её за $\nu[a;b)$. Кайф, две меры совпадают на ячейках. А значит совпадают на $\mathbb A_g$. (В книжке есть доказательство без теоремы о единственности стандартного продолжения меры.) Остаётся лишь доказать, что $\mathbb A_g=2^\Delta$. Рассмотрим
+        $$H=\{a_1;a_2;\ldots\}$$
+        Это множество измеримо (как не более чем счётное). Значит и дополнение его измеримо. А $\mu_g(\Delta\setminus H)=0$. А меры $\mu_g$ (как и любое стандартное продолжение) полна, а значит любое подмножество $\Delta\setminus H$ измеримо (и имеет меру ноль). Ну и всё, $A=(A\cap H)\cup(A\cap H\compl)$, и первое измеримо как не более чем счётное, а второе как множество меры ноль.
+    \end{proof}
+    \begin{remark}
+        Как мы видим, $\mu_g$ не зависит от $x_0$ и $c$. А значит, если ряд $\sum\limits_kh_k \theta(x-a_k)$ сходится для любого $x$, то $\sum\limits_kh_k \theta(x_0-a_k)$ можно вынести в $c$.
+    \end{remark}
+    \begin{example}
+        $g(x)=\lfloor x\rfloor$ порождает считающую меру на $\mathbb Z$.
+    \end{example}
+    \begin{remark}
+        Если $\alpha\in\Delta$ или $\beta\in\Delta$, то можно добавить нагрузки в этих точках.
+    \end{remark}
+    \begin{corollary}
+        $$
+        \int_Ef~\mathrm dg=\sum\limits_{k:a_k\in E}f(a_k)h_k
+        $$
+    \end{corollary}
+    \begin{remark}
+        Мы видим $\mathrm dg$. Очень хочется заменить это на $g'\mathrm dx$. В рассмотренном выше примере это не получится без обобщённых функций, но в некоторых примерах получится.
+    \end{remark}
+    \begin{remark}
+        Здесь и далее $\int\limits_a^bf$~--- интеграл Лебега, $\int\limits_b^af=-\int\limits_a^bf$.
+    \end{remark}
+    \begin{definition}
+        Пусть $\Delta$~--- промежуток в $\mathbb R$, $h\colon\Delta\to\overline{\mathbb R}$ называется \textbf{локально суммируемой} на $\Delta$, еси она суммируема на любом отрезке в $\Delta$. Обозначение: $L_{\mathrm{loc}}(\Delta)$.
+    \end{definition}
+    \begin{definition}
+        Пусть $\Delta$~--- промежуток в $\mathbb R$. $g\colon\Delta\to\mathbb R$ называется \textbf{локально абсолютно непрерывной} на $\Delta$, если $g$ представляется в виде $g(x)=\int_{x_0}^xh+\underbrace{\mathrm{const}}_{g(x_0)}$, где $x_0\in\Delta$, $h$ локально суммируема. Обозначение $AC_{\mathrm{loc}}(\Delta)$.
+    \end{definition}
+    \begin{remark}
+        Далее мы будем опускать слово <<локально>> в этом термине.
+    \end{remark}
+    \begin{property}
+        Если $h$ непрерывно в точке $x$, то $g$ дифференцируема в ней и $g'(x)=h(x)$.
+    \end{property}
+    \begin{proof}
+        См. доказательство теоремы Барроу.
+    \end{proof}
+    \begin{property}
+        По теореме Барроу и формуле Ньютона~--- Лейбница
+        $$
+        C^{(1)}(\Delta)\subsetneqq AC_{\mathrm{loc}}(\Delta)
+        $$
+    \end{property}
+    \begin{proof}
+        Включение строгое, если в качестве $h$ взять $\theta$.
+    \end{proof}
+    \begin{property}
+        $$
+        AC_{\mathrm{loc}}(\Delta)\subsetneqq C(\Delta)
+        $$
+    \end{property}
+    \begin{property}
+        Для включения см. теорему об абсолютной непрерывности интеграла из прошлого семестра.\\
+        Включение строгое:
+        $$
+        g(x)=\int_x^1\frac1t\sin\frac1t~\mathrm dt\qquad \Delta=[0;1]
+        $$
+        В $x=0$ условно сходится (а значит функция $g$ непрерывна), но абсолюно непрерывной она не будет т.к. единственный кандидат на роль $h$ ($\frac1t\sin\frac1t$) не суммируемо.
+    \end{property}
+    \begin{remark}
+        Более интересно то, что включение строгое, даже если рассматривать только возрастающие функции. Например, если взять $\Theta$~--- канторову лестницу, то $h$ по крайней мере в дополнительных канторовых промежутках была равна производной $\Theta$, а значит почти везде была бы равна нулю.
+    \end{remark}
+    \begin{property}
+        Если $g\in AC_{\mathrm{loc}}(\Delta)$, то $g$ дифференцируема в почти всех точках $\Delta$, $g'\in L_{\mathrm{loc}}(\Delta)$ и $g'=h$ почти везде.\\
+        Без доказательства.
+    \end{property}
+    \begin{corollary}
+        Тогда
+        $$
+        g(x)=\int_{x_0}^xg'+g(x_0)
+        $$
+    \end{corollary}
+    \begin{claim}
+        Однако условие <<$g$ почти везде дифференцируема на $\Delta$ и $'g\in L_{\mathrm{loc}}(\Delta)$>> не влечёт равенства
+        $$
+        g(x)=\int_{x_0}^xg'+g(x_0)
+        $$
+        (и не влечёт абсолютной локальной непрерывности).
+    \end{claim}
+    \begin{proof}
+        Канторова лестница.
+    \end{proof}
+    \begin{remark}
+        Абсолютно локально непрерывные функции~--- в точности те функции, для которых верна формула Ньютона~--- Лейбница.
+    \end{remark}
+    \begin{claim}
+        Если $g$ возрастает на $[a;b]$, то $g$ дифференцируема почти везде на $[a;b]$. Тогда $g'$ неотрицательно почти везде и
+        $$
+        \int\limits_a^bg'\leqslant g(b)-g(a)
+        $$
+        Без доказательства.
+    \end{claim}
+    \begin{theorem}[Интеграл Лебега~--- Стилтьеса абсолютно локально непрерывной функции.]
+        \label{Интеграл Лебега~--- Стилтьеса абсолютно локально непрерывной функции}
+        Пусть $\Delta$~--- промежуток в $\mathbb R$, $h\in L_{\mathrm{loc}}(\Delta)$, $h\geqslant0$,$x_0\in\Delta$,
+        $$
+        g(x)=\int_{x_0}^xh+g(x_0)\qquad x\in\Delta
+        $$
+        Тогда
+        \begin{enumerate}
+            \item $\mathbb A_1(\Delta)\subset\mathbb A_g(\Delta)$.
+            \item Если $E\in\mathbb A_1(\Delta)$, $f\in S(E)$, то $\int_Ef~\mathrm dg=\int_Efh$. Интегралы существуют или нет одновременно, если существуют, то равны.
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        Пусть $\nu E=\int_Eh$. Это мера на $\mathbb A_1(\Delta)$. Заметим, что тогда второе утверждение~--- \hyperref[Общая схема замены переменной в интеграле]{замена переменной в интеграле}. О'кей, заметим, что $\mu_g$ и $\nu$ равны нулю на одноточечном множестве, а значит можно считать $\Delta$ открытым.\\
+        Круть, заметим, что $\mu_g[a;b)=g(b)-g(a)=\int\limits_a^bh=\nu[a;b)$, то есть $\nu$ и $\mu_g$ совпадают на ячейках. А значит совпадают на $\mathbb B_\Delta$. А хочется, чтобы они совпадали на измеримых Лебегу множествах.\\
+        Хорошо, давайте дальше проверим, что $\nu$ и $\mu_g$ совпадают на множествах нулевой меры. Возьмём $e\subset\Delta:\mu_1e=0$. Его можно заключить в множестве типа $G_\delta$ с нулевой мерой, а на множестве типа $G_\delta$ $\nu$ и $\mu_g$ совпадают (и равны нулю). Тогда по полноте $\mu_g$ $e\in\mathbb A_g(\Delta)$.\\
+        Итого рассмотрев множество $E\in\mathbb A_1(\Delta)$, представим его как $A\cup e$, где $A\in\mathbb B_\Delta$, $\mu_1e=0$, получим, что любое такое $E$ лежит в $\mathbb A_g(\Delta)$.\\
+        Осталось применить теорему \ref{Общая схема замены переменной в интеграле} ($\Phi=\mathrm{id}_\Delta$).
+    \end{proof}
+    \begin{corollary}
+        Если $g\in C^{(1)}(\Delta)$ и возрастает, то $\int_Ef~\mathrm dg=\int_Efg'$
+    \end{corollary}
+    \begin{remark}
+        Очень жаль, но наши два примера~--- это не все функции.
+    \end{remark}
+    \begin{definition}
+        $g\colon\Delta\to\mathbb R$ называется \textbf{сингулярной}, если $g\equiv0$ \textbf{или} $g$ непрерывна, $g\neq\mathrm{const}$ и $g'=0$ почти везде.
+    \end{definition}
+    \begin{example}
+        Канторова лестница.
+    \end{example}
+    \begin{claim}
+        Пусть $g\colon\Delta\to\mathbb R$, возрастает и непрерывна слева (кроме, возможно, правого конца $\Delta$). Тогда $g$ единственным образом (с точностью до константы) представляется в виде
+        $$
+        g=g_{\mathrm{disc}}+g_{\mathrm{c}}
+        $$
+        где первое~--- функция скачков, второе~--- непрерывная. При этом
+        $$
+        g_{\mathrm{c}}=g_{\mathrm{ac}}+g_{\mathrm{sing}}
+        $$
+        Где первое~--- абсолютно непрерывна, второе~--- сингулярна. При этом все эти $g$ также возрастают и непрерывны слева (кроме, возможно, левого конца).\\
+        Что интересно, то же самое можно записать для мер Стелтьеса~--- Лебега (по крайней мере на $\mathbb B_\Delta$):
+        $$
+        \mu_g=\mu_{g_{\mathrm{disc}}}+\mu_{g_{\mathrm{ac}}}+\mu_{g_{\mathrm{sing}}}
+        $$
+    \end{claim}
+    \begin{definition}
+        \textbf{Интеграл Лебега~--- Стилтьеса функции произвольного знака}.\\
+        Пусть $g=g_1-g_2$, где $g_1,g_2$ возрастают. Пусть $f,E$~--- борелевские. Тогда положим
+        $$
+        \int_Ef~\mathrm dg=\int_Ef~\mathrm dg_1-\int_Ef~\mathrm dg_2
+        $$
+        Если правая часть существует.
+    \end{definition}
+    \begin{property}
+        Нетрудно заметить, что этот интеграл не зависит от конкретного разбиения $g$ на $g_1$ и $g_2$.
+    \end{property}
+    \begin{remark}
+        В частности, на отрезке можно интегрировать по функции ограниченной вариации.
+    \end{remark}
+    \begin{property}
+        Интеграл заведомо существует и конечен для борелевской ограниченной функции $f$.
+    \end{property}
+    \begin{property}
+        Для таких интегралов верна теорема \ref{Интеграл Лебега~--- Стилтьеса абсолютно локально непрерывной функции}.
+    \end{property}
+    \begin{theorem}[Интегрирование по частям в интеграле Лебега~--- Стилтьеса.]
+        \label{Интегрирование по частям в интеграле Лебега~--- Стилтьеса}
+        Пусть $f\in AC[a;b]$, $g\in V[a;b]$. Тогда
+        $$
+        \int_{[a;b]} f~\mathrm g=fg\bigg|_a^b-\int_a^bf'g
+        $$
+    \end{theorem}
+    \begin{proof}
+        Считаем, что $g$ возрастает, (иначе представим в виде разности двух возрастающих) и непрерывна слева (кроме, может, $b$).
+        \begin{itemize}
+            \item Докажем сначала формулу в частном случае $f(a)=g(b)=0$. Тогда
+            $$
+            \int_{[a;b]}f~\mathrm dg=\int_{[a;b]}\left(\int\limits_a^xf'(u)~\mathrm du\right)~\mathrm dg(x)
+            $$
+            Хочется воспользоваться \hyperref[Теорема Фубини]{теоремой Фубини}. Тогда заметим, что $a\leqslant u\leqslant x\leqslant b$, то есть имеем треугольник. Чтобы менять порядок интегрирования, надо проверить суммируемость подынтегральной функции. Для этого ставим модуль $|f'(u)|$. Тогда изменить порядок интегрирования можно по \hyperref[Теорема Тонелли]{Тонелли} и получить $\int\limits_a^b|f'|g$, где первое суммируемо, второе ограничено, а значит интеграл небесконечен. То есть $f'(u)$ суммируема
+            $$
+            \int_{[a;b]}f~\mathrm dg=\int_{[a;b]}f'(u)\underbrace{\left(\int_{[u;b]}\mathrm dg(x)\right)}_{\mu_g[u;b]=g(b)-g(u)=-g(u)}~\mathrm du=-\int\limits_a^bf'g
+            $$
+            Получили то, что хотели.
+            \item Общий случай: рассмотрим $f-f(a)$ и $g-g(b)$. По доказанному,
+            $$
+            \int_{[a;b]}f-f(a)~\mathrm d(g-\bcancel{g(b)})=-\int\limits_a^b(f-\cancel{f(a)})'(g-g(b))
+            $$
+            Тогда
+            $$
+            \int_{[a;b]}f~\mathrm dg-f(a)\int_{[a;b]}\mathrm dg=-\int\limits_a^bf'g+\int\limits_a^bf'g(b)
+            $$
+            При этом $\int_{[a;b]}\mathrm dg$ мы уже считали, это $g(b)-g(a)$, а $\int\limits_a^bf'=f(b)-f(a)$ по формуле Ньютона~--- Лейбница ($f\in AC[a;b]$). Приведя подобные слагаемые, получим искомое.
+        \end{itemize}
+    \end{proof}
+    \begin{corollary}[Интегрирование по частям в интеграле Лебега]
+        \label{Интегрирование по частям в интеграле Лебега}
+        Если $f,g\in AC[a;b]$, то
+        $$
+        \int\limits_a^bfg'=fg\bigg|_a^b-\int\limits_a^bf'g
+        $$
+    \end{corollary}
+    \paragraph{Интегралы, зависящие от параметра.}
+    \begin{definition}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, $Y$~--- множество (произвольное). И есть функция $f\colon X\times Y\to\overline{\mathbb R}$. Пусть также
+        $$\forall y\in Y~f(\bullet;y)\in L(X;\mu)$$
+        Тогда $I(y)=\int_Xf(x;y)~\mathrm dx$ называется \textbf{интегралом, зависящим от параметра}.
+    \end{definition}
+    \begin{remark}
+        Чтобы исследовать свойства интеграла с параметром, придётся вводить дополнительную структуру на $Y$. Например, если $Y$~--- метрическое пространство, можно ли перейти к пределу под знаком интеграла? Или есть ли непрерывность интеграла с параметром. Что можно сказать о дифференцируемости $I$ и о её производной (тогда уже надо считать $Y$ подмножеством $\mathbb R^n$). Можно ли интегрировать по $y$, если $Y$~--- пространство с мерой?\\
+        Впрочем, ответ на 4 вопросы мы знаем~--- см. теоремы \hyperref[Теорема Тонелли]{Тонелли} и \hyperref[Теорема Фубини]{Фубини}. На остальные сейчас попытаемся ответить.
+    \end{remark}
+    \begin{theorem}[Предельный переход по параметру под знаком интеграла]
+        \label{Предельный переход по параметру под знаком интеграла}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, $\tilde Y$~--- пространство с морой, $Y\subset Y$. Пусть $f\colon X\times Y\to\overline{\mathbb R}$ и пусть
+        $$\forall y\in Y~f(\bullet;y)\in L(X;\mu)$$
+        Пусть $y_0$~--- предельная точка $Y$, при почти всех $x\in X$ $f(x;y)\underset{y\to y_0}\rightarrow g(x)$.\\
+        Пусть
+        $$\exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{при почти всех }x\in X~\forall y\in V_{y_0}\cap Y~|f(x;y)|\leqslant\Phi(x)$$
+        Тогда
+        $$
+        \lim\limits_{y\to y_0}\int_Xf(x;y)~\mathrm d\mu(x)=\int_X\lim\limits_{y\to y_0}f(x;y)~\mathrm d\mu(x)
+        $$
+    \end{theorem}
+    \begin{definition}
+        Условие
+        $$\exists\Phi\in L(X;\mu)~\exists V_{y_0}~\text{при почти всех }x\in X~\forall y\in V_{y_0}\cap Y~|f(x;y)|\leqslant\Phi(x)$$
+        называется \textbf{локальным условием Лебега} в точке $y_0$.
+    \end{definition}
+    \begin{proof}
+        Возьмём последовательность точек $y_n\in Y\setminus\{y_0\}$, $y_n\to y_0$. Тогда начиная с некоторого $y_N$ все $y_{n>N}\in V_{y_0}$ из локального условия Лебега.\\
+        Введём последовательность функций $f_n(x)=f(x;y_n)$. Тогда при почти всех $x\in X$ $f_n(x)\underset{n\to\infty}\rightarrow g(x)$. Кроме того в силу локального условия Лебега для почти всех $x\in X~\forall n\in\mathbb N~|f_n(x)|\leqslant\Phi(x)$\\
+        То теореме Лебега о мажорируемой сходимости $g\in L(X;\mu)$, и
+        $$
+        \int_Xf_n(x)~\mathrm d\mu(x)\underset{n\to\infty}\longrightarrow\int_Xg(x)~\mathrm d\mu(x)
+        $$
+    \end{proof}
+    \begin{remark}
+        Не исключён случай, когда $y_0$~--- бесконечно удалённая точка или $\pm\infty$, если $\tilde Y=\mathbb R$.
+    \end{remark}
+    \begin{remark}
+        Квантор $\forall$ и <<для почти всех>> в общем случае менять нельзя. <<Почти всех $x~\forall y$>> сильнее, чем <<$\forall y$ для почти всех $x$>>. Но для данной теоремы более слабое условие также работает (без изменения доказательства).
+    \end{remark}
+    \begin{remark}
+        Интересный факт: мы имели равномерную сходимость для рядов. А эта теорема в некотором смысле оперирует с равномерной сходимостью для семейств функций ($f$ можно рассматривать как семейство функций $f_y(x)$).
+    \end{remark}
+    \begin{definition}
+        Пусть $X$~--- множество, $\tilde Y$~--- метрическое пространство, $Y\subset\tilde Y$, $y_0$~--- передельная точка $Y$, $f\colon X\times Y\to\mathbb R$ (или $\mathbb C$), $g\colon X\to\mathbb R$ (или $\mathbb C$). Тогда говорят, что \textbf{семейство функций} $\{f(\bullet;y)\}_{y\in Y}$ \textbf{сходится} к $g$ \textbf{равномерно} на $X$ при $y\to y_0$, если
+        $$
+        \sup\limits_{x\in X}|f(x;y)-g(x)|\underset{y\to y_0}\longrightarrow0
+        $$
+        Записывается привычным образом $f(x;y)\underset{y\to y_0}\toto g(x)$
+    \end{definition}
+    \begin{corollary}[Предельный переход по параметру при условии равномерной сходимости]
+        \label{Предельный переход по параметру}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой, $\mu$ конечна.\\
+        $\tilde Y$~--- метрическое пространство, $Y\subset Y$, $y_0$~--- предельная точка $Y$.\\
+        Пусть $f\colon X\times Y\to\mathbb R$, $f(x;y)\underset{y\to y_0}\toto g(x)$ на $X$ и пусть
+        $$\forall y\in Y~f(\bullet;y)\in L(X;\mu)$$
+        Тогда $g\in L(X;\mu)$
+        $$
+        \lim\limits_{y\to y_0}\int_Xf(x;y)~\mathrm d\mu(x)=\int_X\lim\limits_{y\to y_0}f(x;y)~\mathrm d\mu(x)
+        $$
+    \end{corollary}
+    \begin{proof}
+        Возьмём последовательность $y_n\in Y\setminus\{y_0\}$, $y_n\to y_0$. Введём $f_n(x)=f(x;y_n)$. Тогда $f_n$ равномерно стремится к $g$ на $X$.\\
+        Возьмём $\eps=1$ и получим $N$ такое что $\forall n>N~\forall x\in X~|f_n(x)-g(x)|<1$.\\
+        Отсюда $|g(x)|<|f_N(x)|+1$, обе части $\in L(X;\mu)$, значит $g\in L(X;\mu)$. Тогда
+        $$
+        |f_n(x)|\leqslant 1+|g(x)|
+        $$
+        Если обозначит правую часть за $\Phi$, можно будет применить теорему Лебега.
+    \end{proof}
+    \begin{example}
+        Условие конечности меры существенно. На множестве бесконечной меры равномерная сходимость не работает:\\
+        $X=[0;+\infty)$, $f_n=\frac1n\chi_{[0;n]}$. Тогда интеграл каждой $f_n$ равен 1, что не стремится к нулю.
+    \end{example}
+    \begin{corollary}[Непрерывность интеграла по параметру в точке]
+        \label{Непрерывность интеграла по параметру в точке}
+        Пусть $(X;\mathbb A;\mu)$~--- пространство с мерой.\\
+        Пусть $Y$~--- метрическое пространство, $y_0\in Y$.\\
+        Пусть $f\colon X\times Y\to\mathbb R$ и пусть
+        $$\forall y\in Y~f(\bullet;y)\in L(X;\mu)$$
+        Пусть для почти всех $x\in X$ $f(x;\bullet)$ непрерывна в $y_0$ и пусть $f$ удовлетворяет локальному условию Лебега нв $y_0$. Тогда $\int_Xf(x;y)~\mathrm d\mu(x)$ непрерывно в $y_0$.
+    \end{corollary}
+    \begin{proof}
+        Если $y_0$~--- изолированная точка $Y$, ничего доказывать не надо, иначе она предельная. Возьмём $g(x)=f(x;y_0)$. Всё.
+    \end{proof}
+    \begin{corollary}
+        Если условие следствия \ref{Непрерывность интеграла по параметру в точке} верно для любой точки $y_0\in Y$, то
+        $$
+        \int_Xf(x;y)~\mathrm d\mu(x)\in C(Y)
+        $$
+    \end{corollary}
+    \begin{remark}
+        Полезное напоминание: если $f\in C(X\times Y)$, то $\forall x\in X~f(x;\bullet)\in C(Y)$ и $\forall y\in Y~f(\bullet;y)\in C(X)$.
+    \end{remark}
+    \begin{theorem}[Непрерывность интеграла по параметру на множестве]
+        \label{Непрерывность интеграла по параметру на множестве}
+        Пусть $X,Y$~--- метрические пространства, $X$ компактно, $\mu$~--- конечная борелевская мера на $X$, $f\in C(X\times Y)$. Тогда
+        $$
+        \int_Xf(x;y)~\mathrm d\mu(x)\in C(Y)
+        $$
+    \end{theorem}
+    \begin{proof}
+        Из комментария выше
+        $$
+        \forall y\in Y~f(\bullet;y)\in C(X)
+        $$
+        Также $X$~--- компакт, следовательно $f(\bullet;y)$ ограничена на $X$. $\mu$~--- борелевская, значит $f(\bullet;y)$ измерима. $\mu X<+\infty$, а значит $f(\bullet;x)\in L(X;\mu)$. Отлично, теперь интеграл $\int_Xf(x;y)~\mathrm d\mu(x)$ корректно определён.\\
+        Ну что ж, осталось проверить локальное условие Лебега в каждой точке $y_0\in Y$. Давайте докажем, что
+        $$
+        \exists V_{y_0}~f\text{ ограничена на }X\times V_{y_0}
+        $$
+        (мажоранта будет константой).\\
+        Ну, давайте докажем от противного. Тогда в частности $\forall n\in\mathbb N~\exists x_n\in X,y_n\in B(y_0;\frac1n)~|f(x_n;y_n)|>n$. $y_n$ стремится к $y_0$, а из $x_n$ можно выделить сходящуюся (к $x_0$) подпоследовательность $x_{n_k}$ (в силу секвенциальной компактности). Но подождите. $|f(x_{n_k};y_{n_k})|>n_k\to\infty$. А левая часть стремится к $|f(x_0;y_0)|$.
+    \end{proof}
+    \begin{remark}
+        В частности, теорема верна для меры Лебега.
+    \end{remark}
+    \begin{corollary}
+        Если $[a;b],\langle c;d\rangle\subset\mathbb R$, $f\in C([a;b]\times\langle c;d\rangle)$, то $\int_Xf(x;y)~\mathrm dx\in C\langle c;d\rangle$.
+    \end{corollary}
+    \begin{example}
+        Локальное условие Лебега в следствии \ref{Непрерывность интеграла по параметру в точке} и компактность $X$ в теореме \ref{Непрерывность интеграла по параметру на множестве} существенны.\\
+        Пусть $X=Y=\mathbb R$,
+        $$
+        f(x;y)=\begin{cases}
+            0 & y=0\\
+            \frac1{1+\left(x+\frac1{|y|}\right)^2} & y\neq0
+        \end{cases}
+        $$
+        Верно ли, что $f\in C(\mathbb R^2)$? Если $y_0\neq0$, то в точке $(x_0;y_0)$ всё понятно. Что с $y=0$? Ну, рассмотрим $(x_0;0)$ в окрестности $|xy|<\frac12$. Тогда
+        $$
+        0\leqslant f(x;y)\leqslant\frac{y^2}{y^2+(x|y|+1)^2}\leqslant4y^2\underset{(x;y)\to(x_0;0)}\longrightarrow0
+        $$
+        Обозначим
+        $$
+        I(y)=\int_{\mathbb R} f(x;y)~\mathrm dx
+        $$
+        Очевидно, $I(0)=0$. А если $y\neq0$, то
+        $$
+        I(y)=\int_{\mathbb R}\frac1{1+\left(x+\frac1{|y|}\right)^2}~\mathrm dx
+        $$
+        От $y$ эта штука не зависит никак, потому что сдвиг. А значит $y$ можно выкинуть, и получить, что $I(y)=\pi$. Ой. Разрыв в нуле.
+    \end{example}
+    \begin{theorem}[Дифференцируемость интеграла по параметру]
+        \label{Дифференцируемость интеграла по параметру}
+        Пусть $Y=\langle c;d\rangle\subset\mathbb R$, $(X;\mathbb A;\mu)$~--- пространство с мерой, $f\colon X\times Y\to\mathbb R$, $\forall y\in Y~f(\bullet;y)\in L(X;\mu)$, при почти всех $x\in X~f(x;\bullet)$ дифференцируемо на $Y$. Пусть $y_0\in Y$ и $\frac{\partial f}{\partial y}$ удовлетворяет локальному условию Лебега. Тогда
+        $$
+        \exists\left(\int_X f(x;y)~\mathrm d\mu(x)\right)'_y(y_0)=\int_Xf'_y(x;y_0)~\mathrm d\mu(x)
+        $$
+    \end{theorem}
+    \begin{proof}
+        
+    \end{proof}
+    \begin{corollary}
+        Если $X$~--- компакт, $\mu$~--- конечная борелевская мера на $X$, $Y=\langle c;d\rangle\subset\mathbb R$, $f,f'_y\in C(X\times Y)$. Тогда
+        $$
+        \int_X f(x;y)~\mathrm d\mu(x)\in C^{(1)}(Y)
+        $$
+        и для любой $y_0\in Y$ верно правило Лейбница
+    \end{corollary}
+    \begin{proof}
+        Надо проверить, локальное условие Лебега для производной. Для любой $y_0$ возьмём 
+        $$
+        \delta>0~[y_0-\delta;y_0+\delta]\cap\langle c;d\rangle=[\alpha;\beta]\text{ ограничено}
+        $$
+        Тогда $f'_y\in C(X\times[\alpha;\beta])$, а значит $f'_y$ ограничена на $X\times[\alpha;\beta]$ (мажоранта~--- постоянная). По теореме \ref{Дифференцируемость интеграла по параметру} $I'(y_0)$ равно тому, чему хочется, а \ref{Непрерывность интеграла по параметру на множестве}.
+    \end{proof}
 \end{document}
