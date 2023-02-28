@@ -54,9 +54,10 @@
 }{}
 \DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
 
-\DeclareMathSymbol{\defeq}{\mathrel}{mathb}{"15}
-\DeclareMathSymbol{\eqdef}{\mathrel}{mathb}{"16}
-
+\DeclareMathSymbol{\tmp}{\mathrel}{mathb}{"15}
+\let\defeq\tmp
+\DeclareMathSymbol{\tmp}{\mathrel}{mathb}{"16}
+\let\eqdef\tmp
 
 \usepackage{trimclip}
 \DeclareMathOperator{\updownarrows}{\clipbox{0pt 0pt 4.175pt 0pt}{$\upuparrows$}\hspace{-.825px}\clipbox{0pt 0pt 4.175pt 0pt}{$\downdownarrows$}}
