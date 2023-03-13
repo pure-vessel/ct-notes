@@ -2063,6 +2063,7 @@
         А тогда и $M\subset\bigcup\limits_jU_{\alpha_j}$, $U_{\alpha_j}$~--- искомое подпокрытие.
     \end{proof}
     \begin{lemma}[Лемма Лебега о компакте]
+        \label{Лемма Лебега о компакте}
         Пусть $(X;\rho)$~--- метрическое пространство, $\scriptK\subset X$~--- компакт, $\{U_\alpha\}_{\alpha\in A}$~--- открытое покрытие $\scriptK$. Тогда существует такое $\eps>0$, что для любого $E\subset X$, диаметр которого меньше $\eps$ и пересекающееся с $\scriptK$ существует $\alpha\in A~E\subset U_\alpha$.
     \end{lemma}
     \begin{proof}
@@ -2080,5 +2081,218 @@
         \rho(y;x_0)\leqslant\rho(y;x_{n_k})+\rho(x_{n_k};x_0)<\delta
         $$
         Это противоречие, так как $E_{n_k}$ покрывается $U_{\alpha_0}$.
+    \end{proof}
+    \begin{definition}
+        Пусть $G\subset\mathbbb R^n$, $f\colon G\to\mathbb V$, $V$~--- векторное пространство, $\mathbb R$ или $\mathbb C$. \textbf{Носителем функции} $f$ называется
+        $$
+        \supp f=\operatorname{Closure}_G G(f\neq0)
+        $$
+        Функция с компактным носителем (в $G$) называется \textbf{финитной} в $G$.
+    \end{definition}
+    \begin{theorem}[Разбиение единицы]
+        \label{Разбиение единицы}
+        Пусть $K$~--- компакт в $\mathbb R^n$, $\{U_\alpha\}_{\alpha\in A}$~--- открытое покрытие $K$. Тогда существует конечный набор функций $\{\psi_j\}_{j=1}^N$ со следующими свойствами:
+        \begin{enumerate}
+            \item $\forall j\in[1:N]~\psi_j\in C^{(\infty)}(\mathbb R^n\to[0;1])$.
+            \item $\forall j\in[1:N]~\exists\alpha_j\in A~\supp\psi_j\subset U_\alpha$.
+            \item $\forall x\in\mathbb R^n~\sum\limits_{j=1}^N\psi_j(x)\leqslant 1$.
+            \item $\forall x\in\mathbb K~\sum\limits_{j=1}^N\psi_j(x)=1$.
+        \end{enumerate}
+    \end{theorem}
+    \begin{definition}
+        Набор таких функций $\psi_j$ называют \textbf{разбиением единицы} на $K$, подчинённое покрытию $U_\alpha$.
+    \end{definition}
+    \begin{proof}
+        Рассмотрим какую-нибудь такую функцию:
+        $$
+        \tau(t)=\begin{cases}
+            e^{-\frac1{(t-1)^2}-\frac1{(t+1)^2}} & t\in(-1;1)\\
+            0 & |t|\geqslant1
+        \end{cases}
+        $$
+        Она равна нулю везде, кроме $(-1;1)$, а на $(-1;1)$~--- не равна, причём $\tau(0)=1$. Также $\tau$ бесконечно гладкая на $\mathbb R$, её носитель~--- $[-1;1]$. Теперь возьмём
+        $$
+        \widetilde\tau=\sum\limits_{l\in\mathbb Z}\tau(t-l)
+        $$
+        Она также бесконечно дифференцируема, но нигде не равна нулю (а также 1-периодична). Теперь возьмём
+        $$
+        \theta=\frac\tau{\widetilde\tau}
+        $$
+        Она имеет тот же носитель, что и $\tau$, также бесконечно дифференцируема и больше нуля на $(-1;1)$. А $\widetilde\theta\equiv1$.\\
+        Положим $h>0$ (ещё потом скажем, какое конкретно), $m\in\mathbb Z^n$, $x\in\mathbb R^n$. Пусть
+        $$
+        \theta_m(x)=\prod\limits_{i=1}^n\theta\left(\frac{x_i}h-m_i\right)
+        $$
+        Разумеется, $\theta_m$ бесконечно гладкие на $\mathbb R^n$, а
+        $$\theta_m(x)>0\Leftrightarrow\forall i\in[1:n]~x_i\in(hm_i-h;hm_i+h)$$
+        Другими словами, точка $x$ попадает в куб $(hm-h\mathbb1;hm+h\mathbb1)$. Замыкание этого куба~--- носитель $\theta_m$. Ребро этого куба равно $2h$, а диагональ~--- $2h\sqrt n$. Несложно догадаться, что
+        $$
+        \sum\limits_{m\in\mathbb Z^n}\theta_m(x)\equiv1
+        $$
+        Вспомним о том, что у нас есть компакт и покрытие. Зафиксируем $\eps>0$ из \hyperref[Лемма Лебега о компакте]{леммы Лебега}. И теперь мы, наконец, скажем, что такое $h$. $h<\frac\eps{2\sqrt n}$.\\
+        Компакт ограничен, поэтому $\supp\theta_m\cap K\neq\varnothing$ лишь для конечного количества $m$. Перенумеруем наши $\theta_m$ одним индексом, они и будут искомыми $\psi_j$. Тогда второе свойство будет верно по \hyperref[Лемма Лебега о компакте]{лемме Лебега}, третье и четвёртое свойства, очевидно, верны.
+    \end{proof}
+    \begin{corollary}[О гладком спуске]
+        \label{Следствие о гладком спуске}
+        Пусть $K$~--- компакт, $G$~--- открыто, $K\subset G\subset\mathbb R^n$. Тогда
+        $$
+        \exists\psi\in C^{(\infty)}(\mathbb R^n\to[0;1])~\supp\psi\subset G,\psi\bigg|_K=1
+        $$
+    \end{corollary}
+    \begin{proof}
+        Возьмём в качестве открытого покрытия $\{G\}$, получим $\psi_j$ и сложим их.
+    \end{proof}
+    \begin{theorem}[Равносильность существования локального и глобального гладкого продолжения]
+        \label{Равносильность существования локального и глобального гладкого продолжения}
+        Пусть $E\subset\mathbb R^k$, $f\colon E\to\mathbb R^n$, $r\in\mathbb N\cup\{\infty\}$,
+        $$
+        \forall\alpha\in E~\exists U_\alpha\text{~--- окрестность }\alpha~\exists\Phi_\alpha\in C^{(r)}(U_\alpha\to\mathbb R^n)~\Phi_\alpha\equiv f\text{ на }U_\alpha\cap E
+        $$
+        Пусть $U=\bigcup\limits_{\alpha\in E}U_\alpha$. Тогда
+        $$
+        \exists\Phi\in C^{(r)}(U\to\mathbb R^n)~\Phi\equiv f\text{ на }E
+        $$
+        Без доказательства.
+    \end{theorem}
+    \paragraph{Гладкие многообразия в евклидовом пространстве.}
+    \begin{definition}
+        Пусть $k\in\mathbb N$. Тогда \textbf{стандартный куб}~--- это $(-1;1)^k$, а \textbf{стандартный полукуб} при $k\geqslant2$~--- $(-1;0]\times(-1;1)^k$. В $\mathbb R^1$ стандартный полукуба будет два: $(-1;0]$ и $[0;1)$.\\
+        Эти двое~--- \textbf{стандартный области}, обычно они обозначаются $\Pi_k$.
+    \end{definition}
+    \begin{remark}
+        Далее <<окрестность>> понимается в широком смысле.\\
+        Относительная окрестность будет обозначаться так: $V_x^M$ (окрестность $x\in \mathbb R^n$ в $M\subset\mathbb R^n$).
+    \end{remark}
+    \begin{definition}
+        Пусть $n,k\in\mathbb R^n$, $k\leqslant n$, $G\subset\mathbb R^k$ открыто. $f\in C^{(j)}(G\to\mathbb R^n)$ называется \textbf{регулярным}, если
+        $$
+        \forall u\in G~\rank f'(u)=k
+        $$
+    \end{definition}
+    \begin{definition}
+        Пусть $r\in\mathbb N\cup\{\infty\}$, $E\subset\mathbb R^k$. Говорят, что $f\colon E\to\mathbb R^n$ принадлежит классу $C^{(r)}(E)$, если существует $r$-гладкое продолжение $f$ на открытое множество, содержащее $E$.\\
+        Аналогично определяется \textbf{регулярное} отображение на $E$ и \textbf{регулярное $r$-гладкое отображение} на $E$.
+    \end{definition}
+    \begin{claim}
+        В определении регулярности достаточно потребовать, чтобы ранг матрицы якоби продолжения был равен $k$ только в точках множества $E$.
+    \end{claim}
+    \begin{proof}
+        У каждой точки $E$ подберём окрестность, где минор матрицы Якоби отличен от нуля (за счёт непрерывности компонент матрицы Якоби). Объединив все окрестности, получим искомое.
+    \end{proof}
+    \begin{definition}
+        Множество $M\subset\mathbb R^n$ называется \textbf{$r$-гладким $k$-мерным многообразием}, если $\forall x\in M~\exists V_x^M~\exists\phi\colon\Pi_k\to V_x^M$~--- регулярный гомеоморфизм класса $C^{(r)}$ такой что $\phi(\mathbb0)=x$.\\
+        Множество таких многообразий в $\mathbb R^n$ обозначается $\mathbb M_{kn}^{(r)}$.
+    \end{definition}
+    \begin{definition}
+        $V_x^M$ называется \textbf{стандартной окрестностью} $x$ или \textbf{районом действия карты}, $\phi$~--- \textbf{локальной параметризацией}, $\phi^{-1}$~--- \textbf{картой}, $(u_1;\ldots;u_k)\in\Pi_k$.\\
+        Набор карт, районы действия которых покрывают $M$, называют \textbf{атласом} $M$.
+    \end{definition}
+    \begin{definition}
+        При $r=0$ регулярность не требуется. Тогда $M$ называется \textbf{топологическим многообразием}.
+    \end{definition}
+    \begin{remark}
+        В определении $\Pi_k$ можно заменить на $\mathbb R^k$ или $(+\infty;0]\times\mathbb R^{k-1}$ (для $k\geqslant2$) // $(-\infty;0]$ или $[0;+\infty)$ для $k=1$. Для этого достаточно провести замену при помощи тангенса.
+    \end{remark}
+    \begin{definition}
+        Если $V_x^M$ является образом куба при параметризации, то $x$ называется \textbf{внутренней точкой} $M$, а если полукуба~--- то \textbf{краевой точкой} $M$. Множество краевых точек $M$ называется \textbf{краем} $M$ и обозначается $\partial M$.
+    \end{definition}
+    \begin{remark}
+        Не следует путать край и границу. В этом параграфе если нам пригодится граница, мы обозначим её $\operatorname{Fr}M$.
+    \end{remark}
+    \begin{claim}
+        Определение краевой и внутренней точки не зависит от параметризации.\\
+        Доказательство для гладких многообразий последует позже, для топологических~--- без доказательства.
+    \end{claim}
+    \begin{claim}
+        Пусть $\Pi$~--- полукуб, $M\in\mathbb M_{kn}^{(r)}$, $x^0\in\partial M$, $\phi\colon M\to V_{x^0}^M$~--- параметризация,
+        $$
+        P_0=\left\{u\in\Pi\mid u_1=0\right\}
+        $$
+        Тогда
+        $$
+        \phi(P_0)=V_{x^0}^M\cap\partial M\qquad\phi(\Pi\setminus P_0)=V_{x^0}^M\cap(M\setminus\partial M)
+        $$
+    \end{claim}
+    \begin{proof}
+        У $u\in P_0$ есть полукубическая окрестность (в $\Pi$). Её образ~--- какая-то окрестности $\phi(u)$ (т.к. $\phi$~--- гомеоморфизм). То есть получим $V_{x^0}^M\cap\partial M$.
+    \end{proof}
+    \begin{definition}
+        Одномерное многообразие называется \textbf{кривой}. А если $n=k-1$, то многообразие называется \textbf{поверхностью} или \textbf{гиперповерхностью}. При $n=3,k=2$ многообразие называется \textbf{классической поверхностью}.
+    \end{definition}
+    \begin{definition}
+        Множество $E$ в метрическом пространстве называется \textbf{дискретным}, если ни одна точка $E$ не является предельной.
+    \end{definition}
+    \begin{definition}
+        Дискретный набор точек пространства $\mathbb R^n$ называется \textbf{нульмерным многообразием}. По определению считаем, что нульмерное многообразие принадлежит $C^{(\infty)}$ и не имеет края.
+    \end{definition}
+    \begin{example}
+        Открытое $G\subset\mathbb R^n$, тогда $G\in\mathbb M_{nn}^{(\infty)}$, без края. Потому что у любой точки есть кубическая окрестность.
+    \end{example}
+    \begin{example}
+        Пусть $\gamma\colon[a;b]\to\mathbb R^n$~--- $r$-гладкий регулярный ($\gamma'\neq0$ нигде) простой незамкнутый путь, $\gamma^*$~--- его носитель. Тогда $\gamma^*\in\mathbb M_{1n}^{(r)}$, $\partial\gamma^*=\{\gamma(a);\gamma(b)\}$. Локальные параметризации~--- сужения $\gamma$.
+    \end{example}
+    \begin{example}
+        Пусть $G$~--- открытое подмножество $\mathbb R^k$, $\phi\in C^{(r)}(G\to\mathbb R^n)$~--- гомеоморфизм $G$ и $\phi(G)$ и пусть $\forall u\in G~\rank\phi'(u)=k$. Тогда $\phi(G)\in\mathbb M_{kn}^{(r)}$, граница пуста. Локальные параметризации~--- сужения $\phi$.
+    \end{example}
+    \begin{example}
+        Частный случай предудущего~--- $(u;f(u))$ для отображения $f\in C^{(r)}(G\to\mathbb R^n)$.
+    \end{example}
+    \begin{example}
+        Пусть $f\in C^{(r)}((a;b)\to(0;+\infty))$,
+        $$
+        M=\left\{(x;y;z)~\middle|~\substack{y^2+z^2=f^2(x)\\a<x<b}\right\}
+        $$
+        Край пуст.
+    \end{example}
+    \begin{example}
+        Сфера в $\mathbb R^n$~--- бесконечно гладкое $n-1$-мерное многообразие без края. Можно явно предъявить параметризацию~--- сферические координаты.
+    \end{example}
+    \begin{example}
+        Цилиндр $\mathbb S^{l-1}(R)\times\mathbb R^{n-l}$.
+    \end{example}
+    \begin{theorem}[Задание многообразия системой уравнений]
+        \label{Задание многообразия системой уравнений}
+        Пусть $F\in C^{(r)}(G\to\mathbb R^m)$, $G\subset\mathbb R^{k+m}$ открыто. $M$~--- множество нулей $F$. $\forall(x;y)\in M~\rank F'(x;y)=m$. Тогда $M\in\mathbb M^{(r)}_{k,k+m}$ и не имеет края.
+    \end{theorem}
+    \begin{proof}
+        Возьмём $(x^0;y^0)\in M$ и проверим искомое. Не умаляя общности будем считать, что $F'_y(x^0;y^0)$. Это значит, что мы в точности находимся в условиях теоремы о неявном отображении. Что она нам даёт? Что существуют окрестности такие что... В качестве окрестности $x^0$ возьмём кубическую, а в качестве окрестности $y^0$~--- шаровую. Тогда теорема даёт нам
+        $$
+        \exists a,b>0~\forall x\in P=(x^0-a\mathbb1;x^0+a\mathbb1)~\exists!y\in B=B_m(y^0;b)~F(x;y)=\mathbb0
+        $$
+        Также теорема утверждает, что если мы обозначим $y=f(x)$, то $f\in C^{(r)}(P)$. Возьмём $\phi(u)=(x^0+au;f(x^0+au)),u\in\Pi(-1;1)^k$. Проверим, что это параметризация. Ну, $\phi\in C^{(r)}(\Pi)$ очевидно. $\phi(\Pi)=(P\times B)\cap M=V_{x^0;y^0}^M$~--- действительно окрестность в $M$. Понятно, что $\phi$ обратимо и $\phi^{-1}(x;y)=\frac{x-x^0}a$ непрерывно, а значит это гомеоморфизм. Также понятно, что оно регулярно (из первой её компоненты, матрица которой~--- $aE$).
+    \end{proof}
+    \begin{definition}
+        Пусть у нас есть такая ситуация. $M\in\mathbb M_{kn}^{(r)}$, $U$ и $V$~--- стандартные окрестности в $M$, $U\cap V=W\neq\varnothing$.\\
+        Пусть $\phi,\psi$~--- локальные параметризации $U$ и $V$, $W_1=\phi^{-1}(W)$, $W_2=\psi^{-1}(W)$, $L=\psi^{-1}\circ\psi\colon W_1\to W_2$. Тогда $L$ называется \textbf{переходом от параметризации} $\phi$ \textbf{к параметризации} $\psi$.
+    \end{definition}
+    \begin{theorem}[Регулярность перехода]
+        \label{Регулярность перехода}
+        В условии определения $L\in C^{(r)}(W_1)$ и регулярно.
+    \end{theorem}
+    \begin{proof}
+        Возьмём $u^0\in W_1$, $x^0=\phi(u^0)$, $v^0=L(u^0)$. Пусть $\Pi$ и $\Pi'$~--- кубы или полукубы, содержащие в себе $\phi$ и $\psi$. Рассмотрим $\psi\colon\Pi'\to V$, $\rank\psi'(v^0)=k$. Пусть для определённости ненулевой минор образую производные первых $k$ координатный функций $\psi$.\\
+        Введём такое обозначение: пусть $x=(x_1;\ldots;x_n)$, тогда $\overline x=(x_1;\ldots;x_k)$, $\overline{\overline x}=(x_{k+1};\ldots;x_n)$. Тогда $x=(\overline x;\overline{\overline x})$. Также поступим с $\phi$ и $\psi$:
+        $$
+        \phi=(\overline\phi;\overline{\overline\phi})\qquad\qquad \psi=(\overline\psi;\overline{\overline\psi})
+        $$
+        Заметим, что в условии таких определений $\det\phi'(v^0)\neq0$. Тогда мы находимся в условии теоремы об обратном отображении. По ней
+        $$
+        \exists\Delta_{v^0}\text{~--- окрестность }v^0\text{ в }\mathbb R^k
+        $$
+        $$
+        \exists D_{\overline{x^0}}\text{~--- окрестность }v^0\text{ в }\mathbb R^k~\overline\psi\colon\Delta_{v^0}\to D_{\overline{x^0}}\text{~--- биекция}
+        $$
+        При этом ${\overline\psi}^{-1}\in C^{(r)}(D_{\overline{x^0}}\to\Delta_{v^0})$.\\
+        Положим $G_{x^0}^M=\psi(\Delta_{v^0}\cap\Pi')$. Заметим, что $G_{x^0}^M\subset V$ и $\forall x\in G_{x^0}^M~v=\psi^{-1}(x)\in\Delta_{v^0}$. А в таком случае $\overline\psi(v)=\overline x\in D_{\overline{x^0}}$, то есть $v={\overline\psi}^{-1}(\overline x)$.\\
+        Ещё докажем, что $G_{x^0}^M$~--- окрестность $x^0$ в $M$. Оно тривиально содержит $x^0$, проверим открытость. Ну, что ж. $\Delta_{v^0}$ открыто в $\mathbb R^k$, а значит $\Delta_{v^0}\cap \Pi'$ открыто в $\Pi'$. Тогда $G_{x^0}^M=\psi(\Delta_{v^0}\cap\Pi')$ открыто в $V$, а $V$ открыто в $M$.\\
+        Ну, хорошо. Заметим, что $\phi$ непрерывна в $u^0$, поэтому существует $B_{u^0}$~--- такая окрестность $u^0$ в $\mathbb R^k$, что $\phi(B_{u^0}\cap W_1)\subset G_{x^0}^M$ и $\overline\phi(B_{u^0})\subset D_{\overline{x^0}}$.\\
+        Для чего нам вся эта пурга? Чтобы жить в $k$-мерном пространстве. Давайте докажем, что
+        $$
+        \forall u\in B_{u^0}\cap W_1~L(u)={\overline\psi}^{-1}(\overline\phi(u))
+        $$
+        Ну, что ж, если $u\in B_{u^0}\cap W_1$, то $x\in G_{x^0}^M$, а $\overline x\in D_{\overline{x^0}}$. Тогда $v=\psi^{-1}(x)\in\Delta_{v^0}$, а значит $v={\overline\psi}^{-1}(\overline x)$.\\
+        Чудно, давайте избавляться от лишних условий. Давайте скажем, что ${\overline\psi}^{-1}(\psi(u))$ имеет смысл ещё и на $B_{u^0}$ так как $\overline\psi(u)\in D_{x^0}$. Тогда можно определить $\Phi_{u_0}\in C^{(r)}(B_{u^0}\to\mathbb R^k)$, $\Phi_{u^0}=L$ на $B_{u^0}\cap W_1$, $\Phi_{u^0}={\overline\psi}\circ\overline\phi$.\\
+        Аналогично $\exists B_{v^0}$ и $\Psi_{v_0}\in C^{(r)}(B_{v^0}\to\mathbb R^k)$ и все остальные хорошие свойства. При этом получается, что $L^{-1}\circ L$~--- тождественная функция в окрестности $u^0$, а значит, поскольку якобианы обратных функций противоположны, ни один из них не ноль, отсюда регулярность.\\
+        Что мы в итоге доказали? Что у каждой точки $u^0$ есть окрестность, в которой всё хорошо. Если сослаться на теорему \ref{Равносильность существования локального и глобального гладкого продолжения}, то будет всё хорошо, либо придётся жить с локальным определением.
     \end{proof}
 \end{document}
