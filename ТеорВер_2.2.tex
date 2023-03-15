@@ -1,0 +1,372 @@
+\documentclass{article}
+\input{Headers/header}
+\input{Headers/formal}
+
+\fancyhead[L]{Теория вероятности}
+
+\let\eps\varepsilon
+
+\newcommand{\A}{{\mathfrak A}}
+\newcommand{\B}{{\mathfrak B}}
+
+\begin{document}
+    \paragraph{Вероятностное пространство.}
+    \begin{definition}
+        Пусть $\Omega$~--- множество, тогда $\A\in 2^\Omega$ называется \textbf{алгеброй}, если
+        \begin{enumerate}
+            \item $\Omega\in A$.
+            \item $\forall A\in\mathfrak A~\overline A\in\A$. Здесь и далее $\overline A=\Omega\setminus A$.
+            \item $\forall A,B\in\A~A\cup B\in\A$.
+        \end{enumerate}
+        При этом $\Omega$ называется \textbf{множеством элементов событий}, $\A$~--- \textbf{набор событий}, $A\in\A$~--- \textbf{событие}, $A\cup B=A+B$~--- \textbf{сумма событий}, $\overline A$~--- \textbf{противоположное событие}, $A\cap B=AB$~--- \textbf{произведение событий}.
+    \end{definition}
+    \begin{definition}
+        Алгебра является \textbf{сигма-алгеброй}, если она замкнута относительно объединения счётного количества своих элементов.
+    \end{definition}
+    \begin{definition}
+        Пусть $\A$~--- сигма-алгебра на $\Omega$. Пусть $P\colon \A\to\mathbb [0;+\infty)$ и
+        \begin{enumerate}
+            \item $P(\Omega)=1$.
+            \item Если $\{A_i\}_{i=1}^\infty\subset\A$ и $\forall A_iA_j=\varnothing$ то
+            $$
+            P\left(\bigcup\limits_{i=1}^\infty A_i\right)=\sum\limits_{i=1}^\infty P(A_i)
+            $$
+        \end{enumerate}
+        Тогда $(\Omega;\A;P)$ называется \textbf{вероятностным пространством}.
+    \end{definition}
+    \begin{definition}
+        Пара событий называется \textbf{несовместной}, если их пересечение пусто. Набор событий \textbf{несовместен}, если они попарно несовместны.
+    \end{definition}
+    \begin{definition}
+        Пусть $A\subset2^\Omega$~--- алгебра. Тогда минимальная по включению сигма-алгебра $\sigma(A)\supset A$ называется \textbf{минимальной сигма-алгеброй}.
+    \end{definition}
+    \begin{claim}
+        Таковая существует.
+    \end{claim}
+    \begin{proof}
+        Хотя бы одна такая существует ($2^\Omega$), причём если пересечь сколько угодно сигма-алгебр, то получится искомая сигма-алгебра.
+    \end{proof}
+    \begin{definition}
+        Пусть $\A$~--- алгебра на $\Omega$, $P\colon\A\to[0;+\infty)$ и
+        \begin{itemize}
+            \item $P(\Omega)=1$.
+            \item Если $\{A_i\}_{i=1}^\infty\subset\A$ и $\bigsqcup\limits_{i=1}^\infty A_i\in\A$, то
+            $$
+            P\left(\bigsqcup\limits_{i=1}^\infty A_i\right)=\sum\limits_{i=1}^\infty P(A_i)
+            $$
+        \end{itemize}
+        Тогда $(\Omega;\A;P)$~--- \textbf{вероятностное пространство в широком смысле}.
+    \end{definition}
+    \begin{theorem}[О продолжении меры]
+        Пусть $(\Omega;\A;P)$~--- вероятностное пространство в широком смысле. Тогда существует единственная функция вероятности $Q\colon\sigma(\A)\to[0:+\infty)$, такое что $Q\Big|_{\A}\equiv P$.\\
+        Без доказательства.
+    \end{theorem}
+    \begin{remark}
+        Эта теорема позволяет нам сказать, например, что мы хотим задать вероятность на отрезках.
+    \end{remark}
+    \begin{definition}
+        \textbf{Борелевская сигма-алгебра}~--- минимальная $\sigma$-алгебра, которая содержит все открытые множества.
+    \end{definition}
+    \begin{example}
+        Дискретное вероятностное пространство: $\Omega=\{\omega_i\}_{i=1}^N$, $A=2^\Omega$, $P(\{\omega_i\})=p_i$, $\sum p_i=1$. Тогда $P(A)$~--- сумма вероятностей элементов $A$.
+    \end{example}
+    \begin{example}
+        Геометрическая вероятность: $\Omega\subset\mathbb R^n$, измеримо по Лебегу, $\mu A<+\infty$, $\A$ состоит из измеримых по Лебегу множеств, $P(A)=\frac{\mu A}{\mu\Omega}$. Обычно при этом $\mathbb R^n$ не более чем трёхмерно.
+    \end{example}
+    \paragraph{Свойства вероятности.}
+    \begin{property}
+        $$
+        \forall A,B\in\A~A\subset B\Rightarrow P(A)\leqslant P(B)
+        $$
+    \end{property}
+    \begin{proof}
+        Понятно, что $B\setminus A\in\A$. Тогда
+        $$
+        B=A\sqcup(B\setminus A)\Rightarrow P(B)=P(A)+P(B\setminus A)\geqslant P(A)
+        $$
+    \end{proof}
+    \begin{corollary}
+        $$\forall A\in\A~P(A)\leqslant1$$
+    \end{corollary}
+    \begin{property}
+        $$
+        P(A)=1-P(\overline A)
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        P(A+B)=P(A)+P(B)-P(AB)
+        $$
+    \end{property}
+    \begin{proof}
+        $$
+        B=(B\setminus AB)\sqcup AB\Rightarrow P(B)=P(B\setminus AB)+P(AB)
+        $$
+        Тогда
+        $$
+        P(A+B)=P(A)+P(B\setminus AB)=P(A)+P(B)-P(AB)
+        $$
+    \end{proof}
+    \begin{claim}[Формула включений-исключений]
+        $$
+        P(A_1+\cdots+A_n)=\sum\limits_{i=1}^nP(A_i)-\sum\limits_{\substack{i,j=1\\i<j}}^nP(A_iA_j)+\sum\limits_{\substack{i,j,k=1\\i<j<k}}^nP(A_iA_jA_k)-\cdots+(-1)^nP(A_1\cdots A_n)
+        $$
+    \end{claim}
+    \begin{proof}
+        Мне лень это писать, докажите сами по индукции.
+    \end{proof}
+    \begin{claim}
+        $$
+        P\left(\bigcup\limits_iA_i\right)\leqslant\sum\limits_i P(A_i)
+        $$
+    \end{claim}
+    \begin{proof}
+        Пусть $B_1=A_1$, $B_2=A_2\overline{A_1}$, $B_3=A_3\overline{A_1\cup A_2}$ и так далее. Тогда
+        $$
+        \bigcup\limits_iA_i=\bigsqcup\limits_iB_i
+        $$
+        При этом $B_i\subset A_i$, а значит
+        $$
+        \sum\limits_i P(A_i)\geqslant\sum\limits_i P(B_i)
+        $$
+    \end{proof}
+    \begin{theorem}
+        Пусть $(\Omega;\A;P)$~--- вероятностное пространство. Тогда следующие утверждения равносильны:
+        \begin{enumerate}
+            \item $P$ счётно-аддитивна.
+            \item $P$ конечно-аддитивна и $\forall \{B_i\}_{i=1}^\infty:B_{i+1}\subset B_i$, $B=\bigcap\limits_{i=1}^\infty B_i$ $\lim\limits_{n\to\infty}P(B_i)=P(B)$ (непрерывность сверху).
+            \item $P$ конечно-аддитивна и $\forall \{C_i\}_{i=1}^\infty:C_{i+1}\supset B_i$, $C=\bigcup\limits_{i=1}^\infty C_i$ $\lim\limits_{n\to\infty}P(C_i)=P(C)$ (непрерывность сверху).
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        Равносильность двух непрерывностей тривиально из формул де Моргана.\\
+        Докажем, что из 1 следует 2. Конечная аддитивность есть, докажем непрерывность сверху. Пусть $A_1=B_1\overline{B_2}$, $A_2=B_2\overline{B_3}$ и так далее. Очевидно, $A_i$ несовместны. Также очевидно, что $A_i$ несовместны с $B$. Также заметим, что
+        $$
+        B_n=B\sqcup\bigsqcup\limits_{i=n+1}^\infty A_i
+        $$
+        Отсюда $P(B_n)=P(B)+\sum\limits_{i=n+1}^\infty P(A_i)$, а справа остаток (очевидно, сходящегося) ряда, который стремится к нулю при $n\to\infty$.\\
+        Теперь из 2 докажем 1. Рассмотрим $\{A_i\}_{i=1}^\infty$ несовместные. Очевидно,
+        $$
+        \sum\limits_{i=1}^\infty P(A_i)=\lim\limits_{n\to\infty}\sum\limits_{i=1}^nP(A_i)
+        $$
+        А ещё мы знаем, что
+        $$
+        \bigsqcup\limits_{i=1}^\infty A_i=\bigsqcup\limits_{i=1}^nA_i\sqcup\bigsqcup\limits_{i=n+1}^\infty A_i
+        $$
+        То есть
+        $$
+        \lim\limits_{n\to\infty}P\left(\bigsqcup\limits_{i=1}^nA_i\right)=
+        \lim\limits_{n\to\infty}\left(P\left(\bigsqcup\limits_{i=1}^\infty A_i\right)-P\left(\bigsqcup\limits_{i=n+1}^\infty A_i\right)\right)=
+        P\left(\bigsqcup\limits_{i=1}^\infty A_i\right)-\lim\limits_{n\to\infty}P\left(\bigsqcup\limits_{i=n+1}^\infty A_i\right)
+        $$
+        Второе слагаемое~--- ноль но непрерывности меры, а отсюда счётная аддитивность.
+    \end{proof}
+    \paragraph{Условная вероятность.}
+    \begin{remark}
+        Пусть $|\Omega|=n$, $|A|=k$, $|B|=m$, $|AB|=l$. Если мы знаем, что $B$ произошло, как узнать вероятность того, что произошло $A$? Ну, это
+        $$
+        \frac lm=\frac{l/n}{m/n}=\frac{P(AB)}{P(B)}
+        $$
+    \end{remark}
+    \begin{definition}
+        Пусть $(\Omega;\A;P)$~--- вероятностное пространство, $B\in\A$, $P(B)>0$. Тогда \textbf{условной вероятностью} $A$ при условии $B$ называется
+        $$
+        P(A|B)=\frac{P(AB)}{P(B)}
+        $$
+        Также обозначается $P_B(A)$.
+    \end{definition}
+    \begin{property}
+        Несложно проверить, что условная вероятность является вероятностью.
+    \end{property}
+    \begin{claim}[Произведение вероятностей]
+        Несложно по определению проверить
+        $$
+        P(A_1\cdots A_n)=P(A_1)P(A_2|A_1)P(A_3|A_1A_2)\cdots P(A_n|A_1A_2\cdots A_{n-1})
+        $$
+    \end{claim}
+    \begin{theorem}[Формула полной вероятности]
+        Пусть $A\in\A$, $B_i\in\A$ несовместны, $A\subset\bigsqcup\limits_{i=1}^nB_i$ (обычно объединение равно $\Omega$), и $\forall i\in[0:n]~P(B_i)>0$. Тогда
+        $$
+        P(A)=\sum\limits_{i=1}^nP(A|B_i)P(B_i)
+        $$
+    \end{theorem}
+    \begin{proof}
+        $$
+        P(A)=P\left(A\cap\bigsqcup\limits_{i=1}^nB_i\right)=P\left(\bigsqcup\limits_{i=1}^nA\cap B_i\right)
+        $$
+        Всё.
+    \end{proof}
+    \begin{theorem}[Формула Байеса]
+        Пусть $A,B\in\A$, $P(A)>0$, $P(B)>0$. Тогда
+        $$
+        P(A|B)=\frac{P(B|A)P(A)}{P(B)}
+        $$
+    \end{theorem}
+    \begin{proof}
+        Очевидно из определения.
+    \end{proof}
+    \begin{definition}
+        События $A,B\in\A$ называются \textbf{независимыми}, если
+        $$
+        P(AB)=P(A)P(B)
+        $$
+    \end{definition}
+    \begin{definition}
+        Говорят, что $A_1,A_2,\ldots,A_n\in\A$ \textbf{независимы в совокупности}, если
+        $P(A_1A_2\cdots A_n)=P(A_1)P(A_2)\cdots P(A_n)$
+    \end{definition}
+    \begin{property}
+        Несложно проверить, что независимость событий $A,B$ равносильна $P(A|B)=P(A)$.
+    \end{property}
+    \begin{property}
+        Независимые в совокупности события попарно независимы. Обратное неверно.
+    \end{property}
+    \begin{definition}
+        Пусть у нас есть два вероятностных пространства: $(\Omega_1,\A_1;P_1)$ и $(\Omega_2,\A_2;P_2)$. Рассмотрим вот такое вероятностное пространство: $(\Omega,\A;P)$, где $\Omega=\Omega_1\times\Omega_2$, $\A$~--- минимальная $\sigma$-алгебра, включающая в себя $\A_1\times\A_2$,
+        $$
+        P((A_1;A_2))=P_1(A_1)P_2(A_2)
+        $$
+        Тогда $(\Omega_1,\A_1;P_1)$ и $(\Omega_2,\A_2;P_2)$~--- независимые испытания.
+    \end{definition}
+    \begin{example}
+        Схема Бернулли: $\Omega_1=\{0;1\}$, $\A_1=2^{\Omega_1}$, $P_1(1)=p$, $P_1(0)=1-p=q$. Хочется рассмотреть эту штуку в степени $n$ (то есть $n$ одинаковых независимых испытаний). Тогда что у нас получается для $\omega\in\Omega=\Omega_1^n$?
+        $$
+        P(\omega)=\sum\limits_{i=1}^nP_i(\omega_i)=p^{\sum\omega_i}q^{n-\sum\omega_i}
+        $$
+        Посчитаем тут такую вероятность: пусть $S_n$~--- количество успехов в $n$ испытаниях? Посчитаем вероятность того, что $S_n=k$? Очевидно, оно равно $\Cnk nkp^kq^{n-k}$.
+    \end{example}
+    \begin{claim}
+        Пусть $k^*$~--- наиболее вероятное число успехов в Бернуллиевских испытаниях. Тогда
+        $$
+        k^*=\begin{cases}
+            p(n-1)\text{ или }p(n-1)+1 & p(n-1)\in\mathbb N\\
+            \lceil p(n-1)-1\rceil & p(n-1)\notin\mathbb N
+        \end{cases}
+        $$
+    \end{claim}
+    \begin{proof}
+        Давайте рассмотрим вот такое частное:
+        $$
+        \frac{P(S_n=k+1)}{P(S_n=k)}
+        $$
+        Чему оно равно?
+        $$
+        \frac{P(S_n=k+1)}{P(S_n=k)}=\frac{\Cnk n{k+1}p^{k+1}q^{n-k-1}}{\Cnk nkp^kq^{n-k}}=\frac pq\cdot\frac{n-k}{k+1}
+        $$
+        Нам хочется оценить, больше это чем 1 или меньше (это позволит нам найти $K^*$). Ну,
+        $$
+        \frac pq\cdot\frac{n-k}{k+1}>1\Leftrightarrow p(n-k)>q(k+1)\Leftrightarrow pn-pk>k=pk+1-p\Leftrightarrow pn>k+1-p\Leftrightarrow pn+p-1>k
+        $$
+        То есть возрастание достигается при $k<p(n-1)-1$, а иначе убывание. Тогда где экстремум? Рассмотрим $k=p(n-1)-1$. Если это целое число, то там $P(S_n=k+1)=P(S_n=k)$, и это самое $k$ даёт значение больше остальных. То есть $k^*=p(n-1)-1$ или $k^*=p(n-1)$.\\
+        А что если оно не целое? То надо куда-то округлить. А именно вверх, потому что тогда оно больше, чем следующее, а предыдущее меньше его.
+    \end{proof}
+    \begin{example}
+        Пусть $n=10000$, $p=\frac1{10000}$. Давайте посчитаем $P(S_n>3)$. Ну, это
+        $$
+        1-P(S_n\leqslant 3)=1-q^{10000}-10000pq^{10000-1}-\Cnk{10000}2p^2q^{10000-2}-\Cnk{10000}3p^3q^{10000-3}
+        $$
+        Фиг мы такое посчитаем.
+    \end{example}
+    \begin{example}
+        Или если взять $p=q=0.5$, то при $n=5\cdot10^3$ мы не сможем нормально посчитать $P(S_n=2349)$.
+    \end{example}
+    \begin{remark}
+        Ну и как такое считать?
+    \end{remark}
+    \begin{theorem}[Теорема Пуассона]
+        Пусть у нас есть несколько схем Бернулли. В первой одно испытание и вероятность успеха $p_1$, во второй~--- 2 и вероятность успеха $p_2$, в $n$-ной $n$ испытаний и вероятность $p_n$. Пусть $np_n\underset{n\to\infty}\longrightarrow\lambda>0$. Тогда
+        $$
+        P(S_n=k)\underset{n\to\infty}\longrightarrow e^{-\lambda}\frac{\lambda^k}{k!}
+        $$
+    \end{theorem}
+    \begin{proof}
+        Известно,
+        $$
+        P(S_n=k)=\frac1{k!}n(n-1)\cdots(n-k+1)p_n^k(1-p_n)^{n-k}
+        $$
+        Известно, что
+        $$
+        np_n=\lambda+o(1)\Rightarrow p_n=\frac\lambda n+o\left(\frac1n\right)
+        $$
+        Тогда
+        $$
+        P(S_n=k)=\frac1{k!}\cancelto1{n(n-1)\cdots(n-k+1)\frac1{n^k}}\cancelto{\lambda^k}{(\lambda+o(1))^k}\frac{\cancelto{e^{-\lambda}}{\left(1-\frac\lambda n+o\left(\frac1n\right)\right)^n}}{\cancelto1{\left(1-\frac\lambda n+o\left(\frac1n\right)\right)^k}}\underset{n\to\infty}\longrightarrow e^{-\lambda}\frac{\lambda^k}{k!}
+        $$
+    \end{proof}
+    \begin{lemma}
+        Пусть $p\in(0;1)$, $H(x)=x\ln\frac xp+(1-x)\ln\frac{1-x}{1-p}$. Пусть $p^*=\frac kn$. Пусть $k\rightarrow+\infty$, $n-k\rightarrow+\infty$. Тогда
+        $$
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np^*(1-p^*)}}\exp(-nH(p^*))
+        $$
+    \end{lemma}
+    \begin{proof}
+        Мы знаем формулу Стирлинга
+        $$
+        n!\sim\sqrt{2\pi n}n^ne^{-n}
+        $$
+        Тогда
+        \[\begin{split}
+            P(S_n=k)&=\frac{\sqrt{2\pi n}n^ne^{-n}}{\sqrt{2\pi\underbrace{k}_{np^*}}k^ke^{-k}\sqrt{2\pi\underbrace{(n-k)}_{n(1-p^*)}}(n-k)^{n-k}e^{-n+k}}p^k(1-p)^{n-k}=\\
+            &=\frac{n^np^k(1-p)^{n-k}}{\sqrt{2\pi np^*(1-p^*)}k^k(n-k)^{n-k}}=\frac1{\sqrt{2\pi np^*(1-p^*)}}\exp\underbrace{\ln\frac{n^np^k(1-p)^{n-k}}{k^k(n-k)^{n-k}}}_L
+        \end{split}\]
+        При этом
+        \[\begin{split}
+            L&=\ln\frac{n^np^k(1-p)^{n-k}}{k^k(n-k)^{n-k}}=\ln\frac{n^np^k(1-p)^n(n-k)^k}{k^k(n-k)^n(1-p)^k}=\\
+            &=\ln\left(\underbrace{\frac{n^n}{(n-k)^n}}_{(1-p^*)^{-n}}(1-p)^n\right)+\ln\frac{p^k(n-k)^k}{(np^*)^k(1-p)^k}=\\
+            &=n\ln\frac{1-p}{1-p^*}+k\ln\frac{p}{p^*}+k\ln\frac{(n-k)}{n(1-p)}=n\ln\frac{1-p}{1-p^*}+k\ln\frac{p}{p^*}+k\ln\frac{1-p^*}{1-p}=\\
+            &=-(n-k)\ln\frac{1-p^*}{1-p}-k\ln\frac{p^*}{p}=-n\underbrace{\left(p^*\ln\frac{p^*}{p}+(1-p^*)\ln\frac{1-p^*}{1-p}\right)}_{H(p^*)}
+        \end{split}\]
+        Это ли не то, что нам надо?
+    \end{proof}
+    \begin{lemma}
+        $$
+        H(x)=\frac{(x-p)^2}{2p(1-p)}+O((x-p)^3)
+        $$
+    \end{lemma}
+    \begin{proof}
+        $$
+        H'(x)=\ln\frac xp+x\cdot\frac px\cdot\frac1p-\ln\frac{1-x}{1-p}-1=\ln\frac xp-\ln\frac{1-x}{1-p}
+        $$
+        $$
+        H''(x)=\frac1x+\frac1{1-x}
+        $$
+        Тогда $H'(p)=0$, $H''(p)=\frac1{p(1-p)}$. По Тейлору получаем искомое.
+    \end{proof}
+    \begin{theorem}[Локальная теорема Муавра~--- Лапласа]
+        Пусть $p\in(0;1)$, $H(x)=x\ln\frac xp+(1-x)\ln\frac{1-x}{1-p}$. Пусть $p^*=\frac kn$. Пусть $k\rightarrow+\infty$, $n-k\rightarrow+\infty$.\\
+        Пусть $k=np=p(n^{2/3})$. Тогда
+        $$
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-\frac{(k-np)^2}{2np(1-p)}\right)
+        $$
+    \end{theorem}
+    \begin{proof}
+        Известно
+        $$
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp(-nH(p^*))
+        $$
+        Отсюда
+        $$
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp(-n\frac{(p^*-p)^2}{2p(1-p)}+n\cdot O((p^*-p)^3))
+        $$
+        Заметим, что $\frac kn-p=o(n^{-1/3})$. Тогда
+        $$
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-n\frac{(p-k/n)^2}{2p(1-p)}+O(n(k/n-p)^3)\right)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-n\frac{(np-k)^2}{2p(1-p)n^2}+o(1)\right)
+        $$
+        Что и требовалось доказать.
+    \end{proof}
+    \begin{theorem}[Интегральная теорема Муавра~--- Лапласа]
+        Пусть
+        $$
+        \Phi(x)=\frac1{\sqrt{2\pi}}\int\limits_{-\infty}^xe^{-\frac{t^2}2}~\mathrm dt
+        $$
+        Далее мы будем называть эту функцию функцией стандартного нормального распределения. Тогда
+        $$
+        \sup\limits_{-\infty<x_1<x_2<+\infty}\left|P\left(x_1\leqslant\frac{S_n-np}{\sqrt{npq}}\leqslant x_2\right)(\Phi(x_2)-\Phi(x_1))\right|\underset{n\to\infty}\longrightarrow0
+        $$
+        Иными словами
+        $$
+        P\left(x_1\leqslant\frac{S_n-np}{\sqrt{npq}}\leqslant x_2\right)\approx\frac1{\sqrt{2\pi}}\int\limits_{x_1}^{x_2}e^{-\frac{t^2}2}~\mathrm dt
+        $$
+        Пока без доказательства.
+    \end{theorem}
+\end{document}
