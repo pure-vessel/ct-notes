@@ -10,6 +10,8 @@
 \newcommand{\B}{{\mathfrak B}}
 
 \begin{document}
+    \tableofcontents
+    \section{Основы теории вероятности.}
     \paragraph{Вероятностное пространство.}
     \begin{definition}
         Пусть $\Omega$~--- множество, тогда $\A\in 2^\Omega$ называется \textbf{алгеброй}, если
@@ -228,6 +230,7 @@
         $$
         Тогда $(\Omega_1,\A_1;P_1)$ и $(\Omega_2,\A_2;P_2)$~--- независимые испытания.
     \end{definition}
+    \paragraph{Схема Бернулли.}
     \begin{example}
         Схема Бернулли: $\Omega_1=\{0;1\}$, $\A_1=2^{\Omega_1}$, $P_1(1)=p$, $P_1(0)=1-p=q$. Хочется рассмотреть эту штуку в степени $n$ (то есть $n$ одинаковых независимых испытаний). Тогда что у нас получается для $\omega\in\Omega=\Omega_1^n$?
         $$
@@ -369,4 +372,268 @@
         $$
         Пока без доказательства.
     \end{theorem}
+    \begin{remark}
+        Оценка теоремы Пуассона.\\
+        Обычно в задачах $np_n$ не стремится, а просто равно $\lambda>0$. Тогда
+        $$
+        \sum\limits_{k=0}^\infty \left|P(S_n=k)-e^{-\lambda}\frac{\lambda^k}{k!}\leqslant\frac\lambda n\right|\leqslant\frac{2\lambda}n\min\{2;\lambda\}
+        $$
+        Оценка локальной теоремы Лапласа. Если $|p^*-p|\leqslant \frac12 mn\min\{p;q\}$, то
+        $$
+        P(S_n=k)=\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-\frac{(k-np)^2}{2np(1-p)}\right)(1+\eps(k;n))
+        $$
+        Где
+        $$
+        \eps(k;n)=\exp\left(\theta\frac{|k-np|^3}{3n^2p^2q^2}+\frac1{npq}\left(\frac16+|k-np|\right)\right)\qquad |\theta|<1
+        $$
+        Оценка интегральной теоремы Лапласа.
+        $$
+        \sum\limits_x\left|P\left(\frac{S_n-np}{\sqrt{npq}}\leqslant x\right)-\Phi(x)\right|\leqslant\frac{p^2+q^2}{\sqrt{npq}}
+        $$
+    \end{remark}
+    \begin{example}
+        Пусть у нас есть два узла связи на 2000 пользователей в каждом. И у нас есть канал связи, который пропускает $N$. Хочется минимизировать $N$, но так, чтобы вероятность перегрузки была меньше $\frac1{100}$. Будем предполагать, что люди пользуются данным каналом связи в течение двух минут из одного часа, то есть каждый пользователь может пользоваться каналом в данный момент с вероятностью $p=\frac1{30}$.\\
+        Ну так и что мы хотим по сути? Мы хотим $P(S_{2000}>N)<\frac1{100}$, что равносильно $P(S_{2000}\leqslant N)\geqslant\frac{99}{100}$.\\
+        Используем Пуассона: $np\approx 6.67$.
+        $$
+        \sum\limits_{k=0}^Ne^{-\lambda}\frac{\lambda^k}{k!}
+        $$
+        Это мы хрен посчитаем, но, короче, получится $N=87$.\\
+        А если применить интегральную теорему Муавра~--- Лапласа, то получим мы
+        $$
+        N=\left\lceil q_{\frac{99}{100}}\sqrt{npq}+np\right\rceil=86
+        $$
+        Где $q_{\frac{99}{100}}$~--- такое число, что $\Phi(q_{\frac{99}{100}})=\frac{99}{100}$.
+    \end{example}
+    \begin{definition}
+        Если $\alpha\in(0;1)$ и $\Phi(q_\alpha)=\alpha$, то $q_\alpha$ называется \textbf{квантилем порядка $\alpha$}.
+    \end{definition}
+    \section{Случайные величины.}
+    \paragraph{Распределение случайных величин, функция распределения случайных величин.}
+    \begin{definition}
+        \textbf{Борелевская сигма-алгебра}~--- это минимальная сигма-алгебра, содержащая все открытые множества.
+    \end{definition}
+    \begin{definition}
+        Пусть $\Omega;\A$~--- множество с сигма-алгеброй. Тогда такое $\xi\colon\Omega\to\mathbb R$, что $\forall B\in\B~\xi^{-1}(B)\in\A$, называется \textbf{случайной величиной}.
+    \end{definition}
+    \begin{definition}
+        Пусть $(\Omega;\A;P)$~--- вероятностное пространство, $\xi$~--- случайная величина. Тогда распределение $\xi$~--- функция
+        $$
+        P_\xi\colon\substack{\B\to\mathbb R\\B\mapsto P(\{\omega\mid \xi(\omega)\in B\})}
+        $$
+    \end{definition}
+    \begin{remark}
+        $P(\{\omega\mid \xi(\omega)\in B\})$ обозначается $P(\xi\in B)$.
+    \end{remark}
+    \begin{property}
+        $P_\xi$~--- вероятность на $(\mathbb R;\B)$.
+    \end{property}
+    \begin{definition}
+        Пусть $\xi$~--- случайная величина. Тогда
+        $$
+        F_\xi(t)=P(\xi\leqslant t)
+        $$
+        называется \textbf{функцией распределения} $\xi$
+    \end{definition}
+    \begin{property}
+        Очевидно, функция распределения нестрого возрастает.
+    \end{property}
+    \begin{property}
+        Не менее очевидно, $F_\xi(+\infty)=1$, $F_\xi(-\infty)=0$;
+    \end{property}
+    \begin{property}
+        Функция распределения непрерывна справа.
+    \end{property}
+    \begin{proof}
+        Возьмём $F(t+\eps_n)-F(t)$. Она равна $P(t<\xi\leqslant t+\eps_n)$. При $\eps_n\to0$, получим, что аргумент $P$ стремится к $\varnothing$, а значит $P(t<\xi\leqslant t+\eps_n)$ стремится к нулю.
+    \end{proof}
+    \begin{lemma}
+        Пусть $P\colon\B\to\mathbb R$~--- некоторая функция. Тогда
+        \[\begin{split}
+            &\forall\{B_n\}_{n=1}^\infty\subset\B:B_{n+1}\subset B_n~P(B_n)\underset{n\to\infty}\rightarrow P\left(\bigcap\limits_{n=1}^\infty B_n\right)\Leftrightarrow\\
+            \Leftrightarrow&\forall\{C_n\}_{n=1}^\infty\subset\B:C_{n+1}\subset C_n,\bigcap\limits_{n=1}^\infty C_n=\varnothing~P(C_n)\underset{n\to\infty}\rightarrow0
+        \end{split}\]
+    \end{lemma}
+    \begin{proof}
+        Следствие слева направо очевидно. Наоборот. Пусть
+        $$
+        \bigcap\limits_{n=1}^\infty B_n=B
+        $$
+        Возьмём $C_n=B_n\overline{B}$. Тогда, очевидно, $C_n$ подходят под условие справа, а значит $P(C_n)\longrightarrow0$.\\
+        Также несложно заметить, что $P(B_n)=P(C_n)+P(B)$, а отсюда получим $P(B_n)\longrightarrow P(B)$.
+    \end{proof}
+    \begin{theorem}
+        Пусть $F$~--- монотонно возрастающая непрерывная слева функция, равная нулю в $-\infty$ и единице в $+\infty$. Тогда существует вероятностное пространство и случайная величина в нём, что $F$~--- её функция распределения.
+    \end{theorem}
+    \begin{proof}
+        Пусть $\Omega=\mathbb R$, $\A$~--- алгебра, состоящая из множеств вида $\bigsqcup\limits_{k=1}^n(a_k;b_k]$ или $(-\infty;b)$ или $(a;\infty)$ или $\mathbb R$.\\
+        $$
+        P\left(\bigsqcup\limits_{k=1}^n(a_k;b_k]\right)=\sum\limits_{k=1}^nF(b_k)-F(a_k)
+        $$
+        $$
+        P((-\infty;b))=F(b)\qquad P((a;+\infty))=1-F(a)\qquad P(\mathbb R)=1
+        $$
+        Получим вероятностное пространство в широком смысле (разве что непрерывность сверху надо проверить). Ну, проверим её, используя лемму. Пусть, не умаляя общности, $A_n=(a_{n,1};a_{n,2}]$, $A_{n+1}\subset A_n$ и пересечение всех пусто.\\
+        Из непрерывности $F$ справа следует, что существует $B_n=(b_{n,1};b_{n,2}]$, где $\Cl B_n\subset A_n$ и $P(A_n)-P(B_n)\leqslant\eps 2^{-n}$. Тогда пересечение всех $B_n$ также пусто.\\
+        Предположим, что существует $M$, такое что $\forall n~A_n\in[-M;M]$. $[-M;M]$~--- компакт, следовательно. Заметим, что
+        $$
+        [-M;M]=\bigcup\limits_{k=1}^\infty [-M;M]\setminus\Cl B_n
+        $$
+        Справа~--- открытое покрытие компакта, значит из него можно вытащить конечное подпокрытие, то есть пересечение какого-то конечного числа $B_n$ пусто. Пусть это пересечение от $1$ до $n_0$. Тогда
+        $$
+        P(A_{n_0})=P(A_{n_0}\setminus\bigcap\limits_{k=1}^{n_0}B_k)+P\left(\bigcap\limits_{k=1}^{n_0}B_k\right)
+        $$
+        Отсюда $P\left(\bigcap\limits_{k=1}^{n_0}B_k\right)=0$. А
+        $$
+        P(A_{n_0}\setminus\bigcap\limits_{k=1}^{n_0}B_k)=P(\bigcap\limits_{k=1}^{n_0}A_{n_0}\setminus B_k)\leqslant P(\bigcap\limits_{k=1}^{n_0}A_k\setminus B_k)\leqslant\sum\limits_{k=1}P(A_n)-P(B_k)\leqslant\eps\sum\limits{k=1}^{n_0} 2^{-n}<\eps
+        $$
+        Если же мы не находимся в промежутке $[-M;M]$, то можно указать такие $M_1$ и $M_2$, что $P((-\infty;M_1)\cup(M_2;+\infty))<\frac\eps2$. Тогда
+        $$
+        P(A_n)=P(A_n[M_1;M_2])+P(A_n\overline{[M_1;M_2]})
+        $$
+        Левую часть суммы мы разобрали, а правая мала т.к. $M_2$, что $P((-\infty;M_1)\cup(M_2;+\infty))<\frac\eps2$.\\
+        Осталось предъявить случайную величину $\xi(\omega)=\omega$.
+    \end{proof}
+    \paragraph{Типы распределений.}
+    \subparagraph{Дискретные случайные величины и распределения.}
+    \begin{definition}
+        Случайная величина $\xi$ называется \textbf{дискретной}, если существует такое не более чем счётное множество $E$, что $P_\xi(E)=1$.
+    \end{definition}
+    \begin{example}
+        Вырожденное: $P(\xi=c)=1$. Обозначают $I(c)$ или $I_c$.
+    \end{example}
+    \begin{example}
+        Распределение Бернулли: $P(\xi=0)=p$, $P(\xi=1)=q=1-p$. Обозначение: $\operatorname{Bern}(p)$.
+    \end{example}
+    \begin{example}
+        Биномиальное распределение: $P(\xi=k)=\Cnk nk p^kq^{n-k}$. Обозначение: $\operatorname{Bin}(n;p)$,
+    \end{example}
+    \begin{example}
+        Отрицательное биномиальное распределение: $\xi=(\min n:S_n=r)-r$, где $r\in\mathbb n$. То есть
+        $$
+        P(\xi=k)=\Cnk{k+r-1}{r-1}p^{r}q^{k}
+        $$
+        Обозначение: $\operatorname{NB}(r;p)$. Также это обобщается на произвольное $r$ при помощи гамма-функции.\\
+        В случае $r=1$ распределение называется геометрическим. Геометрическое распределение~--- количество неудач до первого успеха.
+    \end{example}
+    \begin{example}
+        Распределение Пуассона:
+        $$
+        P(\xi=k)=e^{-\lambda}\frac{\lambda^k}{k!}\qquad k\in\mathbb Z_+
+        $$
+        Обозначение: $\operatorname{Pois}(\lambda)$.
+    \end{example}
+    \begin{definition}
+        \textbf{Носителем случайной величины} $\xi$ называется минимально по включению замкнутое множество $E$, удовлетворяющее условию $P(\xi\in E)=1$.
+    \end{definition}
+    \subparagraph{Абсолютно непрерывные случайные величины и распределения.}
+    \begin{definition}
+        Величина $\xi$ (или её случайно распределение) называется \textbf{абсолютно непрерывной},  если существует $p\in L(\mathbb R\to\mathbb R)$ с неотрицательными значениями такая что $P(\xi\in B)=\int_BP(x)~\mathrm dx$. В таком случае $p$ называется \textbf{плотностью} $\xi$.
+    \end{definition}
+    \begin{property}
+        В таком случае
+        $$F(t)=\int\limits_{-\infty}^tp(x)~\mathrm dx$$
+        То есть плотность почти всюду равна производной функции распределения.
+    \end{property}
+    \begin{property}
+        $P(\xi=c)=0$.
+    \end{property}
+    \begin{property}
+        Функция распределения абсолютно непрерывной случайной величины непрерывна на $\mathbb R$.
+    \end{property}
+    \begin{property}
+        $$P(x_0\leqslant\xi\leqslant x_0+h)=P(x_0<\xi<x_0+h)=F(x_0+h)-F(x_0)=p(x_0)h+o(h)$$
+    \end{property}
+    \begin{property}
+        Пусть $E=\supp p$. Тогда $E$ является носителем по нашему прошлому определению.
+    \end{property}
+    \begin{example}
+        $$
+        p(x)=\frac1{b-a}\chi_{[a;b]}
+        $$
+        Тогда
+        $$
+        F(x)=\begin{cases}
+            0 & x<a\\
+            \frac{x-a}{b-a} & x\in[a;b)\\
+            1 & x\geqslant b
+        \end{cases}
+        $$
+        Обозначение: $U[a;b]$.
+    \end{example}
+    \begin{claim}
+        Пусть $\xi=U[a;b]$, $c>0$. Тогда $\eta=c\xi+d=U[ac+d;bc+d]$
+    \end{claim}
+    \begin{proof}
+        $$
+        P(\eta\leqslant t)=P(c\xi+d\leqslant t)=P\left(\xi\leqslant\frac{t-d}c\right)
+        $$
+        Несложно проверить, что это именно $U[ac+d;bc+d]$.
+    \end{proof}
+    \begin{example}
+        Нормальное (гауссовское) распределение: $\operatorname{N}(\mu;\sigma^2)$:
+        $$
+        p(x)=\frac1{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+        $$
+        \begin{figure}[H]
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width = 15cm, height = 5cm,
+                    trig format plots = rad,
+                    grid = both,
+                    xmin = -2,
+                    xmax = 2,
+                    ymin = 0,
+                    ymax = 1,
+                    axis equal,
+                    axis x line = middle,
+                    axis y line = middle,
+                    axis line style = {->, color=black},
+                    xtick distance = 1,
+                    ytick distance = 1,
+                    minor tick num = 3,
+                    xlabel={$x$},
+                    ylabel={$p(x)$},
+                    ]
+                    \addplot[domain=-2:2,samples=100]{1/sqrt(pi/2)*e^(-x^2*2)};
+                \end{axis}
+            \end{tikzpicture}
+        \end{figure}\noindent
+        $\operatorname{N}(0;1)$~--- стандартное нормальное распределение. Ещё оно обозначается $\Phi(x)$.
+    \end{example}
+    \begin{claim}
+        Пусть $\xi=\operatorname{N}(\mu;\sigma^2)$, $\eta=a\xi+b$. Тогда
+        $\eta=\operatorname{N}(a\mu_b;a^2\sigma^2)$.
+    \end{claim}
+    \begin{proof}
+        Пусть $a>0$. Обозначим $y=ax+b$. Тогда
+        \[\begin{split}
+            P(\eta\leqslant t)&=P(a\xi+b\leqslant t)=P(\xi\leqslant\frac{t-b}a)=F)\xi(\frac{t-b}a)=\frac1{2\pi\sigma^2}\int\limits_{-\infty}^{\frac{t-b}a}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)~\mathrm dx=\\
+            &=\frac1{\sqrt{2\pi\sigma^2a^2}}\int\limits_{-\infty}^t\exp\left(-\frac{(\frac{y-b}a-\mu)^2}{2\sigma^2}\right)=\frac1{\sqrt{2\pi\sigma^2a^2}}\int\limits_{-\infty}^t\exp\left(-\frac{(y-b-a\mu)^2}{2a^2\sigma^2}\right)
+        \end{split}\]
+        Что и требовалось доказать. При $a<0$ аналогично.
+    \end{proof}
+    \begin{corollary}
+        Если $\xi=\operatorname{N}(0;1)$, то $\sigma\xi+\mu=\operatorname{N}(\mu;\sigma^2)$.
+    \end{corollary}
+    \begin{example}
+        Распределение Коши: $\operatorname{Cauchy}(x_0;\gamma)$.
+        $$
+        p(x)=\frac1{\pi\gamma}\cdot\frac1{1+\left(\frac{x-x_0}\gamma\right)^2}
+        $$
+        Тогда
+        $$
+        F(t)=\frac1{\pi\gamma}\int\limits_{-\infty}^t\frac{\mathrm dx}{1+\left(\frac{x-x_0}\gamma\right)^2}=\frac1\pi\atan\left(\frac{t-x_0}\gamma\right)+\frac12
+        $$
+    \end{example}
+    \begin{example}
+        Экспоненциальное распределение: $\operatorname{Exp}(\lambda)$.
+        $$
+        p(x)=\lambda e^{-\lambda x}\chi_{\mathbb R_+}
+        $$
+        Тогда
+        $$
+        F(t)=1-e^{-\lambda t}\chi_{\mathbb R_+}
+        $$
+    \end{example}
 \end{document}
