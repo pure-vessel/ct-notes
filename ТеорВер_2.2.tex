@@ -409,6 +409,7 @@
         Если $\alpha\in(0;1)$ и $\Phi(q_\alpha)=\alpha$, то $q_\alpha$ называется \textbf{квантилем порядка $\alpha$}.
     \end{definition}
     \section{Случайные величины.}
+    \subsection{Одномерные случайные величины.}
     \paragraph{Распределение случайных величин, функция распределения случайных величин.}
     \begin{definition}
         \textbf{Борелевская сигма-алгебра}~--- это минимальная сигма-алгебра, содержащая все открытые множества.
@@ -636,5 +637,129 @@
         F(t)=1-e^{-\lambda t}\chi_{\mathbb R_+}
         $$
     \end{example}
-    
-\end{document}
+    \begin{example}
+        $\Gamma$-распределение: $\Gamma(k,\lambda)$. Сначала для $k\in\mathbb N$, $\lambda>0$.
+        $$
+        p(x)=\frac{\lambda^kx^{k-1}}{(k-1)!}e^{-\lambda x}\qquad x\geqslant 0
+        $$
+        Для $k=\alpha>0$ заменим $(k-1)!$ на $\Gamma(\alpha)$.
+    \end{example}
+    \begin{claim}
+        Пусть $\xi$~--- абсолютно непрерывная случайная величина с плотностью $p_\xi$. Пусть $g\in C^{(1)}(\mathbb R\to\mathbb R)$~--- строго монотонна. Пусть $\eta=g(\xi)$. Тогда
+        $$
+        p_\eta(y)=p_\xi(g^{-1}(y))\left|\frac{\mathrm d}{\mathrm dy}g^{-1}(y)\right|=p_\xi(g^{-1}(y))\left|\frac1{g'(g^{-1}(y))}\right|
+        $$
+    \end{claim}
+    \begin{proof}
+        Во-первых, у условиях теоремы $g^{-1}$ существует. Также второе равенство следует из первого в силу теоремы об обратном отображении.\\
+        Не умаляя общности, $g$ строго возрастает. Тогда
+        $$
+        F_\eta(y)=P(g(\xi)\leqslant y)\overset{g\uparrow}=P(\xi\leqslant g^{-1}(y))=\int\limits_{-\infty}^{g^{-1}(y)}p_\xi(x)~\mathrm dx
+        $$
+        Продифференцировав это равенство по $y$ получим искомое равенство.
+    \end{proof}
+    \subparagraph{Сингулярные случайные величины и распределения.}
+    \begin{definition}
+        $x$ называется \textbf{точкой роста} монотонно возрастающей функции $f$, если $\forall\eps>0~f(x+\eps)-f(x-\eps)>0$.
+    \end{definition}
+    \begin{definition}
+        Случайная величина $\xi$ (и её распределение) называются \textbf{сингулярными}, если $F_\xi\in C(\mathbb R)$ и мера множества точек $F_\xi$ роста равна нулю.
+    \end{definition}
+    \begin{example}
+        Функция Кантора~--- функция, которая выглядит так: в нуле она равна нулю, в единице~--- единице, а во всех остальных точках строится так: отрезок $[0;1]$ делится на три части и в средней части равна среднему значению краёв (т.е. $\frac12$). И так далее.\\
+        Оня является функцией распределения сингулярной случайной величины.
+    \end{example}
+    \begin{theorem}[Теорема Лебега]
+        Пусть $F$~--- функция распределения. Тогда существуют единственные $F_{\mathrm{disc}}$, $F_{\mathrm{ac}}$ и $F_{\mathrm{sing}}$, которые в сумме дают $F$.\\
+        Без доказательства.
+    \end{theorem}
+    \subsection{Многомерные случайные величины.}
+    \paragraph{Распределение многомерных случайных величин.}
+    \begin{definition}
+        Вектор $\xi$ называется \textbf{случайным вектором} или \textbf{многомерной случайной величиной}, если $\xi_i$~--- случайная величина.
+    \end{definition}
+    \begin{definition}
+        \textbf{Распределением случайного вектора} называется функция $P_\xi$, определённая на $\B^n$, заданная так:
+        $$
+        P_\xi(B_1;\ldots;B_n)=P(\{(\omega_1;\ldots;\omega_n)\mid\xi_1(\omega_1)\in B_1\land\cdots\land \xi_n(\omega_n)\in B_n\})
+        $$
+        Последнее обычно обозначается так: $P(\xi_1\in B_1,\xi_2\in B_2;\ldots;\xi_n\in B_n)$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Функцией распределения случайного вектора} $\xi$ называется функция
+        $$
+        F_\xi(t_1;\ldots;t_n)=P_\xi(\forall i\in[1:n]~\xi_i\leqslant t_i)
+        $$
+    \end{definition}
+    \begin{claim}
+        \[\begin{split}
+            P(\forall i\in[1:n]~&a_i<\xi_i\leqslant b_i)=\\
+            &F(b_1;b_2;\ldots;b_n)\\
+            &-F(a_1;b_2;\ldots;b_n)-F(b_1;a_2;\ldots;b_n)-\cdots-F(b_1;b_2;\ldots;a_n)\\
+            &+\vdots\\
+            &\pm F(a_1;a_2;\ldots;a_n)
+        \end{split}\]
+        То есть в этой сумме участвует $F$ от $a_i$ и $b_i$ в произвольном сочетании, при этом минус стоит там, где нечётное количество $a_i$.
+    \end{claim}
+    \begin{proof}
+        $$
+            P(\forall i\in[1:n]~a_i<\xi_i\leqslant b_i)=P(\xi_1\leqslant b_1,\forall i\in[2:n]~a_i<\xi_i\leqslant b_i)-P(a_1\geqslant\xi_1,\forall i\in[2:n]~a_i<\xi_i\leqslant b_i)
+        $$
+        Проведя такую операцию несколько раз, получим искомое.
+    \end{proof}
+    \begin{remark}
+        Если ввести обозначение $\Delta_{a_i;b_i}F=F(\cdot;\ldots;b_i;\cdot;\ldots;\cdots)-F(\cdot;\ldots;a_i;\cdot;\ldots;\cdots)$, то арифметическая сумма из утверждения выше записывается как
+        $$
+        \Delta_{a_1;b_1}\Delta_{a_2;b_2}\cdots\Delta_{a_n;b_n}F
+        $$
+    \end{remark}
+    \begin{property}
+        $$F(+\infty;\cdots;+\infty)=1$$
+        $$F(-\infty;\cdots;-\infty)=0$$
+        $F$ непрерывна справа.
+    \end{property}
+    \begin{theorem}
+        Если функция распределения удовлетворяет трём свойствам выше, то она является функцией распределения некоторого случайного вектора.
+    \end{theorem}
+    \begin{proof}
+        Аналогично одномерному случаю.
+    \end{proof}
+    \begin{definition}
+        Случайный вектор (и его распределение) называется \textbf{дискретным}, если существует не более чем счётное множество $E$ такое что $P(\xi\in E)=1$.
+    \end{definition}
+    \begin{example}
+        Полиномиальное распределение. Пусть $p=(p_1;\ldots;p_m)$, где $\sum p_i=1$. Обозначается $\operatorname{Poly}(n;p)$.\\
+        Физическая интерпретация такая: мы бросаем кубик с $m$ гранями $n$ раз. Пусть $S_{n,j}$~--- количество исходов типа $j$ в $n$ независимых испытаниях. Тогда искомая случайная величина обладает распределением
+        $$
+        P(S_{n,1}\in B_1;S_{n,2}\in B_2;\ldots;S_{n,m}\in B_m)
+        $$
+        Рассмотрим $P(S_{n,1}=k_1;S_{n,2}=k_2;\ldots;S_{n,m}=k_m)$, где $\sum k_m=n$. Чему равна такая вероятность? Ну,
+        $$
+        \frac{n!}{k_1!k_2!\cdots k_m!}p_1^{k_1}p_2^{k_2}\cdots p_m^{k_m}
+        $$
+    \end{example}
+    \begin{remark}
+        Несложно заметить, что штука справа~--- слагаемые в сумме $(p_1+p_2+\cdots+p_m)^n$.
+    \end{remark}
+    \begin{definition}
+        Случайный вектор $\xi$ (и его распределение) называется \textbf{абсолютно непрерывным}, если существует $p\in L(\mathbb R^n\to\mathbb R)$ с неотрицательными значениями такая что $P(\xi\in B)=\int_BP~\mathrm d\mu_n$ (тут интеграл $n$-кратный). В таком случае $p$ называется \textbf{плотностью} $\xi$.
+    \end{definition}
+    \begin{example}
+        Случайный вектор $\xi$ имеет стандартное многомерное нормальное распределение $\operatorname{N}(\mathbb0_n;E_n)$, если его плотность равна
+        $$
+        p(x_1;\ldots;x_n)=\frac1{(\sqrt{2\pi})^n}\exp\left(-\frac{\sum\limits_{i=1}^nx_i^2}2\right)
+        $$
+    \end{example}
+    \begin{property}
+        Несложно заметить, что это произведение плотностей одномерных стандартных нормальных распределений.
+    \end{property}
+    \begin{example}
+        Случайный вектор $\eta$ имеет многомерное нормальное распределение $\operatorname{N}(\mu;\Sigma)$ (где $\mu\in\mathbb R^n$, $\Sigma$~--- симметричная матрица $n\times n$ с неотрицательными собственными числами), если он равен $\sqrt\Sigma\xi+\mu$, где $\xi$~--- стандартный многомерный гауссовский вектор.
+    \end{example}
+    \begin{remark}
+        В случае $\Sigma>0$ можно написать плотность:
+        $$
+        p(y)=\frac1{\sqrt{2\pi}^n\sqrt{\det\Sigma}}\exp\left(-\frac12(y-\mu)^T\Sigma^{-1}(y-\mu)\right)
+        $$
+    \end{remark}
+ \end{document}
