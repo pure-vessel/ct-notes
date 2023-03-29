@@ -608,7 +608,7 @@
     \begin{proof}
         Пусть $a>0$. Обозначим $y=ax+b$. Тогда
         \[\begin{split}
-            P(\eta\leqslant t)&=P(a\xi+b\leqslant t)=P(\xi\leqslant\frac{t-b}a)=F)\xi(\frac{t-b}a)=\frac1{2\pi\sigma^2}\int\limits_{-\infty}^{\frac{t-b}a}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)~\mathrm dx=\\
+            P(\eta\leqslant t)&=P(a\xi+b\leqslant t)=P(\xi\leqslant\frac{t-b}a)=F_\xi(\frac{t-b}a)=\frac1{2\pi\sigma^2}\int\limits_{-\infty}^{\frac{t-b}a}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)~\mathrm dx=\\
             &=\frac1{\sqrt{2\pi\sigma^2a^2}}\int\limits_{-\infty}^t\exp\left(-\frac{(\frac{y-b}a-\mu)^2}{2\sigma^2}\right)=\frac1{\sqrt{2\pi\sigma^2a^2}}\int\limits_{-\infty}^t\exp\left(-\frac{(y-b-a\mu)^2}{2a^2\sigma^2}\right)
         \end{split}\]
         Что и требовалось доказать. При $a<0$ аналогично.
@@ -636,4 +636,5 @@
         F(t)=1-e^{-\lambda t}\chi_{\mathbb R_+}
         $$
     \end{example}
+    
 \end{document}
