@@ -482,4 +482,689 @@
         $$
         Где $\varphi$~--- функция Эйлера.
     \end{remark}
+    \begin{remark}
+        Здесь дыра в сюжете.
+    \end{remark}
+    \paragraph{Производящие функции Дирихле.}
+    \begin{remark}
+        Сегодня в качестве формальной переменной мы будем использовать $s$, а не $t$
+    \end{remark}
+    \begin{definition}
+        \textbf{Производящая функция Дирихле} для последовательности $a_1,a_2,\ldots$~--- это следующий формальный ряд
+        $$
+        A(s)=\sum\limits_{n=1}^\infty \frac{a_n}{n^s}
+        $$
+    \end{definition}
+    \begin{example}
+        Начнём с последовательности $1,0,0,\ldots,0,\ldots$. Для неё $A(s)=1$.
+    \end{example}
+    \begin{example}
+        $1,1,\ldots,1,\ldots$. Тогда $A(s)=\zeta(s)$~--- дзета-функция Римана.
+    \end{example}
+    \begin{example}
+        $1,2,3,4,\ldots$. Тогда $A(s)=\zeta(s-1)$.
+    \end{example}
+    \begin{claim}
+        Если $k\in\mathbb Z,b_n=n^ka_n$, то $B(s)=A(s-k)$.
+    \end{claim}
+    \begin{claim}
+        Несложно заметить, что сумма производящих функций Дирихле~--- производящая функция Дирихле суммы рядов.
+    \end{claim}
+    \begin{remark}
+        Отсюда мы легко умеем умножать производящие функции Дирихле на многочлен
+    \end{remark}
+    \begin{remark}
+        Пусть $C(s)=A(s)B(s)$, то как $c_n$ зависит от $a_n$ и $b_n$?
+        $$
+        C(s)=\left(\sum\limits_{n=1}^\infty\frac{a_n}{n^s}\right)\left(\sum\limits_{k=1}^\infty\frac{b_n}{n^s}\right)=\sum\limits_{n=1}^\infty\sum\limits_{k=1}^\infty\frac{a_nb_k}{(nk)^s}=\sum\limits_{n=1}^\infty\sum\limits_{m\mathrel{|}n}\frac{a_nb_{m/n}}{n^s}
+        $$
+    \end{remark}
+    \begin{corollary}
+        Отсюда если $A(s)\zeta(s)=B(s)$, то $b_n=\sum\limits_{d\mathrel{|}n}a_d$.
+    \end{corollary}
+    \begin{corollary}
+        Отсюда последовательность $d_n$~--- количество делителей $n$ соотвествует производящей функции $\zeta^2(s)$.
+    \end{corollary}
+    \begin{remark}
+        Давайте научимся делить. Попробуем взять $\frac1{\zeta(s)}$. Обозначим это за $\mu(s)$.
+        $$
+        \sum\limits_{d\mathrel|1}\mu_d=1\Rightarrow\mu_1=1
+        $$
+        $$
+        \sum\limits_{d\mathrel|2}\mu_d=0\Rightarrow\mu_2=-1
+        $$
+        $$
+        \sum\limits_{d\mathrel|3}\mu_d=0\Rightarrow\mu_3=-1
+        $$
+        $$
+        \sum\limits_{d\mathrel|4}\mu_d=0\Rightarrow\mu_4=0
+        $$
+        Заметим, что это единственным образом определяет $\mu$. Мы получим $\mu_5=-1,\mu_6=1$. Для простых мы видим, что оно $-1$. А для составных непонятно.
+    \end{remark}
+    \begin{theorem}
+        Пусть $\mu(s)=\frac1{\zeta(s)}$. Тогда
+        $$
+        \mu_k=\begin{cases}
+            0 & \exists p~p^2\mathrel|k\\
+            (-1)^\nu & k=p_1p_2\cdots p_\nu,p_i\text{ различны}
+        \end{cases}
+        $$
+    \end{theorem}
+    \begin{proof}
+        Докажем, что $\mu$, определённое той формулой подходит под $\zeta(s)\mu(s)=1$. В $n=1$ понятно, пусть $n>1$. Хочется
+        $$
+        0=\sum\limits_{d\mathrel|n}\mu_d
+        $$
+        Пусть $n=p_1^{\alpha_1}p_2^{\alpha_2}\cdots p_k^{\alpha_k}$. Если квадрат есть, понятно, иначе пусть мы выбрали $j$ простых множителей. Сколько способов их выбрать? $\Cnk kj$. Получим
+        $$
+        \sum\limits_{d\mathrel|n}\mu_d=\sum\limits_{j=0}^k\Cnk kj(-1)^j=(1-1)^k=0
+        $$
+    \end{proof}
+    \begin{definition}
+        Функция $\mu(s)$ называется \textbf{функцией Мёбиуса}.
+    \end{definition}
+    \begin{claim}[Формула обращения Мёбиуса]
+        Пусть $B(s)=A(s)\zeta(s)$. Чтобы найти $A$, можно домножить обе части равенства на $\mu$ и получить
+        $$
+        a_n=\sum\limits_{d\mathrel|n}b_d\mu_{n/d}
+        $$
+    \end{claim}
+    \begin{definition}
+        Произведение $\prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac1{p^{ks}}$ называется \textbf{произведением Эйлера}.
+    \end{definition}
+    \begin{theorem}
+        $$
+        \prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac1{p^{ks}}=\zeta(s)
+        $$
+    \end{theorem}
+    \begin{proof}
+        Что это за штука? Ну,
+        $$
+        \left(1+\frac1{2^s}+\frac1{4^s}+\cdots\right)\left(1+\frac1{3^s}+\frac1{9^s}+\cdots\right)\left(1+\frac1{5^s}+\frac1{25^s}+\cdots\right)\cdots
+        $$
+        Ну, что у нас будет в начале? Ну, $1$. Потом мы получим $\frac1{2^s}$, $\frac1{3^s}$ и $\frac1{5^s}$. Если взять несколько не-единиц, будет $\frac1{6^s}$, $\frac1{10^s}$, $\frac1{15^s}$. Ну, о'кей, а зачем всё это? А затем, что мы получим любое $\frac1{n^s}$, притом ровно один раз, потому что $n$ единственным образом можно разложить на простые и взять единственным образом эти простые из скобок.
+    \end{proof}
+    \begin{remark}
+        Давайте вот на что посмотрим:
+        $$
+        \prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac1{p^{ks}}=\prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac1{(p^s)^k}
+        $$
+        Это геометрическая прогрессия! Она равна
+        $$
+        \prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac1{(p^s)^k}=\prod\limits_{p\in\mathbb P}\frac1{1-p^{-s}}
+        $$
+        На что надо умножить это, чтобы получилась единица?
+    \end{remark}
+    \begin{corollary}
+        $$
+        \mu(s)=\prod\limits_{p\in\mathbb P}\left(1-\frac1{p^s}\right)
+        $$
+    \end{corollary}
+    \begin{definition}
+        Будем обозначать взаимно простые числа значком $\perp$.
+    \end{definition}
+    \begin{definition}
+        Рассмотрим $f\colon\mathbb N\to\mathbb R$ \textbf{теоретико-численно мультипликативной} (далее просто мультипликативной), если
+        $$
+        \forall u,v:u\perp v~f(uv)=f(u)f(v)
+        $$
+        Последовательность называется мультипликативной, если она мультипликативна как функция индексов.
+    \end{definition}
+    \begin{example}
+        $f(u)=1$, хорошая функция.
+    \end{example}
+    \begin{remark}
+        Пусть $a_n$~--- мультипликативная последовательность. Пусть $n=p_1^{\alpha_1}p_2^{\alpha_2}\cdots$. Тогда несложно заметить, что достаточно узнать $a_{p_i^k}$.
+    \end{remark}
+    \begin{theorem}
+        Если $a_n$ мультипликативно, то
+        $$
+        A(s)=\prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac{a_{p^k}}{p^{ks}}
+        $$
+    \end{theorem}
+    \begin{definition}
+        $\sigma_k(s)=\sum\limits_{d\mathrel|n}d^k$ называется \textbf{теоретико-числовыми моментами числа}.
+    \end{definition}
+    \begin{example}
+        $\sigma_0(n)$~--- количество делителей числа $n$. Чему равно $\Sigma_0(s)$?
+        $$
+        \Sigma_0(s)=\prod\limits_{p\in\mathbb P}\sum\limits_{k=0}^\infty\frac{k+1}{p^{ks}}=
+        \prod\limits_{p\in\mathbb P}\underbrace{\sum\limits_{k=0}^\infty\frac{k+1}{(p^s)^k}}_{\frac1{(1-p^{-s})^2}}=
+        \prod\limits_{p\in\mathbb P}\frac1{(1-p^{-s})^2}=\zeta(s)^2
+        $$
+    \end{example}
+    \begin{example}
+        Рассмотрим функцию Эйлера $\phi(n)$~--- количество натуральных чисел, взаимно простых с $n$ и меньших его.
+        \[\begin{split}
+            \Phi(s)&=\prod\limits_{p\in\mathbb P}\left(1+\sum\limits_{k=1}^\infty\frac{p^k-p^{k-1}}{p^{ks}}\right)=\prod\limits_{p\in\mathbb P}\left(1+\frac{p^1-p^0}{p^s}+\frac{p^2-p^1}{p^{2s}}+\cdots\right)=\\
+            &=\prod\limits_{p\in\mathbb P}\left(\underbrace{1+\frac{p^1}{p^s}+\frac{p^2}{p^{2s}}+\cdots}_{\sum\limits_{k=0}^\infty\frac1{p^{k(s-1)}}}+\underbrace{-1-\frac{p^0}{p^s}-\frac{p^1}{p^{2s}}-\cdots}_{-\frac1p\sum\limits_{k=1}^\infty\frac1{p^{k(s-1)}}}\right)=\\
+            &=\prod\limits_{p\in\mathbb P}\frac{1-p^{-s}}{1-p^{-s+1}}=\mu(s)\zeta(s-1)=\frac{\zeta(s-1)}{\zeta(s)}
+        \end{split}\]
+    \end{example}
+    \section{Теория вычислимости.}
+    \begin{remark}
+        Глобально мы хотим анализировать как-то алгоритмы. А для этого надо формализовать понятие <<программы>> и <<алгоритма>>. Ну, это достаточно просто. У нас есть какие-то символы $\Pi$ и некоторое подмножество строк из них~--- корректные программы. Какие~--- пока не так важно. А зафиксируем то, что программа принимает на вход какой-то $x$~--- строку символов из $\Sigma$ и возвращает что? Ну, мы для простоты будем возвращать истину или ложь. Этого нам хватит. Если программа крашится~--- будем считать, что это ложь.\\
+        Но ведь программа может никогда не завершиться. И это уже какой-то другой фундаментальный случай, его нельзя проэмулировать и узнать.
+    \end{remark}
+    \begin{definition}
+        Будем считать, что \textbf{язык программы} ($L(p)$)~--- множество слов, на которых она не зависает и выдаёт 1.
+    \end{definition}
+    \begin{claim}
+        Несложно заметить, что $L(p)$~--- функция из программ в языки. И что она не инъективна (\Verb|return false;| и \Verb|while (true) {}| дают пустой язык, хотя программы разные). И что по соображениям мощности эта функция не сюръективна. Более того, $2^{\Sigma^*}$ (все языки)~--- несчётное множество, а множество программ счётно.
+    \end{claim}
+    \begin{remark}
+        Впрочем, как мы обсуждали ранее, у невозможности задания почти всех языков программой есть и обратная сторона. Очень трудно описать несчётное количество языков счётным количеством строк на русском языке.
+    \end{remark}
+    \begin{definition}
+        Язык называется \textbf{рекурсивно-перечислимым}, если он распознаётся некоторой программой. Множество таких языков~--- $RE$. Более современное название~--- просто \textbf{перечислимые} или \textbf{полуразрешимые}.
+    \end{definition}
+    \begin{remark}
+        Почему \textbf{полу}-разрешимые? Потому что программа умеет зависать, то есть мы нормально живём только в том случае, если слово есть в языке.
+    \end{remark}
+    \begin{definition}
+        Язык называется \textbf{рекурсивным} (устаревшее) или \textbf{разрешимым} (современное), если существует программа, которая никогда не зависает и возвращает истину только на словах этого языка.
+    \end{definition}
+    \begin{remark}
+        Так. У нас есть два алфавита. Зачем? Давайте всё будет в одном алфавите. Компьютер нормально живёт с битовыми строками, и всё у него хорошо. Так что отныне $\Sigma=\Pi$.
+    \end{remark}
+    \begin{remark}
+        Ещё одно допущение. Зачем нам считать, что не любая программа корректна? Давайте любая программа будет корректна, а если нет, то подставим вместо него программу, которая всегда зависает.
+    \end{remark}
+    \begin{remark}
+        Так, хорошо. Ещё иногда удобно считать, что программа принимает не строку, а неотрицательное целое число. Между $\mathbb N_0$ и $\Sigma^*$ можно создать простую биекцию: градуированный лексикографический порядок.
+    \end{remark}
+    \begin{definition}
+        \textbf{Градуированный лексикографический порядок}~--- упорядочивание сначала по длине, а среди равных длин~--- лексикографически. Он (как биекция между $\Sigma^*$ и $\mathbb N_0$) называется \textbf{естественным изоморфизмом}.
+    \end{definition}
+    \begin{remark}
+        Здесь и далее $\mathbb N_0$, $\Sigma^*$ и множество программ можно использовать рандомно, они все изоморфны, а значит можно говорить о программах, как о числах, о вводе как и программе и т.п.
+    \end{remark}
+    \begin{definition}
+        Номер программы в естественном изоморфизме~--- \textbf{номер Гёделя}.
+    \end{definition}
+    \begin{remark}
+        Хотя вообще номер Гёделя~--- что-то более комплексное т.к. более глобально нам хочется сделать программу, которая считает число, конвертирует его в программу и запустит её. И вот в \textbf{любой} такой нумерации номера называются номерами Гёделя. Наш пример~--- именно такая нумерация.
+    \end{remark}
+    \begin{remark}
+        Всё это, конечно, хорошо, но что такое программа? А на самом деле не так важно. Есть два подхода к этому. Можно формально определить, что такое программа, углубиться в абстрактные вычислители и прочее. А второе~--- программистский здравый смысл. Мы с вами программисты, знаем кучу всего вообще, давайте считать, что у нас есть языки программирования есть, и нам разве что пофиг, что у нас ограниченная память, ограниченные целые числа и т.п. Но на что-то забить всё же нельзя. На точность вещественных чисел, например, иначе парадоксы получатся.\\
+        Очень хорошо, а верно ли, что наши два подхода эквивалентны? Ну, вообще вопрос некорректный, потому что слева математический объект, а справа хрень какая-то, но если и на это забить, то да, эквивалентны. Это \textbf{тезис Тьюринга~--- Чёрча}. По модулю ограниченности памяти наши штуки эквивалентны.
+    \end{remark}
+    \begin{remark}
+        Почему полуразрешимый язык называется перечислимым?
+    \end{remark}
+    \begin{definition}
+        Язык называется \textbf{перечислимым}, если существует программа, которая, будучи запущенной на пустов вводе выводит все слова языка (возможно, за бесконечное время).
+    \end{definition}
+    \begin{remark}
+        Тут что-то схожее с производящими функциями. Мы не можем описать заданный член формального ряда, но можем описать первые $n$, когда они заданы рекуррентно. Ещё есть вопрос в том, что значит <<выводит>>, как оно их разделяет, но это всё не важно.
+    \end{remark}
+    \begin{example}
+        Десятичные записи простых чисел перечислимы. Понятно, как их перечислить. Напишем простую проверку, является ли число простым и просто в \Verb|for| запихнём её вызов и печать.
+    \end{example}
+    \begin{theorem}
+        Перечислимость и полуразрешимость эквивалентны.
+    \end{theorem}
+    \begin{proof}
+        Давайте полуразрешим перечислимый язык. Давайте возьмём перечислитель и всё, что он напечатает, перехватим и будем поочерёдно сравнивать с пришедшим нам словом.\\
+        Давайте наоборот. Заметим, что перебрать все слова и проверить каждое не получится (проверка может зависнуть). Давайте запускать программу с ограничением на время работы и сначала переберём все слова с ограничением на время работы $TL=1$, потом $TL=2$ и т.д. Правда, тут вложенные бесконечные циклы, и в итоге до $TL=2$ мы не доберёмся. Поэтому давайте напишем вот что:
+        \begin{verbatim}
+            for TL in range(1, infinity):
+                for x in map(word_by_number, range(TL)):
+                    if P(x):
+                        print(x)
+        \end{verbatim}
+        Что мы тут использовали? Что мы можем вставить одну программу в другую, причём можно ещё и ограничить каким-то количеством шагов.
+    \end{proof}
+    \begin{theorem}
+       Любой разрешимый язык полуразрешим, но не обратное.
+    \end{theorem}
+    \begin{example}
+        Рассмотрим вот такой язык: пусть $U=\{(p;x)\mid p(x)=1\}$~--- множество пар из программы и ввода, что ввод удовлетворяет программе. Понятно, что он полуразрешим (запустим $p(x)$). Но почему он не разрешим? От противного, пусть есть программа $q$, которая его разрешает. Сделаем тогда программу $r(x)=\neg q(x;x)$. Эта штука также никогда не зависает. Чудно. Что такое $r(r)$? Если это 1, то $q(r;r)=0\Rightarrow u(r;r)\neq1\Rightarrow r(r)\neq1$. Если 0, то $q(r;r)=1$, а значит $r(r)=1$. Ой.
+    \end{example}
+    \begin{theorem}
+        Если $A$ и $\overline A$ перечислимы, то $A$ разрешим.
+    \end{theorem}
+    \begin{proof}
+        Ну, один из этих двоих не зависнет. А значит вводим $TL$ и ждём того, кто первый пройдёт. В программировании можно воспользоваться тезисом Тьюринга~--- Чёрча и запустить два потока исполнения.
+    \end{proof}
+    \begin{claim}
+        Существуют неперечислимые языки.
+    \end{claim}
+    \begin{proof}
+        Возьмём $A=U$~--- перечислим, но не разрешим. Тогда $\overline U$ по теореме выше неперечислим.
+    \end{proof}
+    \begin{remark}
+        А можно ли, чтобы программы не зависали? Ну, мы ещё выясним, что нельзя выполнить три условия: программы не зависают, не-зависающие программы эквивалентны обычными и чтобы по программе можно было понять, что она выводит.
+    \end{remark}
+    \begin{definition}
+        Рассмотрим последовательность программ $\{p_n\}$. Говорят, что \textbf{последовательность программ вычислима}, если существует программа $V(i;x)$, которая по номеру $i$ и входу $x$ возвращает $p_i(x)$.
+    \end{definition}
+    \begin{theorem}
+        Пусть $\{p_n\}$~--- последовательность программ. Тогда выполнено хотя бы одно из трёх:
+        \begin{enumerate}
+            \item Существуют $i$ и $x$ такие что $p_i(x)$ зависает.
+            \item Существует такая программу $q$, что она не зависает ни на одном входе и для любого $i$ существует $x_i$ такое что $q(x_i)\neq p_i(x_i)$
+            \item $\{p_i\}$ не вычислима.
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        Пусть не так. Рассмотрим $q(x)=\neg V(x;x)$ (поскольку $\{p_i\}$ вычислима). Тогда, поскольку $p_i$ не зависают, $q$ она подходит под 2.
+    \end{proof}
+    \begin{claim}[Задача останова]
+        $HALT=\{(p;x)\mid p\text{ не зависает на }x\}$ не разрешим.
+    \end{claim}
+    \begin{proof}
+        Ну, пусть мы разрешили задачу останова программой $h$. Пусть $q(x)$~--- программа, которая выглядит так:
+        \begin{verbatim}
+            if (h(x, x))
+                while (true)
+                    ;
+            else
+                return 0;
+        \end{verbatim}
+        Понятно, что попытка проанализировать $(q;q)$ приведёт нас к противоречию.
+    \end{proof}
+    \begin{definition}
+        \textbf{Функция} $f\colon\underset{\subset\Sigma^*}A\to\Sigma^*$ называется \textbf{вычислимой}, если существует такая программа $p$, что $\forall x\in A~f(x)=p(x)$ и $\forall x\notin A~p$ зависает.
+    \end{definition}
+    \begin{definition}
+        Всюду определённая функция~--- та, у которой область определения равно $\Sigma^*$.
+    \end{definition}
+    \begin{definition}
+        Говорят, что $A$ \textbf{m-сводится} к $B$, если существует всюду определённая вычислимая функция $f$ такая что $x\in A\Leftrightarrow f(x)\in B$. Обозначение: $A\leqslant_mB$
+    \end{definition}
+    \begin{remark}
+        То есть все слова из $A$ отображаются в язык $B$, а не из $A$~--- вне $B$. При этом функция нигде не зависает.
+    \end{remark}
+    \begin{remark}
+        <<m>> исторически расшифровывается как many-to-one, а современно как mapping.
+    \end{remark}
+    \begin{theorem}
+        Если $B$ разрешим и $A\leqslant_m B$, то $A$ разрешим.
+    \end{theorem}
+    \begin{proof}
+        Ну, тривиально, нам нужна композиция функции и разрешителя $B$.
+    \end{proof}
+    \begin{theorem}
+        Если $B$ перечислим и $A\leqslant_m B$, то $A$ перечислим.
+    \end{theorem}
+    \begin{theorem}
+        Если $A$ не разрешим/не перечислим, $A\leqslant_m B$, то $B$ не разрешим/не перечислим.
+    \end{theorem}
+    \begin{theorem}
+        $U\leqslant_m HALT$.
+    \end{theorem}
+    \begin{proof}
+        Пусть $f$ преобразует программу $p$ и ввод $x$ в
+        \begin{verbatim}
+            q = function(x)
+                return "if (p(" + x + ") != 1)
+                    while (true)
+                        ;
+                else
+                    return 1"
+            return (q, x)
+        \end{verbatim}
+    \end{proof}
+    \begin{claim}
+        Пусть $HALT_\varepsilon$~--- множество программ, не зависающих на $\varepsilon$. Тогда
+        $$
+        HALT\leqslant_mHALT_\varepsilon
+        $$
+    \end{claim}
+    \begin{proof}
+        Программа сведения выглядит так:
+        \begin{verbatim}
+            return "function(unused) p(" + x + "), return 0"
+        \end{verbatim}
+    \end{proof}
+    \begin{definition}
+        $FINITE=\{p\mid\exists\text{конечное число }x~p(x)=1\}$
+    \end{definition}
+    \begin{claim}
+        $HALT\leqslant_m\overline{FINITE}$.
+    \end{claim}
+    \begin{theorem}[Теорема Успенского~--- Райса]
+        Никакое нетривиальное свойство перечислимых языков не разрешимо.
+    \end{theorem}
+    \begin{definition}
+        $A\subset RE$ ($RE$, напомню, множество полуразрешимых языков) называется \textbf{свойством}.
+    \end{definition}
+    \begin{definition}
+        Множество программ, распознающих языки с заданным свойством~--- \textbf{язык свойства}.
+    \end{definition}
+    \begin{definition}
+        Отсюда мы сразу понимаем, что такое \textbf{разрешимое свойство}~--- то, язык которого разрешим.
+    \end{definition}
+    \begin{definition}
+        \textbf{Свойство тривиально}, если оно равно $RE$ или $\varnothing$.
+    \end{definition}
+    \begin{proof}
+        Пусть $A$~--- нетривиальное свойство. То есть есть язык, который ему принадлежит, а есть тот, который не. Возьмём пустой язык. Не умаляя общности, пусть он не принадлежит $A$. И есть $T\in A$. У $T$ есть полуразрешитель \Verb|inT|. Пусть $A$ разрешим. Тогда есть программа \Verb|inA(p)|, которая проверяет, верно ли, что $L(p)\in A$. Напишем такую программу:
+        \begin{verbatim}
+            inU(p, x):
+                q = "function(y)
+                        if (p(" + x + ") == 1)
+                            return inT(y)
+                        else
+                            return 0"
+                return inA(q)
+        \end{verbatim}
+        Утверждается, что это разрешитель универсального языка. Если $p(x)=1$, то $q(y)\equiv inT(y)$. В противном случае $q(y)=0$. Если $p(x)$ зависает, то $q(y)$ тоже зависает. Итого, если $p(x)=1$, то $q$ полураспознаёт $T$, а значит $L(q)=T\in A$. В противном случае $q$ полураспознаёт пустой язык, $L(q)=\varnothing\notin A$. То есть $p(x)=1\Leftrightarrow L(q)\in A\Leftrightarrow inA(q)=1$.
+    \end{proof}
+    \begin{remark}
+        Здесь очень важное слово~--- <<языков>>. Не <<программ>>. Если вы прикручиваете свойство к программе, то теорема перестаёт работать.
+    \end{remark}
+    \begin{remark}
+        Сегодня на повестке дня <<как написать программу, которая выводит свой собственный код, и зачем>>.\\
+        напишем простую программу, которая печатает ничего:
+        \begin{verbatim}
+            #include <iostream>
+            
+            int main() {
+                std::cout << "";
+                return 0;
+            }
+        \end{verbatim}
+        Идея первая~--- скопировать этот код внутрь кавычек
+        \begin{verbatim}
+            #include <iostream>
+            
+            int main() {
+                std::cout << "#include <iostream>
+                
+                int main() {
+                    std::cout << "";
+                    return 0;
+                }";
+                return 0;
+            }
+        \end{verbatim}
+        Но он помимо к тому, что не работает, ещё и не компилируется. Ладненько, давайте поборемся со вторым, научимся экранировать:
+        \begin{verbatim}
+            std::string escape(const std::string& s) {
+                std::string result;
+                for (char c : s) {
+                    switch (c) {
+                    case '\n':
+                        result += "\\n";
+                        break;
+                    case '\"':
+                        result += "\\\"";
+                        break;
+                    case '\'':
+                        result += "\\'";
+                        break;
+                    case '\\':
+                        result += "\\\\";
+                        break;
+                    default:
+                        result += c;
+                        break;
+                    }
+                }
+                return result;
+            }
+        \end{verbatim}
+        Давайте через эту штуку пропустим нашу программу. Получим что-то такое:
+        \begin{verbatim}
+            #include <iostream>\n#include <string>\n\nstd::string escape(const std::string& s) {\n    std::string result;\n    for (char c : s) {\n        switch (c) {\n        case \'\\n\':\n            result += \"\\\\n\";\n            break;\n        case \'\\\"\':\n            result += \"\\\\\\\"\";\n            break;\n        case \'\\\'\':\n            result += \"\\\\\'\";\n            break;\n        case \'\\\\\':\n            result += \"\\\\\\\\\";\n            break;\n        default:\n            result += c;\n            break;\n        }\n    }\n    return result;\n}\n\nint main() {\n    std::cout << \"\";\n    return 0;\n}\n
+        \end{verbatim}
+        Теперь просто засунем это на место строки в исходный код:
+        \begin{verbatim}
+            #include <iostream>
+
+            std::string escape(const std::string& s) {
+                std::string result;
+                for (char c : s) {
+                    switch (c) {
+                    case '\n':
+                        result += "\\n";
+                        break;
+                    case '\"':
+                        result += "\\\"";
+                        break;
+                    case '\'':
+                        result += "\\'";
+                        break;
+                    case '\\':
+                        result += "\\\\";
+                        break;
+                    default:
+                        result += c;
+                        break;
+                    }
+                }
+                return result;
+            }
+
+            int main() {
+                std::cout << "#include <iostream>\n#include <string>\n\nstd::string escape(const std::string& s) {\n    std::string result;\n    for (char c : s) {\n        switch (c) {\n        case \'\\n\':\n            result += \"\\\\n\";\n            break;\n        case \'\\\"\':\n            result += \"\\\\\\\"\";\n            break;\n        case \'\\\'\':\n            result += \"\\\\\'\";\n            break;\n        case \'\\\\\':\n            result += \"\\\\\\\\\";\n            break;\n        default:\n            result += c;\n            break;\n        }\n    }\n    return result;\n}\n\nint main() {\n    std::cout << \"\";\n    return 0;\n}\n";
+                return 0;
+            }
+        \end{verbatim}
+        Ну, отличный план, только в том, что мы печатаем написано \Verb|std::cout << "";|, а у нас на месте этого какая-то упоротая строка. Но как ни странно, эта проблема решается. В нашей текущей программе уже написано то, что мы должны вставить вместо \Verb|std::cout << "";|. Давайте наша программа просто сделает то, что сделали мы: возьмёт этот исходный код, пропустит его через \Verb|escape| и подставит его на место \Verb|std::cout << "";|.\\
+        Обозначим за \Verb|$| особый спецсимвол, которым мы покажем, где у нас находится \Verb|std::cout << "";|, чтобы знать, куда вставлять. Напишем пока что-то такое:
+        \begin{verbatim}
+            #include <iostream>
+            #include <string>
+            
+            std::string escape(const std::string& s) {
+                std::string result;
+                for (char c : s) {
+                    switch (c) {
+                    case '\n':
+                        result += "\\n";
+                        break;
+                    case '\"':
+                        result += "\\\"";
+                        break;
+                    case '\'':
+                        result += "\\'";
+                        break;
+                    case '\\\':
+                        result += "\\\\";
+                        break;
+                    default:
+                        result += c;
+                        break;
+                    }
+                }
+                return result;
+            }
+            
+            std::string get_other_source() {
+                return "$";
+            }
+            
+            std::string get_source() {
+                std::string s = get_other_source();
+                std::string r = escape(s);
+                s.replace(s.find('$'), 1, r);
+                return s;
+            }
+            
+            int main() {
+                std::cout << get_source();
+                return 0;
+            }
+        \end{verbatim}
+        Теперь пропустим нашу программу через \Verb|escape| и вместо доллара поставим результат:
+        \begin{verbatim}
+            #include <iostream>
+            #include <string>
+            
+            std::string escape(const std::string& s) {
+                std::string result;
+                for (char c : s) {
+                    switch (c) {
+                    case '\n':
+                        result += "\\n";
+                        break;
+                    case '\"':
+                        result += "\\\"";
+                        break;
+                    case '\'':
+                        result += "\\'";
+                        break;
+                    case '\\':
+                        result += "\\\\";
+                        break;
+                    default:
+                        result += c;
+                        break;
+                    }
+                }
+                return result;
+            }
+            
+            std::string get_other_source() {
+                return "#include <iostream>\n#include <string>\n\nstd::string escape(const std::string& s) {\n    std::string result;\n    for (char c : s) {\n        switch (c) {\n        case \'\\n\':\n            result += \"\\\\n\";\n            break;\n        case \'\\\"\':\n            result += \"\\\\\\\"\";\n            break;\n        case \'\\\'\':\n            result += \"\\\\\'\";\n            break;\n        case \'\\\\\':\n            result += \"\\\\\\\\\";\n            break;\n        default:\n            result += c;\n            break;\n        }\n    }\n    return result;\n}\n\nstd::string get_other_source() {\n    return \"$\";\n}\n\nstd::string get_source() {\n    std::string s = get_other_source();\n    std::string r = escape(s);\n    s.replace(s.find(\'$\'), 1, r);\n    return s;\n}\n\nint main() {\n    std::cout << get_source();\n    return 0;\n}\n";
+            }
+            
+            std::string get_source() {
+                std::string s = get_other_source();
+                std::string r = escape(s);
+                s.replace(s.find('$'), 1, r);
+                return s;
+            }
+            
+            int main() {
+                std::cout << get_source();
+                return 0;
+            }
+        \end{verbatim}
+        Оно работает!\\
+        Заметим, что нам не надо именно выводить код. Мы можем, например, посчитать количество символов в исходном коде или что-нибудь ещё. То есть схема работы всегда одинаковая. Пишем \Verb|escape|, \Verb|get_other_source| и \Verb|source|, они одинаковые везде. После этого пишем в \Verb|main|'е то, что мы хотим сделать с исходным кодом. Когда мы кончили, пропускаем код программы через \Verb|escape| и вставляем вместо доллара.
+    \end{remark}
+    \begin{theorem}[Теорема о рекурсии, теорема о рефлексии]
+        Для любой вычислимой функции двух аргументов $V(x;y)$ существует вычислимая функция одного аргумента $p$, что $\forall y~V(p;y)=p(y)$.
+    \end{theorem}
+    \begin{remark}
+        Что происходит? А вот что: программа может использовать свой исходный код (любым образом).\\
+        Доказывать эту теорему мы не будем, а дальше рассмотрим применения этой теоремы.
+    \end{remark}
+    \begin{theorem}
+        Универсальный язык не разрешим (снова). Но теперь мы докажем это при помощи теоремы о рекурсии.
+    \end{theorem}
+    \begin{proof}
+        Пусть разрешим, то есть есть разрешимая функция $U(p;x)$, которая возвращает 1, если $p(x)=1$ и 0 иначе. Напишем две штуки:
+        \begin{verbatim}
+            p(x):
+                if u(p, x):
+                    return 0;
+                else:
+                    return 1;
+        \end{verbatim}
+        Отличная программа. Теперь то же самое, но математически. Пусть $V(p;x)=\neg U(p;x)$. По теореме о рекурсии существует $p$ такое что $v(p;x)\equiv p(x)$. Если $p(x)=1$, то $V(p;x)=1$, значит $U(p;x)=0$, значит $p(x)\neq1$.
+    \end{proof}
+    \begin{theorem}
+        $HALT_\varepsilon$ неразрешим.
+    \end{theorem}
+    \begin{proof}
+        Пусть разрешим программой $h$. Тогда вот то, что приведёт нас к противоречию:
+        \begin{verbatim}
+            p(x):
+                if x == epsilon && h(p):
+                    while true {}
+                else:
+                    return 1
+        \end{verbatim}
+    \end{proof}
+    \begin{theorem}
+        Любое нетривиальное свойство перечислимых языков неразрешимо.
+    \end{theorem}
+    \begin{proof}
+        Пусть есть свойство $A$ нетривиальное и разрешимое. Пусть у нас есть языки $Q$ и $R$ с полуразрешителями $q$ и $r$, где $Q\in A$ и $R\in A$. И пусть у нас есть $inA$~--- разрешитель $A$. Напишем такую программу:
+        \begin{verbatim}
+            p(x):
+                if inA(p):
+                    return r(x)
+                else:
+                    return q(x)
+        \end{verbatim}
+    \end{proof}
+    \begin{remark}
+        Перейдём уже к чему-то, что без теоремы о рекурсии плохо доказывается.
+    \end{remark}
+    \begin{theorem}[Теорема о неподвижной точке]
+        Для любой всюду определённой вычислимой функции $f$ существует программа $p$, что $f(p)$ и $p$ ведут себя одинаково на любом вводе.
+    \end{theorem}
+    \begin{proof}
+        Рассмотрим $f$. Напишем следующую программу:
+        \begin{verbatim}
+            p(x):
+                q = f(p)
+                return q(x)
+        \end{verbatim}
+    \end{proof}
+    \begin{remark}
+        Интересный факт: можно теорему о неподвижной точке рассматривать как базовую, а теорему о рекурсии~--- как её следствие.
+    \end{remark}
+    \begin{theorem}[Первая теорема Гёделя о неполноте]
+        В любой достаточно богатой формально непротиворечивой системе существует верное недоказуемое утверждение.
+    \end{theorem}
+    \begin{remark}
+        С нашей точки зрения аксиомы~--- это строки, и мы можем получать из одних строк другие (при помощи естественного вывода). И система непротиворечива, если нельзя одновременно доказать $\alpha$ и $\neg\alpha$. Причём тут нам пофиг вообще, какие у нас аксиомы нам единственное, что хочется~--- разрешимость. Т.е. по схеме аксиом и утверждению определить, подходит ли оно и по трём утверждениям выяснить, корректный ли modus ponens. В условиях вышеперечисленного мы можем проверить, корректное ли у нас доказательства.\\
+        Что такое <<достаточно богатая>>~--- вопрос. В математической логике вводят конкретные аксиомы, причём достаточно малое их количество, но мы не жадные и скажем, что система достаточно богата, если в ней сформулировать утверждение <<программа на данном входе даёт единицу>>.
+    \end{remark}
+    \begin{proof}
+        Рассмотрим такую программу:
+        \begin{verbatim}
+            p(x):
+                s = "p(x) зависает"
+                for y --- доказательство:
+                    if y доказывает s:
+                        return 1
+        \end{verbatim}
+        Если $p$ завершает работу, то она нашла доказательство, что она зависает. А у нас система непротиворечива. Значит она не завершает работу, но доказать мы это не можем.
+    \end{proof}
+    \begin{theorem}[Вторая теорема Гёделя о неполноте]
+        Никакая достаточно богатая непротиворечивая система не может доказать свою непротиворечивость.
+    \end{theorem}
+    \begin{proof}
+        Рассмотрим первую теорему. Рассмотрим программу, если $p(x)$ не зависает, то проблема, значит она зависает. А вот давайте попытаемся сформулировать эту же фразу в нашей системе. И если бы система могла доказать свою непротиворечивость, то их этого бы следовало, что $p$ зависает, а значит у этого было бы доказательство. Но его нет.
+    \end{proof}
+    \begin{remark}
+        Давайте закончим с математической логикой и перейдём к алгоритмам сжатия.
+    \end{remark}
+    \begin{definition}
+        $K(s)=\min\{\operatorname{len}(p)\mid p(\varepsilon)=s\}$ называется \textbf{колмогоровской сложностью}.
+    \end{definition}
+    \begin{theorem}
+        Колмогоровская сложность невычислима.
+    \end{theorem}
+    \begin{proof}
+        От противного. Рассмотрим программу
+        \begin{verbatim}
+            p(x):
+                for s in Sigma^*:
+                    if K(s) > len(p):
+                        print(s)
+                        return
+        \end{verbatim}
+        Мы найдём такую строку, что $K(s)$ больше длины $p$. То есть наименьшая длина программы, которая выводит $s$ больше длины $p$. Но $p$ же выводит $s$, противоречие. Причём такая строка $s$ точно существует, потому что \Verb|len(p)|~--- какое-то число, количество программ размера меньше либо равных его конечно, а значит и количество строк, у которых сложность меньше \Verb|len(p)| конечно.
+    \end{proof}
+    \begin{theorem}
+        Пусть $f$ всюду определённая вычислимая функция такой что $\forall s~K(s)\geqslant f(s)$. Тогда $\exists c~f(s)\leqslant c$.
+    \end{theorem}
+    \begin{proof}
+        Точно такое же, только вместо $K$ надо подставить $f$ в код. Поскольку $K(s)\geqslant f(s)>\operatorname{len}p$, ситуация та же самая. Тогда
+        $$
+        c=\max\{\operatorname{len}p,f(s):f(s)>\operatorname{len}p\}
+        $$
+        Если бы это множество было бесконечно, мы бы получили противоречие.
+    \end{proof}
+    \begin{definition}
+        \textbf{Busy Beaver} (\textbf{усердный бобёр})~--- следующая функция.
+        $$
+        \operatorname{BB}(n)=\max\{\operatorname{len}s\mid\exists p:\operatorname{len}p\leqslant n,p(\varepsilon)=s\}
+        $$
+    \end{definition}
+    \begin{theorem}
+        Для любой всюду определённой вычислимой функции $f$ существует конечное число таких $n$, что $\operatorname{BB}(n)\leqslant f(n)$
+    \end{theorem}
+    \begin{remark}
+        Доказательство остаётся читателю как домашнее задание.
+    \end{remark}
 \end{document}
