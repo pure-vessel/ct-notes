@@ -337,7 +337,7 @@
     \end{proof}
     \begin{theorem}[Локальная теорема Муавра~--- Лапласа]
         Пусть $p\in(0;1)$, $H(x)=x\ln\frac xp+(1-x)\ln\frac{1-x}{1-p}$. Пусть $p^*=\frac kn$. Пусть $k\rightarrow+\infty$, $n-k\rightarrow+\infty$.\\
-        Пусть $k=np=p(n^{2/3})$. Тогда
+        Пусть $k-np=p(n^{2/3})$. Тогда
         $$
         P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-\frac{(k-np)^2}{2np(1-p)}\right)
         $$
@@ -345,16 +345,17 @@
     \begin{proof}
         Известно
         $$
-        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp(-nH(p^*))
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np*((1-p*)}}\exp(-nH(p^*))
         $$
         Отсюда
         $$
-        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp(-n\frac{(p^*-p)^2}{2p(1-p)}+n\cdot O((p^*-p)^3))
+        P(S_n=k)\sim\frac1{\sqrt{2\pi np*(1-p*)}}\exp(-n\frac{(p^*-p)^2}{2p(1-p)}+n\cdot O((p^*-p)^3))
         $$
-        Заметим, что $\frac kn-p=o(n^{-1/3})$. Тогда
-        $$
-        P(S_n=k)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-n\frac{(p-k/n)^2}{2p(1-p)}+O(n(k/n-p)^3)\right)\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-n\frac{(np-k)^2}{2p(1-p)n^2}+o(1)\right)
-        $$
+        Заметим, что $\frac kn-p=o(n^{-1/3})$, поэтому $p* \approx p$. Тогда
+        \begin{align*}
+            P(S_n=k)&\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-n\frac{(p-k/n)^2}{2p(1-p)}+O(n(k/n-p)^3)\right)\\
+             &\sim\frac1{\sqrt{2\pi np(1-p)}}\exp\left(-n\frac{(np-k)^2}{2p(1-p)n^2}+o(1)\right)
+        \end{align*}
         Что и требовалось доказать.
     \end{proof}
     \begin{theorem}[Интегральная теорема Муавра~--- Лапласа]
