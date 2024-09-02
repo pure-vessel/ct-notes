@@ -9,6 +9,9 @@
 \newcommand{\A}{{\mathfrak A}}
 \newcommand{\B}{{\mathfrak B}}
 
+\DeclareMathOperator{\Expected}{\mathsf{E}}
+\DeclareMathOperator{\Covariance}{cov}
+
 \begin{document}
     \tableofcontents
     \section{Основы теории вероятности.}
@@ -26,7 +29,7 @@
         Алгебра является \textbf{сигма-алгеброй}, если она замкнута относительно объединения счётного количества своих элементов.
     \end{definition}
     \begin{definition}
-        Пусть $\A$~--- сигма-алгебра на $\Omega$. Пусть $P\colon \A\to\mathbb [0;+\infty)$ и
+        Пусть $\A$~--- сигма-алгебра на $\Omega$. Пусть $P\colon \A\to[0;+\infty)$ и
         \begin{enumerate}
             \item $P(\Omega)=1$.
             \item Если $\{A_i\}_{i=1}^\infty\subset\A$ и $\forall A_iA_j=\varnothing$ то
@@ -137,7 +140,7 @@
         \begin{enumerate}
             \item $P$ счётно-аддитивна.
             \item $P$ конечно-аддитивна и $\forall \{B_i\}_{i=1}^\infty:B_{i+1}\subset B_i$, $B=\bigcap\limits_{i=1}^\infty B_i$ $\lim\limits_{n\to\infty}P(B_i)=P(B)$ (непрерывность сверху).
-            \item $P$ конечно-аддитивна и $\forall \{C_i\}_{i=1}^\infty:C_{i+1}\supset B_i$, $C=\bigcup\limits_{i=1}^\infty C_i$ $\lim\limits_{n\to\infty}P(C_i)=P(C)$ (непрерывность сверху).
+            \item $P$ конечно-аддитивна и $\forall \{C_i\}_{i=1}^\infty:C_{i+1}\supset B_i$, $C=\bigcup\limits_{i=1}^\infty C_i$ $\lim\limits_{n\to\infty}P(C_i)=P(C)$ (непрерывность снизу).
         \end{enumerate}
     \end{theorem}
     \begin{proof}
@@ -504,20 +507,30 @@
         Вырожденное: $P(\xi=c)=1$. Обозначают $I(c)$ или $I_c$.
     \end{example}
     \begin{example}
+        \label{Распределение Бернулли}
+        \label{Bern}
         Распределение Бернулли: $P(\xi=0)=p$, $P(\xi=1)=q=1-p$. Обозначение: $\operatorname{Bern}(p)$.
     \end{example}
     \begin{example}
+        \label{Биномиальное распределение}
+        \label{Bin}
         Биномиальное распределение: $P(\xi=k)=\Cnk nk p^kq^{n-k}$. Обозначение: $\operatorname{Bin}(n;p)$,
     \end{example}
     \begin{example}
+        \label{Отрицательное биномиальное распределение}
+        \label{NB}
+        \label{Геометрическое распределение}
+        \label{Geom}
         Отрицательное биномиальное распределение: $\xi=(\min n:S_n=r)-r$, где $r\in\mathbb n$. То есть
         $$
         P(\xi=k)=\Cnk{k+r-1}{r-1}p^{r}q^{k}
         $$
         Обозначение: $\operatorname{NB}(r;p)$. Также это обобщается на произвольное $r$ при помощи гамма-функции.\\
-        В случае $r=1$ распределение называется геометрическим. Геометрическое распределение~--- количество неудач до первого успеха.
+        В случае $r=1$ распределение называется геометрическим. Геометрическое распределение~--- количество неудач до первого успеха. Обозначается $\operatorname{Geom}(p)$.
     \end{example}
     \begin{example}
+        \label{Распределение Пуассона}
+        \label{Pois}
         Распределение Пуассона:
         $$
         P(\xi=k)=e^{-\lambda}\frac{\lambda^k}{k!}\qquad k\in\mathbb Z_+
@@ -572,6 +585,9 @@
         Несложно проверить, что это именно $U[ac+d;bc+d]$.
     \end{proof}
     \begin{example}
+        \label{Нормальное распределение}
+        \label{Гауссовское распределение}
+        \label{N}
         Нормальное (гауссовское) распределение: $\operatorname{N}(\mu;\sigma^2)$:
         $$
         p(x)=\frac1{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
@@ -618,6 +634,8 @@
         Если $\xi=\operatorname{N}(0;1)$, то $\sigma\xi+\mu=\operatorname{N}(\mu;\sigma^2)$.
     \end{corollary}
     \begin{example}
+        \label{Распределение Коши}
+        \label{Cauchy}
         Распределение Коши: $\operatorname{Cauchy}(x_0;\gamma)$.
         $$
         p(x)=\frac1{\pi\gamma}\cdot\frac1{1+\left(\frac{x-x_0}\gamma\right)^2}
@@ -628,6 +646,8 @@
         $$
     \end{example}
     \begin{example}
+        \label{Экспоненциальное распределение}
+        \label{Exp}
         Экспоненциальное распределение: $\operatorname{Exp}(\lambda)$.
         $$
         p(x)=\lambda e^{-\lambda x}\chi_{\mathbb R_+}
@@ -638,6 +658,7 @@
         $$
     \end{example}
     \begin{example}
+        \label{Gamma-распределение}
         $\Gamma$-распределение: $\Gamma(k,\lambda)$. Сначала для $k\in\mathbb N$, $\lambda>0$.
         $$
         p(x)=\frac{\lambda^kx^{k-1}}{(k-1)!}e^{-\lambda x}\qquad x\geqslant 0
@@ -728,6 +749,7 @@
         Случайный вектор (и его распределение) называется \textbf{дискретным}, если существует не более чем счётное множество $E$ такое что $P(\xi\in E)=1$.
     \end{definition}
     \begin{example}
+        \label{Poly}
         Полиномиальное распределение. Пусть $p=(p_1;\ldots;p_m)$, где $\sum p_i=1$. Обозначается $\operatorname{Poly}(n;p)$.\\
         Физическая интерпретация такая: мы бросаем кубик с $m$ гранями $n$ раз. Пусть $S_{n,j}$~--- количество исходов типа $j$ в $n$ независимых испытаниях. Тогда искомая случайная величина обладает распределением
         $$
@@ -754,6 +776,7 @@
         Несложно заметить, что это произведение плотностей одномерных стандартных нормальных распределений.
     \end{property}
     \begin{example}
+        \label{N (многомерное)}
         Случайный вектор $\eta$ имеет многомерное нормальное распределение $\operatorname{N}(\mu;\Sigma)$ (где $\mu\in\mathbb R^n$, $\Sigma$~--- симметричная матрица $n\times n$ с неотрицательными собственными числами), если он равен $\sqrt\Sigma\xi+\mu$, где $\xi$~--- стандартный многомерный гауссовский вектор.
     \end{example}
     \begin{remark}
@@ -762,4 +785,887 @@
         p(y)=\frac1{\sqrt{2\pi}^n\sqrt{\det\Sigma}}\exp\left(-\frac12(y-\mu)^T\Sigma^{-1}(y-\mu)\right)
         $$
     \end{remark}
+    \paragraph{Независимые случайные величины.}
+    \begin{definition}
+        Случайные величины $\xi_1;\ldots;\xi_n$ называются \textbf{независимыми}, если для любых борелевских множеств $B_1;\ldots;B_n$
+        $$
+        P(\xi_1\in B_1\land\cdots\land\xi_n\in B_n)=P(\xi_1\in B_1)\cdot\cdots\cdot P(\xi_n\in B_n)
+        $$
+    \end{definition}
+    \begin{definition}
+        Случайные величины $\{\xi_i\}_{i=1}^\infty$ \textbf{независимы}, если
+        $$
+        \forall m~\xi_1;\ldots;\xi_m\text{ независимы}
+        $$
+    \end{definition}
+    \begin{theorem}
+        Случайные величины независимы тогда и только тогда, когда их совместная функция распределения равна произведению одномерных функций распределения.
+    \end{theorem}
+    \begin{proof}
+        В одну сторону очевидно, в другую~--- доказательства не будет.
+    \end{proof}
+    \begin{theorem}[Критерий независимости дискретных случайных величин]
+        Пусть $\xi_1;\ldots;\xi_n$~--- дискретны. Пусть $\xi_k$ имеет своим множеством значений $\{x_{i,k}\}_i$. Тогда эти величины независимы тогда и только тогда, когда
+        $$
+        \forall x_{\text{индексы}}~
+        P(\xi_1=x_{i_1,1}\land\cdots\land\xi_n=x_{i_n,n})=P(\xi_1=x_{i_1,1})\cdot\cdots\cdot P(\xi_n=x_{i_n,n})
+        $$
+    \end{theorem}
+    \begin{proof}
+        Необходимость очевидна, теперь достаточность, которая тоже довольно проста. Условие $\xi_k\in B_k$ можно представить как $\xi_k=x_{j_1,k}\lor\cdots\lor \xi_k=x_{j_m,k}$. Отсюда используем сумму вероятностей и предпосылку импликации.
+    \end{proof}
+    \begin{theorem}[Критерий независимости абсолютно непрерывных случайных величин]
+        Абсолютно непрерывные случайные величины независимы тогда и только тогда, когда их совместная плотность равна произведению одномерных плотностей.
+    \end{theorem}
+    \begin{proof}
+        $$
+        \int\limits_{-\infty}^{t_1}\cdots\int\limits_{-\infty}^{t_n}p(x_1;\ldots;x_n)~\mathrm dx_1\cdots\mathrm dx_n=F(t_1;\ldots;t_n)=F(t_1)\cdot\cdots\cdot F(t_n)=\prod\int\limits_{-\infty}^{t_k}p(x_k)~\mathrm dx_k
+        $$
+        Это если нам дана независимость, а узнать мы хотим указанное в теореме (дифференцируем указанное равенство). Следствие обратно сами докажете, используя аналогичные формулы.
+    \end{proof}
+    \begin{example}
+        Пусть $\xi_1$ и $\xi_2$~--- независимые \hyperref[Распределение Бернулли]{Бернуллиевские случайные величины} с параметром $p$. Что будет, если их сложить? Очевидно, получится \hyperref[Биномиальное распределение]{биномиальное распределение} $\operatorname{Bin}(2;p)$.\\
+        Тривиально по индукции докажете, что это для любого количества одинаковых независимых $\operatorname{Bern}(p)$ работает.
+    \end{example}
+    \begin{example}
+        Пусть $\xi_1=\operatorname{Pois}(\lambda_1)$, $\xi_2=\operatorname{Pois}(\lambda_2)$ независимы. Чему равна сумма этих случайных \hyperref[Распределение Пуассона]{величин пуассона}? Получится $\operatorname{Pois}(\lambda_1+\lambda_2)$, докажете, опять же, сами, рассмотрев $P(\xi_1+\xi_2=k)$.
+    \end{example}
+    \begin{example}
+        Пусть $\xi_1,\ldots,\xi_n\sim\hyperref[Geom]{\operatorname{Geom}}(p)$ и независимы. Тогда сумма имеет распределение $\hyperref[NB]{\operatorname{NB}}(n;p)$
+    \end{example}
+    \begin{example}
+        Пусть $\xi_1,\xi_2\sim\hyperref[Exp]{\operatorname{Exp}}(\lambda)$ независимы. И мы опять считаем сумму $\xi_1+\xi_2$. Как несложно заметить, нам нужно посчитать
+        $$
+        p_{\xi_1,\xi_2}(t)=\int\limits_{-\infty}^\infty p_1(x)p_2(t-x)~\mathrm dx
+        $$
+        Если $t\leqslant0$, ответ $0$. Иначе искомая плотность равна $\lambda^2te^{-\lambda t}$. Это же \hyperref[Gamma-распределение]{Gamma-распределение} $\Gamma(2;\lambda)$.
+    \end{example}
+    \begin{example}
+        Сложение \hyperref[Нормальное распределение]{нормальных распределений}. Пусть $\xi_1\sim\operatorname{N}(\mu_1;\sigma_1^2)$, $\xi_2\sim\operatorname{N}(\mu_2;\sigma_2^2)$ независимы, тогда $\xi_1+\xi_2\sim\operatorname{N}(\mu_1+\mu_2;\sigma_1^2+\sigma_2^2)$. Докажите это сами.
+    \end{example}
+    \section{Об интегралах.}
+    \begin{remark}
+        Пусть $(\Omega;\A;P)$~--- вероятностное пространство, $\xi$~--- случайный вектор с распределением $P_\xi$. Пусть $g\colon\mathbb R^n\to\mathbb R$ измерима. Тогда
+        $$
+        \int_\Omega g(\xi(\omega))~P(\mathrm d\omega)=\int_{\mathbb R^n}g(x)~P_\xi(\mathbb dx)
+        $$
+        Для дискретного случая это равно $\sum g(x_k)P(\xi=x_k)$, а для абсолютно непрерывного~--- $\int g(x)p(x)~\mathrm dx$.
+    \end{remark}
+    \begin{theorem}[Теорема Фубини]
+        Пусть $\xi,\eta$~---независимые случайные величины, $g\colon\mathbb R^2\to\mathbb R$ измерима. Тогда
+        $$
+        \iint g(x,y)~P_{\xi,\eta}(\mathrm dx,\mathrm dy)=\iint g(x;y)~\mathrm dF_\xi(x)~\mathrm dF_\eta(y)=\iint g(x;y)~\mathrm dF_\eta(y)~\mathrm dF_\xi(x)
+        $$
+    \end{theorem}
+    \section{Числовые характеристики случайных величин.}
+    \subsection{Математическое ожидание.}
+    \begin{definition}
+        Пусть $\xi$~--- случайная величина, тогда её \textbf{математическим ожиданием} называется
+        $$
+        \Expected\xi=\int\limits_\mathbb Rx~\mathrm dF_\xi(x)
+        $$
+    \end{definition}
+    \begin{property}
+        Пусть $\xi_1;\ldots;\xi_n$~--- случайные величины, $g\colon\mathbb R^n\to\mathbb R$. Тогда
+        $$
+        Eg(\xi_1,\ldots,\xi_n)=\int\limits_{\mathbb R^n}g(\xi_1,\ldots,\xi_n)~P_{\xi_1;\ldots;\xi_n}(\mathrm dx_1;\ldots;\mathrm dx_n)
+        $$
+    \end{property}
+    \begin{property}
+        Математическое ожидание линейно.
+    \end{property}
+    \begin{property}
+        Математическое ожидание произведения независимых величин равно произведению их математических ожиданий (обратное неверно).
+    \end{property}
+    \begin{theorem}[Неравенство Маркова]
+        \label{Неравенство Маркова}
+        Если $\xi\geqslant0$ и существует $\Expected\xi$, то
+        $$
+        \forall c>0~P(X\geqslant c)\leqslant\frac{\Expected\xi}c
+        $$
+    \end{theorem}
+    \begin{proof}
+        $$
+        P(X\geqslant c)=\int_{x\geqslant c}\mathrm dF(x)\leqslant\int_{x\geqslant c}\frac xc\mathrm dF(x)\leqslant\frac1c\int\limits_{\mathbb R}x\mathrm dF(x)=\frac1cE\xi
+        $$
+    \end{proof}
+    \begin{corollary}
+        Ожидание индикатора $\xi\in B$ равно $P(\xi\in B)$.
+    \end{corollary}
+    \begin{property}
+        Если $P(\xi\geqslant0)=1$, то $\Expected\xi\geqslant0$.
+    \end{property}
+    \begin{property}
+        Если $\xi\geqslant0$ и $\Expected\xi=0$, то $P(\xi=0)=1$.
+    \end{property}
+    \begin{proof}
+        $$
+        1=P(\xi\geqslant0)=P(\xi\geqslant0)+P(\xi<c)\leqslant P(\xi<c)\leqslant 1
+        $$
+        Отсюда тут везде равенства, значит $P(\xi<c)=1$.
+    \end{proof}
+    \begin{property}
+        Если $\xi$ дискретно с носителем $\mathbb N$, то $\Expected\xi=\sum\limits_{k=1}^\infty P(\xi\geqslant k)$.\\
+        Очевидно.
+    \end{property}
+    \begin{property}
+        Если $\xi$ непрерывно $\xi\geqslant0$, то $\Expected\xi=\int\limits_0^{+\infty} P(\xi\geqslant r)~\mathrm dr$
+    \end{property}
+    \subsection{Дисперсия.}
+    \begin{definition}
+        \textbf{Дисперсией случайной величины} $\xi$ называется $\operatorname{Var}\xi=\Expected(\xi-\Expected\xi)^2$. Также обозначается $\Variance\xi$.
+    \end{definition}
+    \begin{property}
+        $\Variance\xi\geqslant0$.
+    \end{property}
+    \begin{property}
+        $$
+        \Variance\xi=\Expected\xi^2-(\Expected\xi)^2
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Variance(\xi+c)=\Variance\xi
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Variance a\xi=a^2\Variance\xi
+        $$
+    \end{property}
+    \begin{property}
+        $\Variance(\xi\pm\eta)=\Variance\xi+\Variance\eta\pm 2(\Expected\xi\eta-\Expected\xi\cdot \Expected\eta)$
+    \end{property}
+    \begin{corollary}
+        Если $\xi,\eta$ независимы, то $\Variance(\xi\pm\eta)=\Variance\xi+\Variance\eta$.
+    \end{corollary}
+    \begin{theorem}[Неравенство Чебышёва]
+        \label{Неравенство Чебышёва}
+        Пусть $\xi$~--- случайная величина, существуют $\Expected\xi$ и $\Variance\xi$. Тогда
+        $$
+        \forall\varepsilon>0~P(|\xi-\Expected\xi|\geqslant\varepsilon)\leqslant\frac{\Variance\xi}{\eta^2}
+        $$
+    \end{theorem}
+    \begin{proof}
+        Примените неравенство Маркова для $P(|\xi-\Expected\xi|^2\geqslant\varepsilon^2)$.
+    \end{proof}
+    \begin{property}
+        $$P(\xi-\Expected\xi\geqslant0)=1$$.
+    \end{property}
+    \begin{proof}
+        См. свойство математического ожидания.
+    \end{proof}
+    \begin{property}
+        $$\Variance\xi=\min\limits_{a\in\mathbb R}\Expected(\xi-a)^2$$
+    \end{property}
+    \begin{proof}
+        Искомая формула под минимумом~--- парабола, вершину которой посчитаете сами и найдёте, что она именно в нужной точке.
+    \end{proof}
+    \subsection{Примеры.}
+    \begin{example}
+        $$\hyperref[Bern]{\operatorname{Bern}}(p)$$
+        $$\Expected\xi=p$$
+        $$\Variance\xi=pq$$
+    \end{example}
+    \begin{example}
+        $$\hyperref[Bin]{\operatorname{Bin}}(n,p)$$
+        Чтобы доказать свойства, проще всего вспомнить, что это сумма независимых Вернуллиевских величин.
+        $$\Expected\xi=np$$
+        $$\Variance\xi=npq$$
+    \end{example}
+    \begin{example}
+        $$\hyperref[Pois]{\operatorname{Pois}}(\lambda)$$
+        $$\Expected\xi=\sum\limits_{k=1}^\infty ke^{-\lambda}\frac{\lambda^k}{k!}=e^{-\lambda}\lambda\sum\limits_{k=1}^\infty\frac{\lambda^{k-1}}{(k-1)!}=\lambda$$
+        Для подсчёта дисперсии заметим, что $\Expected(\xi(\xi-1))=\Variance\xi+(\Expected\xi)^2-\Expected\xi$. Тогда
+        $$\Expected(\xi(\xi-1))=\sum\limits_{k=2}^\infty k(k-1)\frac{\lambda^ke^{-\lambda}}{k!}=\lambda^2e^{-\lambda}\sum\limits_{k=2}^\infty \frac{\lambda^{k-2}}{(k-2)!}=\lambda^2$$
+        Отсюда
+        $$\Variance\xi=\lambda$$
+    \end{example}
+    \begin{example}
+        $$\hyperref[Geom]{\operatorname{Geom}}(p)$$
+        Будем считать носителем $\mathbb Z_+$.
+        $$\Expected\xi=\sum\limits_{k=1}^\infty P(x\geqslant k)=\sum\limits_{k=1}^\infty\sum\limits_{i=k}^\infty(1-p)^ip=\sum\limits_{k=1}^\infty p\frac{(1-p)^k}{1-(1-p)}=\frac{1-p}p$$
+        $$
+        \Expected(\xi(\xi-1))=\sum\limits_{k=2}^\infty k(k-1)(1-p)^{k}p
+        =(1-p)^2p\sum\limits_{k=2}^\infty k(k-1)(1-p)^{k-2}
+        =(1-p)^2p\sum\limits_{k=2}^\infty \frac{\partial^2(1-p)^k}{\partial p^2}
+        =(1-p)^2p\frac{\partial^2}{\partial p^2}\sum\limits_{k=2}^\infty(1-p)^k\overset{\substack{\text{дальше}\\\text{сам}}}=\frac{2(1-p)^2}{p^2}
+        $$
+        $$\Variance\xi=\frac{1-p}{p^2}$$
+    \end{example}
+    \begin{example}
+        Равномерное распределение на $[a;b]$.\\
+        Заметим тот факт, что $\xi$~--- равномерное распределение на $[a;b]$ можно выразить через $\eta$~--- равномерное распределение на $[0;1]$:
+        $$
+        \xi=(b-a)\eta+a
+        $$
+        Отсюда
+        $$\Expected\xi=\frac{a+b}2$$
+        $$\Variance\xi=\frac{(a+b)^2}{12}$$
+    \end{example}
+    \begin{example}
+       $$\hyperref[N]{\operatorname{N}}(\mu;\sigma^2)$$
+       $$\Expected\xi=\mu$$
+       $$\Variance\xi=\sigma^2$$
+       Сами как-нибудь проинтегрируете, мне лень.
+    \end{example}
+    \begin{example}
+        $$\hyperref[Exp]{\operatorname{Exp}}(\lambda)$$
+        $$\Expected\xi=\int\limits_0^{+\infty}x\lambda e^{-\lambda x}~\mathrm dx=-xe^{-\lambda x}\Big|_0^{+\infty}+\frac1\lambda\int\limits_0^{+\infty}\lambda e^{-\lambda x}~\mathrm dx=\frac1\lambda$$
+        $$\Expected\xi^2=\int\limits_0^{+\infty}x^2\lambda e^{-\lambda x}~\mathrm dx=-x^2e^{-\lambda x}\Big|_0^{+\infty}+\frac2\lambda\int\limits_0^{+\infty}\lambda xe^{-\lambda x}~\mathrm dx=\frac2{\lambda^2}$$
+        $$\Variance\xi=\frac1{\lambda^2}$$
+    \end{example}
+    \begin{example}
+        $$\hyperref[Gamma-распределение]{\operatorname{\Gamma}}(n,\lambda)=\operatorname{Exp}(\lambda)+\cdots+\operatorname{Exp}(\lambda)$$
+        $$\Expected\xi=\frac n\lambda$$
+        $$\Variance\xi=\frac n{\lambda^2}$$
+        Доказывать для нецелого $n$ не будем.
+    \end{example}
+    \begin{example}
+        $$\hyperref[Cauchy]{\operatorname{Cauchy}}(0;1)$$
+        $$\Expected\xi=\frac1\pi\int\limits_{-\infty}^{+\infty}\frac{x~\mathrm dx}{1+x^2}$$
+        Мат. ожидание не существует.
+    \end{example}
+    \subsection{Моменты и связанное с ними.}
+    \begin{definition}
+        \textbf{Моментом случайной величины} $\xi$ порядка $k$ называется $\Expected \xi^k$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Абсолютным моментом случайной величины} $\xi$ порядка $k$ называется $\Expected |\xi|^k$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Центральным моментом случайной величины} $\xi$ порядка $k$ называется $\Expected (\xi-\Expected\xi)^k$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Абсолютным центральным моментом случайной величины} $\xi$ порядка $k$ называется $\Expected|\xi-\Expected\xi|^k$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Коэффициентом ассиметрии случайной величины} $\xi$ называется $\frac{\Expected (\xi-\Expected\xi)^3}{\sigma^3}$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Коэффициентом эксцесса случайной величины} $\xi$ называется $\frac{\Expected (\xi-\Expected\xi)^4}{\sigma^4}-3$.
+    \end{definition}
+    \subsection{Мода.}
+    \begin{definition}
+        \textbf{Модой дискретной случайной величины} $\xi$ называется число $x_k^*=\operatorname{argmax}_{x_k}P(\xi=x_k)$.
+    \end{definition}
+    \begin{definition}
+        \textbf{Модой непрерывной случайной величины} $\xi$ называется число $x^*=\operatorname*{argmax}_{x\in\mathbb R}p(x)$.
+    \end{definition}
+    \begin{definition}
+        Случайная величина называется \textbf{$n$-модальной} (\textbf{унимодальной} для $n=1$, \textbf{бимодальной} для $n=2$...), если у неё $n$ \underline{\textit{локальных}} максимумов.
+    \end{definition}
+    \subsection{Квантиль, медиана.}
+    \begin{definition}
+        \textbf{Квантилью случайной величины} $\xi$ порядка $\alpha\in(0;1)$ называется такое число $q_\alpha$, что $P(\xi\geqslant q_\alpha)\geqslant1-\alpha$ и $P(\xi\leqslant q_\alpha)\leqslant\alpha$.\\
+        Квантиль порядка $\frac12$ называется \textbf{медианой}.
+    \end{definition}
+    \begin{remark}
+        В дискретном случае определяется неоднозначно. Есть несколько способов это исправить, обращайте внимание на то, какой используется в Вашей задаче.
+    \end{remark}
+    \begin{theorem}
+        Пусть $m=\operatorname{med}\xi$. Тогда $m=\operatorname*{argmin}_{a\in\mathbb R}{\Expected|\xi-a|}$, если для любого $a$ искомое ожидание существует.
+    \end{theorem}
+    \begin{proof}
+        Н.У.О. $m=0$, иначе сдвинем $\xi$. Сравним $\Expected|\xi-c|$ и $\Expected|\xi|$. Пусть $c>0$. Тогда
+        $$
+        |\xi-c|-|\xi|=\begin{cases}
+            -c & \xi>c\\
+            c-2\xi & 0<\xi\leqslant c,c-2\xi\geqslant -c\\
+            c & x\leqslant0
+        \end{cases}
+        $$
+        отсюда
+        $$
+        \Expected(|\xi-c|-|\xi|)=\Expected(|\xi-c|-|\xi|)\mathbb1(\xi\leqslant0)+\Expected(|\xi-c|-|\xi|)\mathbb1(\xi>0)\geqslant c\Expected\mathbb1(\xi\leqslant1)-c\Expected\mathbb1(\xi>c)=c(2P(\xi\leqslant0)-1)\geqslant0
+        $$
+        То есть $\Expected|\xi-c|$ больше либо равно $\Expected|\xi|$.
+    \end{proof}
+    \subsection{Ковариация. Коэффициентом корреляции.}
+    \begin{definition}
+        \textbf{Ковариацией случайных величин} $\xi$ и $\eta$ называется $\Covariance(\xi;\eta)=\Expected(\xi-\Expected\xi)\Expected(\eta-\Expected\eta)$
+    \end{definition}
+    \begin{property}
+        $$
+        \Covariance(\xi;\eta)=\Expected(\xi\eta)-\Expected\xi\Expected\eta
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Variance(\xi_1+\cdots+\xi_n)=\sum\Variance\xi_i+\sum\Covariance(\xi_i;\xi_j)
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Covariance(\xi;\eta)=\Covariance(\eta;\xi)
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Covariance(\xi;\xi)=\Variance(\xi)
+        $$
+    \end{property}
+    \begin{property}
+        Ковариация линейна по обоим аргументам.
+    \end{property}
+    \begin{property}
+        $$
+        \Covariance(\xi;c)=0
+        $$
+    \end{property}
+    \begin{property}
+        Ковариация независимых величин равна нулю. Обратное в общем случае неверно.
+    \end{property}
+    \begin{example}
+        Пусть $\xi\sim\hyperref[N]{\operatorname{N}(0;1)}$, $\eta=\xi^2$. Они не независимы, при этом
+        $$
+        \Expected\xi=0
+        $$
+        $$
+        \Expected\xi\eta=\frac1{\sqrt{2\pi}}\int\limits_{-\infty}^{+\infty}x^3e^{-x^2/2}~\mathrm dx=0
+        $$
+        Значит корреляция равна нулю.
+    \end{example}
+    \begin{definition}
+        \textbf{Коэффициентом корреляции случайных величин} $\xi$ и $\eta$ называется $\rho(\xi;\eta)=\frac{\Covariance(\xi;\eta)}{\sqrt{\Variance\xi\Variance\eta}}$
+    \end{definition}
+    \begin{property}
+        $$
+        |\rho(\xi;\eta)|\leqslant1
+        $$
+    \end{property}
+    \begin{proof}
+        Чтобы это доказать, посмотрим на следующее свойство и рассмотрим $\Variance(\tilde\xi+\tilde\eta)$ и $\Variance(\tilde\xi-\tilde\eta)$.
+    \end{proof}
+    \begin{property}
+        $$
+        \rho(\xi;\eta)=\Covariance\left(\underbrace{\frac{\xi-\Expected\xi}{\sqrt{\Variance\xi}}}_{\tilde\xi};\underbrace{\frac{\eta-\Expected\eta}{\sqrt{\Variance\eta}}}_{\tilde\eta}\right)
+        $$
+    \end{property}
+    \begin{property}
+        Если $\eta=a\xi+b,a\neq0$, то
+        $$
+        \rho(\xi;\eta)=\sign a
+        $$
+    \end{property}
+    \begin{property}
+        Если $\rho(\xi;\eta)=1$, то $\tilde\xi-\tilde\eta=c$.
+        Если $\rho(\xi;\eta)=-1$, то $\tilde\xi+\tilde\eta=c$.
+    \end{property}
+    \begin{definition}
+        Две величины \textbf{некоррелированы}, если их ковариация (следовательно, коэффициент корреляции) равна нулю.
+    \end{definition}
+    \begin{claim}
+        Независимость влечёт некоррелированность, обратное в общем случае неверно.
+    \end{claim}
+    \subsection{Характеристики векторных случайных величин.}
+    \begin{definition}
+        \textbf{Математическим ожиданием случайного вектора} называется вектор математических ожиданий его компонент.
+    \end{definition}
+    \begin{theorem}
+        $\Expected A\xi=A\Expected\xi$
+    \end{theorem}
+    \begin{definition}
+        \textbf{Дисперсией случайного вектора} $\xi$ называется
+        $$
+        \Expected(\xi-\Expected\xi)(\xi-\Expected\xi)^T
+        $$
+        Несложно заметить, что это матрица ковариаций компонент.
+    \end{definition}
+    \begin{property}
+        $$
+        \Variance\xi=(\Variance\xi)^T
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Variance\xi\geqslant0
+        $$
+        (Речь идёт про неотрицательную определённость.)
+    \end{property}
+    \begin{proof}
+        Рассмотрим $T^T\Variance\xi T$
+        $$
+        T^T\Variance\xi T=T^T\Expected(\xi-\Expected\xi)(\xi-\Expected\xi)^TT=\Expected\underbracket{T^T(\xi-\Expected\xi)}\underbracket{(\xi-\Expected\xi)^TT}=\Expected(T^T(\xi-\Expected\xi))^2\geqslant0
+        $$
+    \end{proof}
+    \begin{property}
+        $$
+        \Variance(\xi+c)=\Variance\xi
+        $$
+    \end{property}
+    \begin{property}
+        Если $\xi$ и $\eta$ независимы, то
+        $$
+        \Variance(\xi+\eta)=\Variance\xi+\Variance\eta
+        $$
+    \end{property}
+    \begin{proof}
+        Если $i=j$, то просто имеем дисперсии на диагоналях, и для одномерных дисперсий мы знаем такой результат.\\
+        Иначе раскроем коварицаии по линейности  получим искомое.
+    \end{proof}
+    \begin{example}
+        $$\hyperref[Poly]{\operatorname{Poly}}(n,p)$$
+        Вспомним, что наша случайная величина является суммой независимых случайных величин с распределением $\operatorname{Poly}(1,p)$. Математические ожидание же $\xi_1\sim\operatorname{Poly}(1,p)$ равно $\left(\begin{matrix}
+            p_1\\p_2\\\vdots\\p_m
+        \end{matrix}\right)$.\\
+        Дисперсия также считается как $n$ умножить на $\Variance\xi_1$. Осталось только это посчитать.
+        $$
+        \Variance\xi_1=\left(\begin{matrix}
+            \Covariance(\xi_1^{(1)},\xi_1^{(1)}) & \Covariance(\xi_1^{(1)},\xi_1^{(2)}) & \cdots & \Covariance(\xi_1^{(1)},\xi_1^{(m)})\\
+            \Covariance(\xi_1^{(2)},\xi_1^{(1)}) & \Covariance(\xi_1^{(2)},\xi_1^{(2)}) & \cdots & \Covariance(\xi_1^{(2)},\xi_1^{(m)})\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \Covariance(\xi_1^{(m)},\xi_1^{(1)}) & \Covariance(\xi_1^{(m)},\xi_1^{(2)}) & \cdots & \Covariance(\xi_1^{(m)},\xi_1^{(m)})\\
+        \end{matrix}\right)
+        $$
+        Если $i=j$, то $\Covariance(\xi_1^{(i)}l\xi_1^{(i)})=\Variance\xi_1^{(i)}=\Expected(\xi_1^{(i)})^2-(\Expected\xi_1^{(i)})^2=p_i(1-p_i)$.\\
+        Если $i\neq j$, то $\Covariance(\xi_1^{(i)}l\xi_1^{(j)})=\Expected(\xi_1^{(i)}\xi_1^{(j)})-\Expected\xi_1^{(i)}\Expected\xi_1^{(j)}=-p_ip_j$.
+        Посмотрим на $\Expected(\xi_1^{(i)}\xi_1^{(j)})$. Тут просто выражение под мат.ожиданием ноль, ведь в $\xi_1$ только одна компонента равна единице.
+    \end{example}
+    \begin{example}
+        $$\hyperref[N (многомерное)]{\operatorname{N}}(\mu;\Sigma)$$
+        Дл этого рассмотрим стандартный Гауссовский вектор, а потом рассмотрим нестандартный. Ну, у него компоненты~--- независимые $\operatorname{N}(0;1)$. У каждого мат. ожидание ноль, а дисперсия один. И в силу независимости ковариации равны нулю, а значит $\Expected\xi=\mathbb0$, $\Variance\xi$~--- единичная матрица.\\
+        Теперь $\operatorname{N}(\mu;\Sigma)$. Мы знаем, что если $\eta=A\xi+\mu$ и $\xi\sim\operatorname{N}(\mathbb0;E)$, то $\eta\sim\operatorname{N}(\mu;AA^T)$, а отсюда $\Expected\eta=\mu$, $\Variance\eta=AA^T$.\\
+        При этом на линейной алгебре доказывали, что для $\Sigma\geqslant0$ и $\Sigma=\Sigma^T$ у $\Sigma$ существует корень. Отсюда $\operatorname{\mu;\Sigma}$ подходит под предыдущий случай.
+    \end{example}
+    \begin{claim}
+        $$\left(\begin{matrix}
+            \eta_1\\\eta_2
+        \end{matrix}\right)\sim\operatorname{N}(\left(\begin{matrix}
+            \mu_1\\\mu_2
+        \end{matrix}\right);\left(\begin{matrix}
+            \Sigma_{11} & \Sigma_{12}\\\Sigma_{21} & \Sigma_{22}
+        \end{matrix}\right))
+        \Rightarrow\xi_1\sim\operatorname{N}(\mu_1;\Sigma_{11}),\xi_2\sim\operatorname{N}(\mu_2;\Sigma_{22})
+        $$
+    \end{claim}
+    \begin{proof}
+        Рассмотрим спектральное представление $\Sigma$:
+        $$
+        \left(\begin{matrix}
+            \Sigma_{11} & \Sigma_{12}\\\Sigma_{21} & \Sigma_{22}
+        \end{matrix}\right)=
+        \left(\begin{matrix}
+            U_{11} & U_{12}\\U_{21} & U_{22}
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            \Lambda_{1} & \mathbb0\\\mathbb0 & \Lambda_{2}
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            U_{11}^T & U_{21}^T\\U_{12}^T & U_{22}^T
+        \end{matrix}\right)
+        $$
+        Корень из этой байды равен тому же самому, только с корнями $\sqrt{\Lambda_i}$. В итоге
+        $$
+        \left(\begin{matrix}
+            \eta_{1}\\\eta_{2}
+        \end{matrix}\right)=
+        \left(\begin{matrix}
+            U_{11} & U_{12}\\U_{21} & U_{22}
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            \sqrt{\Lambda_{1}} & \mathbb0\\\mathbb0 & \sqrt{\Lambda_{2}}
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            U_{11}^T & U_{21}^T\\U_{12}^T & U_{22}^T
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            \xi_{1}\\\xi_{2}
+        \end{matrix}\right)
+        $$
+        Где $\xi_1$ и $\xi_2$~--- нормальные Гауссовские векторы.\\
+        Для того, чтобы проверить то, что мы хотим, надо всего лишь посмотреть на эту формулу и узнать, что будет её первой компонентой, и что~--- второй. Получим именно то, что нужно.
+    \end{proof}
+    \begin{claim}
+        Для нормальных случайных векторов некоррелированность влечёт независимость.
+    \end{claim}
+    \begin{proof}
+        Пусть мы знаем некоррелированность. Тогда
+        $$\left(\begin{matrix}
+            \eta_1\\\eta_2
+        \end{matrix}\right)\sim\operatorname{N}(\left(\begin{matrix}
+            \mu_1\\\mu_2
+        \end{matrix}\right);\left(\begin{matrix}
+            \sigma_{\xi_1}^2 & \mathbb0\\\mathbb0 & \sigma_{\xi_2}^2
+        \end{matrix}\right))
+        $$
+        Если $\sigma_{\xi_1}=0$ или $\sigma_{\xi_2}=0$, то всё очевидно. Иначе
+        $$
+        p(x_1;x_2)=\frac1{2\pi\sqrt{\sigma_{\xi_1}^2\sigma_{\xi_2}^2}}\underbrace{\exp\left(-\frac12\left(\begin{matrix}
+            x_1-\mu_1\\x_2\mu_2
+        \end{matrix}\right)^T
+        \left(\begin{matrix}
+            \sigma_{\xi_1}^{-2} & \mathbb0\\\mathbb0 & \sigma_{\xi_2}^{-2}
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            x_1-\mu_1\\x_2-\mu_2
+        \end{matrix}\right)\right)}_{\exp\left(-\frac12\left(\frac{(x_1-\mu_1)^2}{\sigma_{\xi_1}^2}+\frac{(x_2-\mu_2)^2}{\sigma_{\xi_2}^2}\right)\right)}
+        $$
+    \end{proof}
+    \section{Вероятностные неравенства.}
+    \begin{remark}
+        См. также \ref{Неравенство Маркова} \ref{Неравенство Чебышёва}
+    \end{remark}
+    \begin{theorem}[Слабый закон больших чисел]
+        \label{Слабый закон больших чисел}
+        Пусть $\xi_1;\ldots;\xi_n$~--- независимые одинаково распределённые величины. И пусть у них ожидание $\mu$ и дисперсия $\sigma^2$. Тогда
+        $$
+        \forall\varepsilon>0~P(|\overline\xi-\mu|\geqslant\varepsilon)\underset{n\to\infty}\longrightarrow0
+        $$
+        Где
+        $$
+        \overline\xi=\frac{\sum\limits_{i=1}^n\xi_i}n
+        $$
+    \end{theorem}
+    \begin{proof}
+        $$
+        P(|\overline\xi-\mu|\geqslant\varepsilon)\leqslant\frac{\Variance\overline\xi}{\varepsilon^2}=\frac{\sigma^2}{n\varepsilon^2}
+        $$
+    \end{proof}
+    \begin{definition}
+        $$
+        L_2=\{\xi\mid\Expected\xi^2<\infty\}
+        $$
+    \end{definition}
+    \begin{claim}
+        Пусть $\xi,\eta\in L_2$, Тогда
+        $$
+        |\Expected\xi\eta|\leqslant\Expected\xi^2\Expected\eta^2
+        $$
+    \end{claim}
+    \begin{proof}
+        Это просто неравенство Коши~--- Буняковского~--- Шварца для скалярного произведения $(\xi;\eta)\mapsto\Expected\xi\eta$.
+    \end{proof}
+    \begin{claim}
+        Пусть $\xi,\eta\in L_2$, Тогда
+        $$
+        (\Covariance(\xi;\eta))^2\leqslant\Variance\xi\Variance\eta
+        $$
+    \end{claim}
+    \begin{proof}
+        Это просто неравенство Коши~--- Буняковского~--- Шварца для скалярного произведения $(\xi;\eta)\mapsto\Expected(\xi-\Expected\xi)(\eta-\Expected\eta)$.
+    \end{proof}
+    \begin{claim}
+        Если $g$ выпукла вниз, то $g(\Expected\xi)\leqslant\Expected g(\xi)$.
+    \end{claim}
+    \begin{proof}
+        неравенство Йенсена.
+    \end{proof}
+    \begin{claim}
+        Если $p,q$~--- сопряжённые показатели, то
+        $$
+        \Expected|\xi\eta|\leqslant(\Expected|\xi|^p)^{1/p}(\Expected|\eta|^q)^{1/q}
+        $$
+    \end{claim}
+    \begin{proof}
+        Неравенство Гёльдера.
+    \end{proof}
+    \begin{claim}
+        Если $p\geqslant1$, то
+        $$
+        (\Expected|\xi+\eta|^p)^{1/p}\leqslant(\Expected|\xi|^p)^{1/p}+(\Expected|\eta|^p)^{1/p}
+        $$
+    \end{claim}
+    \begin{proof}
+        Неравенство Минковского.
+    \end{proof}
+    \begin{claim}[неравенства Ляпунова]
+        Пусть $p<q$. Тогда
+        $$
+        (\Expected|\xi|^p)^{1/p}\leqslant(\Expected|\xi|^q)^{1/q}
+        $$
+    \end{claim}
+    \section{Условные распределения, мат. ожидания и дисперсии.}
+    \begin{claim}
+        Пусть $\xi_1;\ldots;\xi_n$~--- дискретный вектор. Тогда
+        $$
+        P(\xi_1=x_1,\ldots,\xi_k=x_k\mid \xi_{k+1}=x_{k+1},\ldots,\xi_n=x_n)=\frac{P(\xi_1=x_1,\ldots,\xi_n=x_n)}{P(\xi_{k+1}=x_{k+1},\ldots,\xi_n=x_n)}
+        $$
+        \\
+        Пусть $\xi_1;\ldots;\xi_n$~--- абсолютно непрерывный вектор. Тогда
+        $$
+        p(x_1,\ldots,x_k\mid x_{k+1},\ldots,x_n)=\frac{p_{\xi_1;\ldots;\xi_n}(x_1,\ldots,x_n)}{p_{\xi_{k+1};\ldots;\xi_n}(x_{k+1},\ldots,x_n)}
+        $$
+    \end{claim}
+    \begin{corollary}
+        Если $(\xi;\eta)$ дискретны, то
+        $$
+        P(\xi=k)=\sum\limits_jP(\xi=k\mid\eta=y_j)P_\eta(\eta=y_i)
+        $$
+        Если $(\xi;\eta)$ непрерывны, то
+        $$
+        p(x)=\int p(x\mid y)p_\eta(y)~\mathrm dy
+        $$
+    \end{corollary}
+    \begin{definition}
+        Условное математическое ожидание $E(\xi\mid\eta)$ в дискретном случае равно
+        $$
+        \sum\limits_kx_kP(\xi=x_k\mid\eta)
+        $$
+        в непрерывном случае равно
+        $$
+        \int xp(x\mid y)~\mathrm dx
+        $$
+    \end{definition}
+    \begin{property}
+        $$
+        \Expected(\xi\mid\eta)=\operatorname*{argmin}_{f(\eta)\in L_2}\Expected(\xi-f(\eta))^2
+        $$
+    \end{property}
+    \begin{property}
+        $$
+        \Expected(\xi\mid\xi)=\xi
+        $$
+    \end{property}
+    \begin{property}
+        Если $\xi$ и $\eta$ независимы, то
+        $$
+        \Expected(\xi\mid\eta)=\Expected\xi
+        $$
+    \end{property}
+    \begin{claim}[Формула полной вероятности для математического ожидания]
+        \begin{property}
+            $$
+            \Expected(\xi)=\Expected\Expected(\xi\mid\eta)
+            $$
+        \end{property}
+    \end{claim}
+    \begin{definition}
+        \textbf{Условная дисперсия} $\Variance(\xi\mid\eta)$ равна
+        $$
+        \Expected((\xi-\Expected(\xi\mid\eta))^2\mid\eta)=\Expected(\xi^2\mid\eta)-(\Expected(\xi\mid\eta))^2
+        $$
+    \end{definition}
+    \begin{property}
+        $$
+        \Variance\eta=\Expected\Variance(\eta\mid\xi)+\Variance\Expected(\xi\mid\eta)
+        $$
+    \end{property}
+    \begin{proof}
+        $$
+        \Expected\eta^2=\Expected\Expected(\eta^2\mid\xi)=\Expected\left(\Variance(\eta\mid\xi)+(\Expected(\eta\mid\xi))^2\right)
+        $$
+        $$
+        \Expected\eta=\Expected\Expected(\eta\mid\xi)
+        $$
+        Тогда
+        $$
+        \Variance\eta=\Expected\eta^2-(\Expected\eta)^2=\Expected\Variance(\eta\mid\xi)+\underbrace{\Expected(\Expected(\eta\mid\xi))^2-(\Expected\Expected(\eta\mid\xi))^2}_{\Variance\Expected(\xi\mid\eta)}
+        $$
+    \end{proof}
+    \begin{example}
+        Пусть
+        $$\left(\begin{matrix}
+            \xi_1\\\xi_2
+        \end{matrix}\right)\sim\hyperref[N (многомерное)]{\operatorname{N}}(\mu;\Sigma)$$
+        Тогда
+        $$
+        \Expected(\xi_2\mid\xi_1)=\mu_2+\frac{\Covariance(\xi_1;\xi_2)}{\Variance\xi_1}(\xi_1-\mu_1)
+        $$
+        Для доказательства введём
+        $$
+        \eta=\xi_2-\frac{\Covariance(\xi_1;\xi_2)}{\Variance\xi_1}\xi_1
+        $$
+        Несложно заметить, что $\Covariance(\eta;\xi_1)=0$, а значит они независимы. Тогда
+        $$
+        \Expected(\xi_2\mid\xi_1)=\Expected(\eta\mid\xi_1)+\frac{\Covariance(\xi_1;\xi_2)}{\Variance\xi_1}\Expected(\xi_1\mid\xi_1)
+        $$
+    \end{example}
+    \section{Сходимости.}
+    \begin{definition}
+        Пусть $\xi_n$, $\xi$~--- случайные величины на одном пространстве. Говорят, что $\xi_n$ \textbf{сходится к $\xi$ почти наверное}, если
+        $$
+        P({\omega\mid \lim\limits_{n\to\infty}\xi_n(\omega)=\xi(\omega)})=1
+        $$
+    \end{definition}
+    \begin{definition}
+        Пусть $\xi_n$, $\xi$~--- случайные величины на одном пространстве. Говорят, что $\xi_n$ \textbf{сходится к $\xi$ по вероятности}, если
+        $$
+        \forall\varepsilon>0~P(|\xi_n-\xi|\geqslant\varepsilon)\underset{n\to\infty}\longrightarrow0
+        $$
+    \end{definition}
+    \begin{definition}
+        Пусть $\xi_n$, $\xi$~--- случайные величины на одном пространстве. Говорят, что $\xi_n$ \textbf{сходится к $\xi$ в среднем порядка $p$}, если
+        $$
+        \Expected|\xi_n-\xi|^p\underset{n\to\infty}\longrightarrow0
+        $$
+    \end{definition}
+    \begin{definition}
+        Пусть $\xi_n$, $\xi$~--- случайные величины. Говорят, что $\xi_n$ \textbf{сходится к $\xi$ по распределению}, если
+        $$
+        \forall f\text{ непрерывна и ограничена}~\Expected f(\xi_n)\rightarrow \Expected f(\xi)
+        $$
+    \end{definition}
+    \begin{theorem}
+        Сходимость почти наверное влечёт сходимость по вероятности.\\
+        Сходимость в среднем порядка $p$ влечёт сходимость по вероятности.\\
+        Сходимость по вероятности влечёт сходимость по распределению.\\
+    \end{theorem}
+    \begin{proof}
+        \begin{itemize}
+            \item[$p\to d$]
+            $$
+            |\Expected(f(\xi_n)-f(\xi))|\leqslant\Expected|f(\xi_n)-f(\xi)|\mathbb1(|\xi_n-\xi|\geqslant\delta_\varepsilon)+\Expected|f(\xi_n)-f(\xi)|\mathbb1(|\xi_n-\xi|<\delta_\varepsilon)\leqslant2MP(|\xi_n-\xi|\geqslant\delta_\varepsilon)+\varepsilon
+            $$
+            Здесь $\delta_\varepsilon$~--- из определения непрерывности $f$, $M$~--- то, чем ограничена $f$.
+            \item[$L_p\to p$]
+            $$
+            P(|\xi_n-\xi|\geqslant\varepsilon)\leqslant
+            P(|\xi_n-\xi|^p\geqslant\varepsilon^p)\leqslant
+            \frac{\Expected|\xi_n-\xi|^p}{\varepsilon^p}\longrightarrow0
+            $$
+            \item[$a.s.\to p$]
+            Пусть $O=\{\omega\mid\xi_n(\omega)\nrightarrow\xi(\omega)\}$. Известно $P(O)=0$.\\
+            Пусть $\varepsilon>0$, $A_1=\bigcup\limits_{m\geqslant n}\{\omega\mid|\xi_m(\omega)-\xi(\omega)|>\varepsilon\}$.\\
+            Очевидно, $A_{n+1}\subset A_n$, следовательно $P(A_n)\rightarrow P(A)$, где $A=\bigcap\limits_n A_n$.\\
+            Пусть $\omega\in O\compl$. Тогда
+            $$\exists N(\varepsilon,\omega)~\forall n>N~|\xi_n(\omega)-\xi(\omega)|<\varepsilon$$
+            Это значит $\omega\notin A_N$, следовательно $\omega\in A\compl$. Отсюда $P(A)=0$.\\
+            Осталось заметить, что
+            $$P(|\xi_n-\xi|\geqslant\varepsilon)\leqslant P(A_n)$$
+        \end{itemize}
+    \end{proof}
+    \begin{remark}
+        Ни одна из обратных импликаций в общем случае неверна. Ни одна из импликаций между $a.s.$ и $L_p$ не влечёт другую.
+    \end{remark}
+    \begin{example}
+        $$d\nrightarrow p$$
+        Пусть $P(\omega_1)=P(\omega_2)=\frac12$. Пусть
+        $$
+        \xi(\omega_i)=(-1)^i\qquad\xi_n(\omega_i)=(-1)^{i+n}
+        $$
+        Тогда
+        $$
+        \Expected f(\xi)=\frac{f(\xi(\omega_1))+f(\xi(\omega_2))}2=\frac{f(1)+f(-1)}2=\Expected f(\xi_n)
+        $$
+        Однако
+        $$
+        P(\xi_n(\omega_i)-\xi(\omega_i))=\pm2\nrightarrow0
+        $$
+    \end{example}
+    \begin{example}
+        $$a.s.\nrightarrow L_p$$
+        Возьмём равномерное распределение на $[0;1]$. Пусть $\xi\equiv0$,
+        $$\xi_n(\omega)=\begin{cases}
+            e^n & \omega\in[0;1/n]\\0 & \mathrm{otherwise}
+        \end{cases}$$
+        Очевидно, сходимость почти наверное есть. Но
+        $$
+        \Expected|\xi_n-\xi|^p=\frac{e^{np}}n\nrightarrow0
+        $$
+    \end{example}
+    \begin{example}
+        $$
+        p\nrightarrow a.s.
+        $$
+        Пусть
+        $$\xi_{2^n}(\omega)=\begin{cases}
+            \frac1{2^n} & \omega\in[0;\frac1{2^n}]\\0&\mathrm{otherwise}
+        \end{cases}$$
+        $$
+        \forall m~\exists n:m\in(2^n;2^{n+1})~\xi_m(\omega)=\begin{cases}
+            \frac1{2^n} & \omega\in[\frac{m-2^n}{2^n};\frac{m-2^n+1}{2^n}]\\0&\mathrm{otherwise}
+        \end{cases}
+        $$
+        Тогда
+        $$
+        P(|\xi_m(\omega)-\xi(\omega)|>\varepsilon)\rightarrow0
+        $$
+    \end{example}
+    \begin{example}
+        $$
+        L_p\nrightarrow a.s.
+        $$
+        Возьмём предыдущий пример и заменим $2^n$ на $n!$.
+    \end{example}
+    \begin{theorem}
+        Пусть $F_n,F$~--- функции распределения. Тогда сходимость по распределению равносильна $$
+        \forall x\in C(F)~F_n(x)\to F(x)
+        $$
+    \end{theorem}
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$]
+            Пусть $x_0\in C(F)$. Пусть
+            $$
+            f_\varepsilon(t)=\begin{cases}
+                1 & t\leqslant x_0\\
+                0 & t\geqslant x_0+\varepsilon\\
+                \text{линейно} & \mathrm{otherwise}
+            \end{cases}
+            $$
+            $$F_n(x_0)=\int\limits_{-\infty}^{x_0}~\mathrm dF_n(x)=\int\limits_{-\infty}^{x_0}f_\varepsilon(t)~\mathrm dF_n(x)\leqslant =\int\limits_{-\infty}^{+\infty}f_\varepsilon(t)~\mathrm dF_n(x)\rightarrow \int\limits_{-\infty}^{x_0+\varepsilon}f_\varepsilon(t)~\mathrm dF(x)\leqslant F(x+\varepsilon)$$
+            \item[$\Leftarrow$]
+            Пока не будем доказывать.
+        \end{itemize}
+    \end{proof}
+    \begin{remark}
+        Условие в теореме равносильно.
+        $$\forall x,y~F_n(x)-F_n(y)\rightarrow F(x)-F(y)$$
+    \end{remark}
+    \begin{remark}
+        Если $f\in C(\mathbb R)$, то
+        $$\sup\limits_{x\in\mathbb R}|F_n(x)-F(x)|\rightarrow0$$
+    \end{remark}
+    \begin{remark}
+        Если $F_n,F$ дискретны и имеют одинаковый носитель, то для сходимости по распределению достаточно доказать, что вероятность $\xi_n=x_k$ сходится к $\xi=x_k$.
+    \end{remark}
+    \begin{theorem}[Свойства сходимостей]
+        \begin{enumerate}
+            \item Пусть $\xi_n\overset{a.s.}\rightarrow\xi$, $|\xi_n|\overset{a.s.}\leqslant\eta$, $\Expected\eta<+\infty$. Тогда $\Expected\xi_n\rightarrow\Expected\xi$.
+            \item Пусть $\xi_n\overset p\rightarrow\xi$, $f\in C(\mathbb R)$. Тогда $f(\xi_n)\overset p\rightarrow f(\xi)$.
+            \item Пусть $\xi_n-\eta_n\overset p\rightarrow0$, $\xi_n\overset p\rightarrow\xi$, тогда $\eta_n\overset p\rightarrow\xi$.
+            \item Пусть $\xi_n-\eta_n\overset p\rightarrow0$, $\eta_n\overset d\rightarrow\eta$, тогда $\xi_n\overset p\rightarrow\eta$.
+            \item Если $\xi_n\overset d\rightarrow\xi$, $\eta_n\overset p\rightarrow0$, то $\xi_n\eta_n\overset p\rightarrow\xi$.
+            \item $\xi_n\overset d\rightarrow C$ тогда и только тогда, когда $\xi_n\overset p\rightarrow C$.
+            \item Если $\xi_n\overset d\rightarrow\xi$, $\eta_n\overset p\rightarrow C$, то $\xi_n+\eta_n\overset d\rightarrow\xi+C$, $\xi_n\eta_n\overset d\rightarrow\xi C$, если $C\neq0$, то ещё $\frac{\xi_n}{\eta_n}\overset d\rightarrow\frac{\xi}C$.
+            \item Арифметические операции сохраняют сходимость по вероятности.
+        \end{enumerate}
+    \end{theorem}
+    \begin{theorem}
+        Пусть $\scriptF$~--- множество функций распределений. Пусть $\scriptG$~--- множество неубывающих функций, непрерывных справа, $g(+\infty)\leqslant1$, $g(-\infty)\geqslant 0$. Тогда для любой последовательности $\{g_n\}\subset\scriptG$. Тогда существует подпоследовательность $g_{n_k}$, сходящаяся к $g\in\scriptG$.
+    \end{theorem}
+    \begin{remark}
+        Для $\scriptF$ это в общем случае неверно:
+        $$
+        f_n(t)=\begin{cases}
+            0 & t<-n\\
+            \frac12 & t\in[-n;n)\\
+            1 & t\geqslant n
+        \end{cases}
+        $$
+        Тогда эта штука сходится к $\frac12\notin\scriptF$.
+    \end{remark}
+    \begin{definition}
+        Последовательность случайных величин называется \textbf{плотной}, если
+        $$
+        \forall\varepsilon>0~\exists N~\inf\limits_n P(-N\leqslant\xi_n\leqslant N)>1-\varepsilon
+        $$
+    \end{definition}
+    \begin{definition}
+        \textbf{Класс $\scriptL$ определяет распределение}, если $\scriptL$~--- подмножество непрерывных ограниченных функций и
+        $$\forall f\in L~\int f~\mathrm dG=\int f~\mathrm dF\Rightarrow F=G$$
+    \end{definition}
+    \begin{theorem}
+        Пусть $\{F_n\}\subset\scriptF$, $\scriptL$ определяет распределение. В таком случае существование $\lim F_n=F\in \scriptF$ равносильно конъюнкции условий $\{F_n\}$ плотно и $\forall f\in\scriptL~\exists \lim\int f~\mathrm dF_n$
+    \end{theorem}
+    \begin{proof}
+        Следствие направо тривиально. Докажем налево. Известно, что у $F_n$ есть сходящаяся в $\scriptG$ подпоследовательность $F_{n_k}$. Пусть она сходится к $F_1\in\scriptG$.\\
+        Пусть $\varepsilon>0$. Для него существует такое $N$, что
+        $$
+        1\geqslant F_n(N)>F_n(N)-F_n(-N)>1-\varepsilon
+        $$
+        Пусть $x_0$~--- точка непрерывности $F_1$ и $x_0\geqslant N$. Тогда $1\geqslant F_n(x_0)>1-\varepsilon$. Если мы рассмотрим $x_1<-N$, то получим $F_n(x_1)<\varepsilon$. Отсюда $F_1$ на бесконечности равно 1, а на минус бесконечности~--- нулю. То есть $F_1\in\scriptF$.\\
+         $\lim\int fdF_{n_k}=\int fdF_1=\int fdF_2\Rightarrow F_1=F_2$~--- любая подпоследовательность сходится к одному распределению, следовательно $\exists\lim F_n F$
+    \end{proof}
+    \begin{corollary}
+        Пусть $\scriptL$ определяет распределение, $\forall f\in\scriptL~\int f~\mathrm dF_n\rightarrow\int f~\mathrm dF$, $F\in\scriptG$.\\
+        Тогда из хотя бы одного из условий
+        \begin{itemize}
+            \item $\{F_n\}$ плотная.
+            \item $F\in\scriptF$.
+            \item $f\equiv1$.
+        \end{itemize}
+        Следует $F_n\rightarrow F\in\scriptF$.
+    \end{corollary}
  \end{document}
