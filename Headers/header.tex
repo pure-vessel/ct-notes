@@ -1,16 +1,40 @@
 \usepackage{ifluatex}
 \ifluatex 
     \usepackage{fontspec}
-    \setsansfont{CMU Sans Serif}%{Arial}
-    \setmainfont{CMU Serif}%{Times New Roman}
-    \setmonofont{CMU Typewriter Text}%{Consolas}
+    \setsansfont[
+        Path = C:/Windows/Fonts/,
+        Extension = .ttf ,
+        BoldFont={cmunsx} ,
+        ItalicFont={cmunsi} ,
+        BoldItalicFont={cmunso} ,
+        UprightFont={cmunss}
+    ]{CMU Sans Serif}
+    \setmainfont[
+        Path = C:/Windows/Fonts/,
+        Extension = .ttf ,
+        BoldItalicFont={cmunbi} ,
+        ItalicFont={cmunti} ,
+        BoldFont={cmunbx} ,
+        UprightFont={cmunrm}
+    ]{CMU Serif}
+    \setmonofont[
+        Path = C:/Windows/Fonts/,
+        Extension = .ttf ,
+        % LightFont={cmunbtl} ,
+        BoldItalicFont={cmuntx} ,
+        % LightItalicFont={cmunbto} ,
+        BoldFont={cmuntb} ,
+        ItalicFont={cmunit} ,
+        UprightFont={cmuntt}
+    ]{CMU Typewriter Text}
     \defaultfontfeatures{Ligatures={TeX}}
 \else
     \usepackage[T2A]{fontenc}
     \usepackage[utf8]{inputenc}
 \fi
 \usepackage[english,russian]{babel}
-\usepackage{amssymb,latexsym,amsmath,amscd,mathtools,wasysym}
+\usepackage{anyfontsize}
+\usepackage{amssymb,latexsym,amsmath,amscd,mathtools,wasysym,stmaryrd}
 \usepackage[shortlabels]{enumitem}
 \usepackage[makeroom]{cancel}
 \usepackage{graphicx}
@@ -23,11 +47,17 @@
 \usepackage{multicol}
 \usepackage{tabu}
 \usepackage{arydshln} % \hdashline and :
+\usepackage{makecell} % \makecell for line breaks
+\usepackage{tabularx}
+\usepackage{xltabular}
+\renewcommand\tabularxcolumn[1]{m{#1}} % for vertical centering text in X column
+
 
 \usepackage{float}
 \makeatletter
 \g@addto@macro\@floatboxreset\centering
 \makeatother
+\setlength{\parindent}{0pt}
 \usepackage{caption}
 \usepackage{csquotes}
 \usepackage[bb=dsserif]{mathalpha}
@@ -36,7 +66,7 @@
 \usepackage[e]{esvect}
 \let\vec\vv
 
-\usepackage{xcolor}
+\usepackage[x11names]{xcolor}
 \colorlet{darkgreen}{black!25!blue!50!green}
 
 
@@ -84,13 +114,15 @@
 \usepackage{tikz,tikz-3dplot}
 \usepackage{tkz-euclide}
 \usetikzlibrary{calc,automata,patterns,angles,quotes,backgrounds,shapes.geometric,trees,positioning,decorations.pathreplacing}
-\pgfkeys{/pgf/plot/gnuplot call={T: && cd TeX && gnuplot}}
+\usetikzlibrary{lindenmayersystems}
+\pgfkeys{/pgf/plot/gnuplot call={cd Output && gnuplot}}
 \usepgfplotslibrary{fillbetween,polar}
+\usetikzlibrary{quotes,babel}
 \ifluatex
-\usetikzlibrary{graphs,graphs.standard,graphdrawing,quotes,babel}
+\usetikzlibrary{graphs,graphs.standard,graphdrawing}
 \usegdlibrary{layered,trees,circular,force}
 \else
-\errmessage{Run with LuaTeX, if you want to use gdlibraries}
+% \errmessage{Run with LuaTeX, if you want to use gdlibraries}
 \fi
 \makeatletter
 \newcommand\currentnode{\the\tikz@lastxsaved,\the\tikz@lastysaved}
@@ -156,6 +188,7 @@
 \newcommand*{\scriptC}{{\mathcal{C}}}
 \newcommand*{\scriptD}{{\mathcal{D}}}
 \newcommand*{\scriptF}{{\mathcal{F}}}
+\newcommand*{\scriptG}{{\mathcal{G}}}
 \newcommand*{\scriptH}{{\mathcal{H}}}
 \newcommand*{\scriptK}{{\mathcal{K}}}
 \newcommand*{\scriptL}{{\mathcal{L}}}
@@ -178,6 +211,10 @@
 \DeclareMathOperator{\divby}{\scalebox{1}[.65]{\vdots}}
 \DeclareMathOperator{\toto}{\rightrightarrows}
 \DeclareMathOperator{\ntoto}{\not\rightrightarrows}
+
+\newcommand{\bigmid}{\mathrel{\big|}}
+\newcommand{\Bigmid}{\mathrel{\Big|}}
+\newcommand{\biggmid}{\mathrel{\bigg|}}
 
 \newcommand{\undercolorblack}[2]{{\color{#1}\underline{\color{black}#2}}}
 \newcommand{\undercolor}[2]{{\colorlet{tmp}{.}\color{#1}\underline{\color{tmp}#2}}}
